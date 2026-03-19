@@ -2,8 +2,10 @@ import image_38b9e8caabd18994531c10195796a44535b96a9d from 'figma:asset/38b9e8ca
 import image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 from 'figma:asset/a7ec64405f3af286fe5684ab2c4dda16bd6f6981.png'
 import image_81aa8fe3a4228a9160f66a4537389eb77969fcc8 from 'figma:asset/81aa8fe3a4228a9160f66a4537389eb77969fcc8.png'
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRight, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import Scrollbar from 'smooth-scrollbar';
 import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png';
 import customImage from 'figma:asset/854c6198f4803d1591af952ed1bbaf767a149818.png';
 
@@ -28,9 +30,20 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleNativeScroll = () => setScrolled(window.scrollY > 50);
+    const handleSmoothScroll = (event: Event) => {
+      const customEvent = event as CustomEvent<{ y?: number }>;
+      setScrolled((customEvent.detail?.y ?? 0) > 50);
+    };
+
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    window.addEventListener('smooth-scroll', handleSmoothScroll as EventListener);
+    handleNativeScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleNativeScroll);
+      window.removeEventListener('smooth-scroll', handleSmoothScroll as EventListener);
+    };
   }, []);
 
   return (
@@ -72,7 +85,7 @@ const Hero = () => {
                 <Star key={i} className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current" />
               ))}
             </div>
-            <span className="text-[#0a0a0a] font-medium tracking-tight text-xs md:text-sm whitespace-nowrap">4.9/5 en Google · Barcelona</span>
+            <span className="text-[#0a0a0a] font-medium tracking-tight text-xs md:text-sm whitespace-nowrap">4.9/5 en Google · Barcelona · KEUNE Ambassador</span>
           </motion.div>
         </div>
 
@@ -97,7 +110,7 @@ const Hero = () => {
           className="w-full flex justify-start mx-[0px] mt-[0px] mb-[16px]"
         >
           <p className="text-[#0a0a0a] text-lg md:text-2xl font-normal tracking-tight text-left max-w-3xl leading-snug md:leading-snug">
-            Salon de peluqueria en Barcelona especializado en color, corte y tratamientos personalizados para realzar tu estilo con un resultado natural y elegante.
+            El arte de la colorimetría en equilibrio
           </p>
         </motion.div>
 
@@ -181,7 +194,7 @@ const Treatments = () => {
   ];
 
   return (
-    <section className="bg-white text-[#0a0a0a] bg-[#f4f4f4] px-[0px] py-[24px]">
+    <section id="servicios" className="text-[#0a0a0a] bg-[#f4f4f4] px-[0px] pt-[24px] pb-[72px] md:pb-[96px]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
         
         {/* Left Column: Intro text and Image */}
@@ -262,8 +275,60 @@ const Treatments = () => {
 };
 
 const KeuneSection = () => {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  const [isKeuneBgActive, setIsKeuneBgActive] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    let rafId = 0;
+
+    const updateBackgroundState = () => {
+      rafId = 0;
+      const section = sectionRef.current;
+      if (!section) {
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const shouldActivate = rect.top <= viewportHeight * 0.55 && rect.bottom >= viewportHeight * 0.45;
+
+      setIsKeuneBgActive((prev) => (prev === shouldActivate ? prev : shouldActivate));
+    };
+
+    const scheduleUpdate = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(updateBackgroundState);
+      }
+    };
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('smooth-scroll', scheduleUpdate as EventListener);
+    window.addEventListener('resize', scheduleUpdate);
+    scheduleUpdate();
+
+    return () => {
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('smooth-scroll', scheduleUpdate as EventListener);
+      window.removeEventListener('resize', scheduleUpdate);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
+  }, []);
+
   return (
-    <section className="bg-[#fdfcfb] px-[0px] pt-[40px] pb-[96px]">
+    <section
+      ref={sectionRef}
+      className="px-[0px] pt-[40px] pb-[96px]"
+      style={{
+        backgroundColor: isKeuneBgActive ? '#eef2f6' : '#ffffff',
+        transition: 'background-color 460ms ease',
+      }}
+    >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         {/* Intro */}
         <div className="flex flex-col mb-20 items-center w-full">
@@ -316,7 +381,7 @@ const KeuneSection = () => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="group flex flex-col"
             >
-              <div className="w-full aspect-[4/5] bg-[#e8e0d5]/30 mb-6 overflow-hidden rounded-sm relative">
+              <div className="w-full aspect-[4/5] bg-[#dce4ec]/40 mb-6 overflow-hidden rounded-sm relative">
                 <img src={cat.img} alt={cat.title} className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
               </div>
@@ -327,7 +392,7 @@ const KeuneSection = () => {
         </div>
 
         {/* Benefits & CTA */}
-        <div className="rounded-2xl p-10 md:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 bg-[#efefef4d]">
+        <div className="rounded-2xl p-10 md:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 bg-[#e6edf4] border border-[#d6e0ea]">
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
             {[
               "Fórmulas profesionales seleccionadas con criterio",
@@ -418,11 +483,99 @@ const Process = () => {
   );
 };
 
+const ScrollPaintText = ({ text, className }: { text: string; className: string }) => {
+  const textRef = React.useRef<HTMLHeadingElement | null>(null);
+  const [revealedChars, setRevealedChars] = useState(0);
+  const chars = Array.from(text);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setRevealedChars(chars.length);
+      return;
+    }
+
+    let rafId = 0;
+
+    const updateProgress = () => {
+      rafId = 0;
+      const element = textRef.current;
+      if (!element) {
+        return;
+      }
+
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const start = viewportHeight * 0.85;
+      const end = viewportHeight * 0.2;
+      const rawProgress = (start - rect.top) / (start - end);
+      const progress = Math.max(0, Math.min(1, rawProgress));
+      const nextRevealed = Math.round(progress * chars.length);
+
+      setRevealedChars((prev) => (prev === nextRevealed ? prev : nextRevealed));
+    };
+
+    const scheduleUpdate = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(updateProgress);
+      }
+    };
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('smooth-scroll', scheduleUpdate as EventListener);
+    window.addEventListener('resize', scheduleUpdate);
+    scheduleUpdate();
+
+    return () => {
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('smooth-scroll', scheduleUpdate as EventListener);
+      window.removeEventListener('resize', scheduleUpdate);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
+  }, [chars.length]);
+
+  return (
+    <h3
+      ref={textRef}
+      className={className}
+      style={{ whiteSpace: 'normal', overflowWrap: 'normal', maxWidth: '100%' }}
+    >
+      {chars.map((char, index) => {
+        if (char === ' ') {
+          return <React.Fragment key={`space-${index}`}> </React.Fragment>;
+        }
+
+        return (
+          <span
+            key={`${char}-${index}`}
+            style={{
+              color: index < revealedChars ? '#0a0a0a' : '#cfcfcf',
+              transition: 'color 180ms linear',
+              display: 'inline',
+            }}
+          >
+            {char}
+          </span>
+        );
+      })}
+    </h3>
+  );
+};
+
 const FounderNote = () => {
+  const founderManifesto =
+    'Creemos que el color no se aplica, se interpreta. Trabajamos la colorimetría como un equilibrio entre luz, armonía y técnica. Nuestro propósito es revelar tonos que eleven tu belleza con naturalidad y elegancia.';
+
   return (
     <section className="pt-24 md:pt-32 pb-12 md:pb-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-center lg:justify-end">
-        <div className="w-full lg:max-w-[850px] flex flex-col gap-16 md:gap-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+        <div className="w-full lg:col-span-8 lg:col-start-5 flex flex-col gap-16 md:gap-24">
           
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -430,7 +583,10 @@ const FounderNote = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h3 className="font-sans font-medium tracking-tight text-3xl md:text-5xl lg:text-[52px] text-[#0a0a0a] leading-[1.2] md:leading-[1.15]">Creemos que el color no se aplica, se interpreta. Trabajamos la colorimetría como un equilibrio entre luz, armonía y técnica. Nuestro propósito es revelar tonos que eleven tu belleza con naturalidad y elegancia.</h3>
+            <ScrollPaintText
+              text={founderManifesto}
+              className="font-sans font-medium tracking-tight text-3xl md:text-5xl lg:text-[52px] leading-[1.2] md:leading-[1.15]"
+            />
           </motion.div>
 
           <motion.div 
@@ -703,7 +859,7 @@ const CTA = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a0a0a] text-white/70 py-16 border-t border-white/10">
+    <footer className="bg-[#0a0a0a] text-white/70 pt-16 pb-44 md:py-16 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-1">
           <h3 className="font-sans font-medium tracking-tight text-2xl text-white mb-6">Mitin Studio.</h3>
@@ -783,8 +939,21 @@ const FloatingWhatsApp = () => {
 };
 
 const MobileStickyCTA = () => {
-  return (
-    <div className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-[#e8e0d5] p-4 z-50 flex flex-col gap-3 pb-safe">
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || typeof document === 'undefined') {
+    return null;
+  }
+
+  return createPortal(
+    <div
+      className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-[#e8e0d5] p-4 z-[70] flex flex-col gap-3 shadow-[0_-10px_30px_-22px_rgba(0,0,0,0.45)]"
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.75rem)' }}
+    >
       <button className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
         <MessageCircle className="w-4 h-4" />
         Asesoramiento gratuito
@@ -792,7 +961,8 @@ const MobileStickyCTA = () => {
       <button className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
         Reservar cita
       </button>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
@@ -934,7 +1104,7 @@ const ReelsSection = () => {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-5xl font-medium text-[#1f1f1f] tracking-tight mb-6"
           >
-            Mitin en movimiento
+            Mitin Studio en movimiento.
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -993,8 +1163,57 @@ const ReelsSection = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const container = document.body;
+    if (!container) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const emitScroll = (y: number) => {
+      window.dispatchEvent(new CustomEvent('smooth-scroll', { detail: { y } }));
+    };
+
+    if (prefersReducedMotion || isTouchDevice) {
+      const handleContainerScroll = () => emitScroll(window.scrollY);
+      window.addEventListener('scroll', handleContainerScroll, { passive: true });
+      emitScroll(window.scrollY);
+
+      return () => {
+        window.removeEventListener('scroll', handleContainerScroll);
+        emitScroll(0);
+      };
+    }
+
+    const scrollbar = Scrollbar.init(container, {
+      damping: 0.09,
+      alwaysShowTracks: false,
+      renderByPixels: true,
+      continuousScrolling: true,
+      delegateTo: document,
+    });
+
+    const handleSmoothbarScroll = (status: { offset: { y: number } }) => {
+      emitScroll(status.offset.y);
+    };
+
+    scrollbar.addListener(handleSmoothbarScroll);
+    emitScroll(scrollbar.offset.y);
+
+    return () => {
+      scrollbar.removeListener(handleSmoothbarScroll);
+      scrollbar.destroy();
+      emitScroll(0);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden md:pb-0 pb-[80px]">
+    <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden pb-0">
       <Header />
       <main>
         <Hero />
