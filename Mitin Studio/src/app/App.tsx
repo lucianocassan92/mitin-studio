@@ -587,7 +587,7 @@ const KeuneSection = () => {
         </div>
 
         {/* Full-width editorial carousel */}
-        <div className="w-full px-0 md:px-6 lg:px-8">
+        <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
           <style>{`
             @keyframes keuneInfiniteScroll {
               0% { transform: translate3d(0, 0, 0); }
@@ -603,14 +603,8 @@ const KeuneSection = () => {
               }
             }
           `}</style>
-          <div
-            className="relative overflow-hidden md:rounded-[28px] bg-[#e3e3e3]"
-            style={{
-              maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
-            }}
-          >
-            <div className="keune-infinite-track flex w-max gap-4 md:gap-6 px-6 md:px-10 py-8 md:py-10">
+          <div className="relative overflow-hidden bg-[#e3e3e3]">
+            <div className="keune-infinite-track flex w-max gap-4 md:gap-6 px-4 md:px-8 py-8 md:py-10">
               {[...KEUNE_PRODUCTS, ...KEUNE_PRODUCTS].map((product, idx) => (
                 <article
                   key={`${product.name}-${idx}`}
