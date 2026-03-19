@@ -7,7 +7,6 @@ import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRi
 import { motion, AnimatePresence } from 'motion/react';
 import Scrollbar from 'smooth-scrollbar';
 import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png';
-import customImage from 'figma:asset/854c6198f4803d1591af952ed1bbaf767a149818.png';
 
 // Color Palette Variables for Tailwind utility
 // Black: #0a0a0a
@@ -21,10 +20,43 @@ const images = {
   hero: "https://images.unsplash.com/photo-1764844463777-2accb463f1b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjBtb2RlbCUyMG5hdHVyYWwlMjBtYWtldXAlMjBiZWF1dHklMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzM4NDYxNjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
   about: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiZWF1dHklMjBzcGF8ZW58MXx8fHwxNzIxMTg2MjY3fDA&ixlib=rb-4.0.3&q=80&w=1080",
   gallery1: "https://images.unsplash.com/photo-1633681140152-3b8726450518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwYmVhdXR5JTIwc2Fsb24lMjBkZXRhaWx8ZW58MXx8fHwxNzczODQ1MTk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  gallery2: "https://images.unsplash.com/photo-1571666411642-b7636bdf4fdf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3V0aXF1ZSUyMGhhaXIlMjBzYWxvbiUyMGludGVyaW9yJTIwbWluaW1hbHxlbnwxfHx8fDE3NzM4NDU2NTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
   gallery3: "https://images.unsplash.com/photo-1712641970791-ea9a566c93bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwc3R5bGluZyUyMGVsZWdhbnQlMjBzYWxvbnxlbnwxfHx8fDE3NzM4NDUxOTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
   gallery4: "https://images.unsplash.com/photo-1689893265427-d7da200eff05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwaGFpciUyMHdhc2hpbmclMjBiYXNpbiUyMHNhbG9ufGVufDF8fHx8MTc3Mzg0NTE5NHww&ixlib=rb-4.1.0&q=80&w=1080"
 };
+
+const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
+
+const KEUNE_PRODUCTS = [
+  {
+    name: "Long & Strong Super Serum",
+    displayName: "Long & Strong\nSuper Serum",
+    family: "Crecimiento y fuerza",
+    image:
+      "https://images.ctfassets.net/9kjqrnn60hxu/31F52SKE8zq68s6RplGISz/1ae37ae192f55aa2bb00e4b2ac44e513/Care-Long_Strong-Super-Serum-100ml.png?fm=webp&q=75&w=3840",
+  },
+  {
+    name: "Long & Strong Shampoo",
+    displayName: "Long & Strong\nShampoo",
+    family: "Crecimiento y fuerza",
+    image:
+      "https://images.ctfassets.net/9kjqrnn60hxu/3Ah4XwelCKjoD1CfKmlvVF/e545409e1ee7aa30e733fb0deeb8d0f3/Care-Long_Strong-Shampoo-300ml.png?fm=webp&q=75&w=3840",
+  },
+  {
+    name: "Vital Nutrition Shampoo",
+    displayName: "Vital Nutrition\nShampoo",
+    family: "Nutrición profunda",
+    image:
+      "https://images.ctfassets.net/9kjqrnn60hxu/5hg6omkOFSsvpRGFB7e4yy/530d7ab11b3696022d1aaef8f41689d6/Care-Vital-Nutrition-Shampoo-300ml.png?fm=webp&q=75&w=3840",
+  },
+  {
+    name: "Vital Nutrition Power Plump",
+    displayName: "Vital Nutrition\nPower Plump",
+    family: "Nutrición profunda",
+    image:
+      "https://www.rivoline.com/cdn/shop/files/1b185.webp?v=1770172772&width=1946",
+  },
+];
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -49,10 +81,13 @@ const Header = () => {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#fdfcfb]/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between items-center text-[#0a0a0a]">
-        <div className="font-sans font-medium text-lg tracking-tighter">
+        <a href="/" className="font-sans font-medium text-lg tracking-tighter hover:opacity-85 transition-opacity">
           Mitin Studio.
-        </div>
+        </a>
         <div className="hidden md:flex items-center gap-4">
+          <a href="/tratamientos" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+            Tratamientos
+          </a>
           <button className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
             Reservar cita
           </button>
@@ -127,9 +162,9 @@ const Hero = () => {
                 <MessageCircle className="w-5 h-5" />
                 Asesoramiento gratuito
               </button>
-              <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
+              <a href="/tratamientos" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
                 Ver servicios
-              </button>
+              </a>
             </div>
           </motion.div>
         </div>
@@ -160,94 +195,99 @@ const Hero = () => {
 };
 
 const Treatments = () => {
-  const [activeIndex, setActiveIndex] = useState(2); // Start with "Specialist minds" equivalent open
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const treatments = [
+  const signatureTreatments = [
     {
-      title: "Corte y diseño.",
-      description: "Creamos formas precisas y orgánicas que respetan la caída natural de tu cabello, asegurando que tu estilo se mantenga impecable día tras día.",
-      image: customImage,
-      modelName: "@sofiamartin",
-      modelUrl: "https://www.instagram.com/sofiamartin?igsh=aTR0ZnF2dHozNTY1"
+      name: "Gloss Hair",
+      description:
+        "Un ritual de brillo pulido que envuelve el cabello en una luz sofisticada, dejando una textura sedosa y un acabado espejo.",
+      benefit: "Beneficio principal: Luminosidad inmediata y acabado glossy elegante.",
     },
     {
-      title: "Color y dimensión.",
-      description: "Dominamos las técnicas más avanzadas para lograr tonos luminosos, multidimensionales y sobre todo, un cabello sano y brillante.",
-      image: "https://images.unsplash.com/photo-1562940215-4314619607a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwY29sb3JpbmclMjBwcmVtaXVtJTIwc2Fsb258ZW58MXx8fHwxNzczODQ2NzY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      modelName: "@isabeldiaz",
-      modelUrl: "#"
+      name: "Color Lock",
+      description:
+        "Protocolo diseñado para proteger y prolongar la intensidad del color, preservando reflejos y profundidad durante más tiempo.",
+      benefit: "Beneficio principal: Color más duradero, vivo y uniforme.",
     },
     {
-      title: "Rituales capilares.",
-      description: "Diagnósticos personalizados y curas profundas para recuperar la fuerza, hidratación y vitalidad desde el cuero cabelludo hasta las puntas.",
-      image: "https://images.unsplash.com/photo-1728949202477-bad2935775cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwdHJlYXRtZW50JTIwbWFzayUyMHJlbGF4fGVufDF8fHx8MTc3Mzg0Njc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      modelName: "@carmenruiz",
-      modelUrl: "#"
+      name: "Hydro Nourish",
+      description:
+        "Tratamiento de hidratación y nutrición profunda que restaura confort, elasticidad y vitalidad en cabellos secos o apagados.",
+      benefit: "Beneficio principal: Recuperación de suavidad, flexibilidad y movimiento natural.",
     },
     {
-      title: "Estética holística.",
-      description: "Nuestros protocolos faciales y corporales combinan cosmética de autor con maniobras expertas para un resultado visible y duradero.",
-      image: "https://images.unsplash.com/photo-1761839256840-7780a45b85dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwc2Fsb24lMjB3YXNoaW5nJTIwc3RhdGlvbnxlbnwxfHx8fDE3NzM3NzQ5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      modelName: "@lauragomez",
-      modelUrl: "#"
-    }
+      name: "Power & Protect",
+      description:
+        "Ritual de fortalecimiento desde la raíz orientado a mejorar resistencia, densidad y calidad capilar de forma progresiva.",
+      benefit: "Beneficio principal: Más fuerza estructural y mayor protección diaria.",
+    },
   ];
 
   return (
-    <section id="servicios" className="text-[#0a0a0a] bg-[#f4f4f4] px-[0px] pt-[24px] pb-[72px] md:pb-[96px]">
+    <section id="servicios" className="text-[#0a0a0a] bg-[#f4f4f4] px-[0px] pt-[72px] md:pt-[96px] pb-[80px] md:pb-[104px]">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-10 md:mb-14">
+        <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#0a0a0a] mb-5">
+          TRATAMIENTOS SIGNATURE
+        </p>
+        <h2 className="text-4xl md:text-5xl lg:text-[62px] font-medium tracking-tight leading-[1.04] text-[#0a0a0a] max-w-4xl">
+          Una selección curada de rituales para transformar el estado del cabello.
+        </h2>
+      </div>
+
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-        
-        {/* Left Column: Intro text and Image */}
         <div className="lg:col-span-4 flex flex-col justify-between h-full">
-          <div className="mb-12 lg:mb-0 lg:pt-2">
-            <p className="text-sm font-medium text-[#0a0a0a] leading-snug max-w-[280px] tracking-tight">
-              La comunicación, la precisión y la claridad son clave. No dejamos nada al azar para asegurar resultados extraordinarios.
+          <div>
+            <p className="text-[#4e4e4e] text-base md:text-lg tracking-tight leading-relaxed max-w-md">
+              Diseñados en cabina con enfoque personalizado, sensibilidad estética y protocolos profesionales para resultados visibles y duraderos.
             </p>
+            <img
+              src={keuneLogo}
+              alt="Keune"
+              className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain mix-blend-multiply"
+            />
           </div>
-          
-          <div className="w-full mt-auto flex flex-col gap-3">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-[#666666]">
-              
-              <a 
-                href="https://www.instagram.com/sofiamartin?igsh=aTR0ZnF2dHozNTY1"
-                target="_blank"
-                rel="noopener noreferrer" 
-                className="text-[#0a0a0a] hover:underline flex items-center gap-1 transition-colors"
-              >
-                @sofiamartin
-                <ArrowRight className="w-3 h-3 -rotate-45" />
-              </a>
-            </div>
-            <div className="w-full aspect-[4/3] lg:aspect-auto lg:h-[350px] overflow-hidden rounded-sm">
-              <img 
+          <div className="mt-8 md:mt-12">
+            <a
+              href="https://www.instagram.com/sofiamartin?igsh=aTR0ZnF2dHozNTY1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0a0a0a] hover:underline text-xs md:text-sm font-medium tracking-tight inline-flex items-center gap-1.5 mb-3"
+            >
+              @sofiamartin
+              <ArrowRight className="w-3.5 h-3.5 -rotate-45" />
+            </a>
+            <div className="rounded-2xl overflow-hidden border border-[#dcd6ce]">
+              <img
                 src={image_38b9e8caabd18994531c10195796a44535b96a9d}
-                alt="Sofia Martin - Corte y diseño"
-                className="w-full h-full object-cover"
+                alt="Tratamientos signature Mitin Studio"
+                className="w-full aspect-[4/3] object-cover"
               />
             </div>
           </div>
         </div>
 
-        {/* Right Column: Accordion */}
         <div className="lg:col-span-8 flex flex-col justify-center">
-          <p className="text-[10px] uppercase tracking-widest font-semibold mb-16 text-[#0a0a0a]">
-            NUESTROS TRATAMIENTOS
-          </p>
-          
-          <div className="flex flex-col">
-            {treatments.map((treatment, idx) => {
+          <div className="flex flex-col border-t border-[#dedad3]">
+            {signatureTreatments.map((treatment, idx) => {
               const isActive = activeIndex === idx;
               return (
-                <div 
-                  key={idx} 
-                  className={`border-t border-[#e8e0d5] py-5 md:py-8 cursor-pointer group transition-colors duration-300 flex flex-col ${isActive ? 'pb-10 md:pb-14' : ''}`}
-                  onClick={() => setActiveIndex(idx)}
-                >
-                  <h3 className={`font-sans font-medium text-4xl md:text-6xl lg:text-[72px] tracking-[-0.05em] leading-[1.1] transition-colors duration-500 ${isActive ? 'text-[#0a0a0a]' : 'text-[#d4d4d4] group-hover:text-[#a3a3a3]'}`}>
-                    {treatment.title}
-                  </h3>
-                  
-                  <AnimatePresence>
+                <div key={treatment.name} className="border-b border-[#dedad3]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveIndex(idx)}
+                    className="w-full text-left py-6 md:py-8"
+                  >
+                    <span
+                      className={`block font-medium tracking-[-0.05em] leading-[1.02] text-[clamp(2.2rem,7vw,5.8rem)] transition-colors duration-500 ${
+                        isActive ? "text-[#0a0a0a]" : "text-[#c8c8c8] hover:text-[#a3a3a3]"
+                      }`}
+                    >
+                      {treatment.name}
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
                     {isActive && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
@@ -256,21 +296,203 @@ const Treatments = () => {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
-                        <p className="text-base md:text-lg text-[#4e4e4e] max-w-2xl pt-4 md:pt-6 tracking-tight leading-relaxed font-normal">
-                          {treatment.description}
-                        </p>
+                        <div className="pb-8 md:pb-10 max-w-3xl">
+                          <p className="text-[#4e4e4e] text-base md:text-lg tracking-tight leading-relaxed mb-4">
+                            {treatment.description}
+                          </p>
+                          <p className="text-[#1f1f1f] text-sm md:text-base font-medium tracking-tight leading-relaxed">
+                            {treatment.benefit}
+                          </p>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
               );
             })}
-            <div className="border-t border-[#e8e0d5]"></div>
+          </div>
+
+          <div className="mt-8 md:mt-10 flex">
+            <a
+              href="/tratamientos"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors w-fit"
+            >
+              Descubrir todos los tratamientos
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
-        
       </div>
     </section>
+  );
+};
+
+const TreatmentsExperiencePage = () => {
+  const categories = [
+    {
+      key: "corte",
+      title: "Corte y diseño",
+      description:
+        "Cortes creados con intención, precisión y sensibilidad estética para acompañar la forma natural del cabello y la identidad de cada persona.",
+    },
+    {
+      key: "color",
+      title: "Color y dimensión",
+      description:
+        "El arte de la colorimetría en equilibrio. Tonos, reflejos y profundidad trabajados con técnica y criterio para crear resultados luminosos, sofisticados y naturales.",
+    },
+    {
+      key: "rituales",
+      title: "Rituales capilares",
+      description:
+        "Diagnósticos personalizados y curas profundas para recuperar la fuerza, hidratación y vitalidad desde el cuero cabelludo hasta las puntas.",
+    },
+    {
+      key: "estetica",
+      title: "Estética holística",
+      description:
+        "Tratamientos diseñados para equilibrar bienestar, cuidado y belleza desde una mirada más global, sensorial y personalizada.",
+    },
+  ];
+
+  const ritualTreatments = [
+    {
+      name: "Gloss Hair",
+      description:
+        "Ritual de luz y pulido capilar que potencia reflejo, suavidad y acabado brillante con una textura ultra sedosa.",
+      benefit: "Beneficio principal: Efecto glossy sofisticado y brillo uniforme.",
+    },
+    {
+      name: "Color Lock",
+      description:
+        "Protocolo de protección para cabello teñido que preserva intensidad, equilibrio de tono y belleza cromática entre visitas.",
+      benefit: "Beneficio principal: Mayor duración del color con aspecto saludable.",
+    },
+    {
+      name: "Hydro Nourish",
+      description:
+        "Tratamiento nutritivo-hidratante para recuperar elasticidad, confort y vitalidad cuando el cabello está seco o apagado.",
+      benefit: "Beneficio principal: Hidratación profunda con movimiento natural.",
+    },
+    {
+      name: "Power & Protect",
+      description:
+        "Ritual enfocado en fuerza y crecimiento que estimula desde la raíz y refuerza la fibra para elevar la resistencia capilar.",
+      benefit: "Beneficio principal: Cabello más fuerte, denso y protegido.",
+    },
+    {
+      name: "Detox & Balance",
+      description:
+        "Protocolo purificante para cuero cabelludo que limpia en profundidad, refresca y restablece el equilibrio natural.",
+      benefit: "Beneficio principal: Sensación de limpieza profunda y cuero cabelludo reequilibrado.",
+    },
+    {
+      name: "Defined Curl",
+      description:
+        "Ritual diseñado para rizos que mejora definición, elasticidad y estructura, manteniendo control y ligereza.",
+      benefit: "Beneficio principal: Rizo más formado, flexible y con mejor memoria.",
+    },
+    {
+      name: "Frizz Veil Ritual",
+      description:
+        "Tratamiento complementario para reducir encrespamiento y sellar la cutícula, ideal en climas húmedos o cabellos porosos.",
+      benefit: "Beneficio principal: Superficie más pulida y control del frizz prolongado.",
+    },
+    {
+      name: "Scalp Reset Ceremony",
+      description:
+        "Ritual sensorial de cabina para reactivar bienestar del cuero cabelludo y preparar el cabello para mejores resultados técnicos.",
+      benefit: "Beneficio principal: Base capilar más sana para potenciar cualquier servicio.",
+    },
+  ];
+
+  return (
+    <>
+      <section className="pt-24 md:pt-32 pb-14 md:pb-20 bg-[#fdfcfb]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-5">
+            TRATAMIENTOS MITIN STUDIO
+          </p>
+          <h1 className="text-[12vw] md:text-[7.8vw] lg:text-[108px] leading-[0.9] tracking-[-0.05em] font-medium text-[#0a0a0a] max-w-5xl">
+            Rituales y tratamientos capilares
+          </h1>
+          <p className="text-lg md:text-2xl tracking-tight text-[#4e4e4e] leading-snug max-w-4xl mt-7 md:mt-9">
+            Una selección de rituales profesionales pensados para hidratar, fortalecer, equilibrar, proteger el color y realzar la belleza natural del cabello.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-[#fdfcfb] pb-8 md:pb-14">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <p className="text-[#5f5f5f] text-base md:text-xl leading-relaxed tracking-tight max-w-3xl">
+            Cada protocolo se adapta al estado real del cabello, al equilibrio del cuero cabelludo y al objetivo estético de cada persona para ofrecer una experiencia de cuidado verdaderamente personalizada.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-[#f4f4f4] py-8 md:py-14">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div>
+            {categories.map((category, idx) => (
+              <article key={category.key} className={`${idx < categories.length - 1 ? 'border-b border-[#dcd6ce]' : ''} py-7 md:py-9`}>
+                <h3 className="text-[#0a0a0a] font-medium tracking-[-0.035em] leading-[0.98] text-[clamp(2rem,5.2vw,4.5rem)]">
+                  {category.title}.
+                </h3>
+                <p className="text-[#4e4e4e] text-sm md:text-lg tracking-tight leading-relaxed max-w-4xl mt-4 md:mt-5">
+                  {category.description}
+                </p>
+
+                {category.key === "rituales" && (
+                  <div className="mt-7 md:mt-9 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                    {ritualTreatments.map((ritual, idx) => (
+                      <motion.article
+                        key={ritual.name}
+                        initial={{ opacity: 0, y: 14 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.45, delay: idx * 0.04 }}
+                        className="px-0 py-2 md:py-3"
+                      >
+                        <h3 className="text-[#0a0a0a] text-2xl md:text-3xl font-medium tracking-tight leading-none mb-3">
+                          {ritual.name}
+                        </h3>
+                        <p className="text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight mb-4">
+                          {ritual.description}
+                        </p>
+                        <p className="text-[#1f1f1f] text-sm md:text-base font-medium tracking-tight leading-relaxed">
+                          {ritual.benefit}
+                        </p>
+                      </motion.article>
+                    ))}
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <KeuneSection />
+
+      <section className="bg-[#0a0a0a] text-white py-16 md:py-24">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <h2 className="text-4xl md:text-6xl font-medium tracking-tight leading-[0.95] mb-6">
+            ¿Te ayudamos a elegir tu ritual ideal?
+          </h2>
+          <p className="text-[#d2d2d2] text-base md:text-xl tracking-tight leading-relaxed max-w-3xl mb-10">
+            Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors">
+              Asesoramiento gratuito por WhatsApp
+            </button>
+            <button className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
+              Reservar cita
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
@@ -325,97 +547,93 @@ const KeuneSection = () => {
       ref={sectionRef}
       className="px-[0px] pt-[40px] pb-[96px]"
       style={{
-        backgroundColor: isKeuneBgActive ? '#eef2f6' : '#ffffff',
+        backgroundColor: isKeuneBgActive ? '#e2e2e2' : '#ffffff',
         transition: 'background-color 460ms ease',
       }}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Intro */}
-        <div className="flex flex-col mb-20 items-center w-full">
-          <img 
-            src={keuneLogo} 
-            alt="Keune Logo" 
-            className="h-24 md:h-32 lg:h-40 object-contain mb-16 mix-blend-multiply"
-          />
-          <div className="flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24 items-start w-full justify-between text-left">
-            <h2 className="flex-1 text-4xl md:text-5xl lg:text-[64px] font-sans font-medium tracking-tight text-[#0a0a0a] leading-[1.1]">
-              Cuidado profesional, <br className="hidden lg:block" />dentro y fuera del salón.
-            </h2>
-            <div className="flex-1 md:pt-4">
-              <p className="text-lg md:text-xl text-[#4e4e4e] font-normal tracking-tight leading-relaxed max-w-xl">
-                Trabajamos con Keune, una marca profesional reconocida por la calidad de sus fórmulas y su enfoque experto. Como salón embajador, confiamos en sus productos para acompañar cada diagnóstico, tratamiento y acabado con el nivel de excelencia que define nuestra experiencia.
-              </p>
+      <div className="max-w-[1600px] mx-auto">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          {/* Intro */}
+          <div className="flex flex-col mb-14 md:mb-20 items-center w-full">
+            <img
+              src={keuneLogo}
+              alt="Keune Logo"
+              className="h-24 md:h-32 lg:h-40 object-contain mb-12 md:mb-16 mix-blend-multiply"
+            />
+            <div className="flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24 items-start w-full justify-between text-left">
+              <h2 className="flex-1 text-4xl md:text-5xl lg:text-[64px] font-sans font-medium tracking-tight text-[#0a0a0a] leading-[1.08]">
+                Cuidado profesional, <br className="hidden lg:block" />dentro y fuera del salón.
+              </h2>
+              <div className="flex-1 md:pt-4">
+                <p className="text-lg md:text-xl text-[#4e4e4e] font-normal tracking-tight leading-relaxed max-w-xl">
+                  Trabajamos con Keune como parte de nuestro estándar de cuidado profesional. Sus fórmulas acompañan nuestros tratamientos en salón y permiten prolongar sus beneficios en casa con la misma exigencia, calidad y sensibilidad por el cabello.
+                </p>
+                <div className="mt-6 md:mt-8">
+                  <a
+                    href={KEUNE_STORE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-9 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors shadow-lg"
+                  >
+                    Descubrir productos
+                  </a>
+                  <p className="text-[#737373] text-sm md:text-base tracking-tight leading-relaxed mt-4 max-w-2xl">
+                    Descubre los productos que acompañan nuestros tratamientos en salón.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-          {[
-            {
-              title: "Cuidado capilar",
-              desc: "Rutinas adaptadas a distintas necesidades con champús y acondicionadores premium.",
-              img: "https://images.unsplash.com/photo-1572566202186-611ceb4042f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGFtcG9vJTIwY29uZGl0aW9uZXIlMjBib3R0bGVzJTIwYWVzdGhldGljJTIwbWluaW1hbHxlbnwxfHx8fDE3NzM4NDc1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080"
-            },
-            {
-              title: "Protección del color",
-              desc: "Productos pensados para prolongar la luminosidad, nutrición y belleza del color.",
-              img: "https://images.unsplash.com/photo-1745138806610-cfbd14b3d18f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwYmVhdXR5JTIwcHJvZHVjdCUyMHR1YmV8ZW58MXx8fHwxNzczODQ3NTQyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-            },
-            {
-              title: "Styling profesional",
-              desc: "Texturas, acabados y productos para mantener el look con resultado de salón.",
-              img: "https://images.unsplash.com/photo-1614329850775-e9d80a40d73a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwaGFpciUyMHN0eWxpbmclMjBwcm9kdWN0cyUyMG1pbmltYWx8ZW58MXx8fDE3NzM4NDc1MTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
-            },
-            {
-              title: "Tratamientos específicos",
-              desc: "Soluciones para nutrición, reparación, brillo, suavidad o cuero cabelludo.",
-              img: "https://images.unsplash.com/photo-1763503834047-ac85c4105c0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwYmVhdXR5JTIwY29zbWV0aWMlMjBqYXJ8ZW58MXx8fHwxNzczODQ3NTQyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+        {/* Full-width editorial carousel */}
+        <div className="w-full px-0 md:px-6 lg:px-8">
+          <style>{`
+            @keyframes keuneInfiniteScroll {
+              0% { transform: translate3d(0, 0, 0); }
+              100% { transform: translate3d(-50%, 0, 0); }
             }
-          ].map((cat, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group flex flex-col"
-            >
-              <div className="w-full aspect-[4/5] bg-[#dce4ec]/40 mb-6 overflow-hidden rounded-sm relative">
-                <img src={cat.img} alt={cat.title} className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-              </div>
-              <h4 className="text-xl font-medium tracking-tight text-[#0a0a0a] mb-2">{cat.title}</h4>
-              <p className="text-sm text-[#8a8a8a] leading-relaxed max-w-xs">{cat.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Benefits & CTA */}
-        <div className="rounded-2xl p-10 md:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 bg-[#e6edf4] border border-[#d6e0ea]">
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-            {[
-              "Fórmulas profesionales seleccionadas con criterio",
-              "Recomendación personalizada según cada cabello",
-              "Continuidad del cuidado en casa",
-              "Resultados más duraderos y cuidados"
-            ].map((benefit, idx) => (
-              <div key={idx} className="flex gap-4 items-start">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#0a0a0a] mt-2 shrink-0" />
-                <p className="text-[#0a0a0a] font-normal tracking-tight text-sm md:text-base leading-snug">{benefit}</p>
-              </div>
-            ))}
-          </div>
-          
-          <div className="hidden lg:block w-px h-32 bg-[#c4b9aa]/30" />
-          <div className="block lg:hidden w-full h-px bg-[#c4b9aa]/30" />
-
-          <div className="flex-[0.8] flex flex-col items-start lg:items-start text-left w-full">
-            <h4 className="text-2xl font-medium text-[#0a0a0a] tracking-tight mb-3">Encuentra tu rutina ideal</h4>
-            <p className="text-[#8a8a8a] text-sm max-w-sm tracking-tight leading-relaxed m-[0px]">
-              Te ayudamos a elegir los productos adecuados según tu tipo de cabello, color o tratamiento.
-            </p>
-            
+            .keune-infinite-track {
+              animation: keuneInfiniteScroll 38s linear infinite;
+              will-change: transform;
+            }
+            @media (max-width: 1024px) {
+              .keune-infinite-track {
+                animation-duration: 30s;
+              }
+            }
+          `}</style>
+          <div
+            className="relative overflow-hidden md:rounded-[28px] bg-[#e3e3e3]"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+            }}
+          >
+            <div className="keune-infinite-track flex w-max gap-4 md:gap-6 px-6 md:px-10 py-8 md:py-10">
+              {[...KEUNE_PRODUCTS, ...KEUNE_PRODUCTS].map((product, idx) => (
+                <article
+                  key={`${product.name}-${idx}`}
+                  className="w-[220px] md:w-[260px] lg:w-[290px] shrink-0 rounded-2xl overflow-hidden bg-[#f2f2f2] shadow-[0_20px_40px_-28px_rgba(20,20,20,0.45)]"
+                >
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4 md:p-5">
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-[#727272] font-semibold mb-2">
+                      {product.family}
+                    </p>
+                    <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight leading-[1.05] whitespace-pre-line min-h-[2.1em]">
+                      {product.displayName ?? product.name}
+                    </h3>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -922,19 +1140,30 @@ const Footer = () => {
 };
 
 const FloatingWhatsApp = () => {
-  return (
-    <div className="hidden md:flex fixed bottom-8 right-8 z-50 flex-col items-end gap-3 pointer-events-none">
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || typeof document === 'undefined') {
+    return null;
+  }
+
+  return createPortal(
+    <div className="hidden md:flex fixed bottom-8 right-8 z-[80] flex-col items-end gap-3 pointer-events-none">
       <div className="bg-white px-4 py-2 rounded-2xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.15)] border border-[#e8e0d5]/50 text-sm text-[#0a0a0a] font-medium tracking-tight pointer-events-auto flex items-center gap-2 animate-bounce">
         <span className="w-2.5 h-2.5 rounded-full bg-[#25D366]"></span>
         ¿Te asesoramos?
       </div>
-      <button 
+      <button
         className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all pointer-events-auto"
         aria-label="Asesoramiento por WhatsApp"
       >
         <MessageCircle className="w-8 h-8" />
       </button>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
@@ -1163,6 +1392,10 @@ const ReelsSection = () => {
 };
 
 export default function App() {
+  const normalizedPath =
+    typeof window !== 'undefined' ? window.location.pathname.replace(/\/+$/, '') || '/' : '/';
+  const isTreatmentsPage = normalizedPath === '/tratamientos';
+
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -1216,15 +1449,21 @@ export default function App() {
     <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden pb-0">
       <Header />
       <main>
-        <Hero />
-        <FounderNote />
-        <Treatments />
-        <KeuneSection />
-        <Testimonials />
-        <Gallery />
-        <ReelsSection />
-        <InstagramFeed />
-        <CTA />
+        {isTreatmentsPage ? (
+          <TreatmentsExperiencePage />
+        ) : (
+          <>
+            <Hero />
+            <FounderNote />
+            <Treatments />
+            <KeuneSection />
+            <Testimonials />
+            <Gallery />
+            <ReelsSection />
+            <InstagramFeed />
+            <CTA />
+          </>
+        )}
       </main>
       <Footer />
       <FloatingWhatsApp />
