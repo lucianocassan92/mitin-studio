@@ -1386,9 +1386,85 @@ const ReelsSection = () => {
 };
 
 export default function App() {
-  const normalizedPath =
-    typeof window !== 'undefined' ? window.location.pathname.replace(/\/+$/, '') || '/' : '/';
-  const isTreatmentsPage = normalizedPath === '/tratamientos';
+  const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
+  const [currentPath, setCurrentPath] = useState(
+    typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/',
+  );
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const isTreatmentsPage = currentPath === '/tratamientos';
+
+  const navigateWithTransition = (nextPath: string) => {
+    const normalizedNextPath = normalizePath(nextPath);
+    if (normalizedNextPath === currentPath || typeof window === 'undefined') {
+      return;
+    }
+
+    setIsPageTransitioning(true);
+    window.setTimeout(() => {
+      window.history.pushState({}, '', normalizedNextPath);
+      setCurrentPath(normalizedNextPath);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      setIsPageTransitioning(false);
+    }, 220);
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const handlePopState = () => {
+      setCurrentPath(normalizePath(window.location.pathname));
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
+    const handleInternalLinkClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0) {
+        return;
+      }
+
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      const anchor = target?.closest('a[href]') as HTMLAnchorElement | null;
+      if (!anchor) {
+        return;
+      }
+
+      const href = anchor.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+        return;
+      }
+
+      if (anchor.target === '_blank' || anchor.hasAttribute('download')) {
+        return;
+      }
+
+      let url: URL;
+      try {
+        url = new URL(href, window.location.origin);
+      } catch {
+        return;
+      }
+
+      if (url.origin !== window.location.origin) {
+        return;
+      }
+
+      event.preventDefault();
+      navigateWithTransition(url.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    document.addEventListener('click', handleInternalLinkClick);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('click', handleInternalLinkClick);
+    };
+  }, [currentPath]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -1442,7 +1518,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden pb-0">
       <Header />
-      <main>
+      <main className={`transition-opacity duration-300 ${isPageTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         {isTreatmentsPage ? (
           <TreatmentsExperiencePage />
         ) : (
