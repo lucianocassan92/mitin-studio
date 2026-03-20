@@ -32,29 +32,25 @@ const KEUNE_PRODUCTS = [
     name: "Long & Strong Super Serum",
     displayName: "Long & Strong\nSuper Serum",
     family: "Crecimiento y fuerza",
-    image:
-      "https://images.ctfassets.net/9kjqrnn60hxu/31F52SKE8zq68s6RplGISz/1ae37ae192f55aa2bb00e4b2ac44e513/Care-Long_Strong-Super-Serum-100ml.png?fm=webp&q=75&w=3840",
+    image: "/keune/long-strong-super-serum.webp",
   },
   {
     name: "Long & Strong Shampoo",
     displayName: "Long & Strong\nShampoo",
     family: "Crecimiento y fuerza",
-    image:
-      "https://images.ctfassets.net/9kjqrnn60hxu/3Ah4XwelCKjoD1CfKmlvVF/e545409e1ee7aa30e733fb0deeb8d0f3/Care-Long_Strong-Shampoo-300ml.png?fm=webp&q=75&w=3840",
+    image: "/keune/long-strong-shampoo.webp",
   },
   {
     name: "Vital Nutrition Shampoo",
     displayName: "Vital Nutrition\nShampoo",
     family: "Nutrición profunda",
-    image:
-      "https://images.ctfassets.net/9kjqrnn60hxu/5hg6omkOFSsvpRGFB7e4yy/530d7ab11b3696022d1aaef8f41689d6/Care-Vital-Nutrition-Shampoo-300ml.png?fm=webp&q=75&w=3840",
+    image: "/keune/vital-nutrition-shampoo.webp",
   },
   {
     name: "Vital Nutrition Power Plump",
     displayName: "Vital Nutrition\nPower Plump",
     family: "Nutrición profunda",
-    image:
-      "https://www.rivoline.com/cdn/shop/files/1b185.webp?v=1770172772&width=1946",
+    image: "/keune/vital-nutrition-power-plump.png",
   },
 ];
 
@@ -180,12 +176,15 @@ const Hero = () => {
             <img 
               src={keuneLogo} 
               alt="Keune" 
+              decoding="async"
               className="w-full h-auto object-contain brightness-0 invert"
             />
           </div>
           <img 
             src={image_81aa8fe3a4228a9160f66a4537389eb77969fcc8} 
             alt="Mitin Studio Model" 
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover object-center md:object-top"
           />
         </motion.div>
@@ -244,6 +243,7 @@ const Treatments = () => {
             <img
               src={keuneLogo}
               alt="Keune"
+              decoding="async"
               className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain mix-blend-multiply"
             />
           </div>
@@ -261,6 +261,8 @@ const Treatments = () => {
               <img
                 src={image_38b9e8caabd18994531c10195796a44535b96a9d}
                 alt="Tratamientos signature Mitin Studio"
+                loading="lazy"
+                decoding="async"
                 className="w-full aspect-[4/3] object-cover"
               />
             </div>
@@ -558,6 +560,8 @@ const KeuneSection = () => {
             <img
               src={keuneLogo}
               alt="Keune Logo"
+              loading="lazy"
+              decoding="async"
               className="h-24 md:h-32 lg:h-40 object-contain mb-12 md:mb-16 mix-blend-multiply"
             />
             <div className="flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24 items-start w-full justify-between text-left">
@@ -614,6 +618,8 @@ const KeuneSection = () => {
                     <img
                       src={product.image}
                       alt={product.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -811,6 +817,8 @@ const FounderNote = () => {
             <img 
               src={image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981} 
               alt="Ilya Mitin, fundador y director creativo" 
+              loading="lazy"
+              decoding="async"
               className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover grayscale-[20%]"
             />
             <div>
@@ -900,7 +908,7 @@ const Testimonials = () => {
   const TestimonialCard = ({ t }: { t: { name: string; role: string; text: string; img: string } }) => (
     <div className="bg-[#fafafa] rounded-lg p-6 flex flex-col gap-3">
       <div className="flex flex-col gap-3">
-        <img src={t.img} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
+        <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover" />
         <div>
           <p className="text-[#0a0a0a] font-medium text-lg tracking-tight">{t.name}</p>
           <p className="text-[#4e4e4e] text-sm">{t.role}</p>
@@ -983,7 +991,7 @@ const Gallery = () => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className={`rounded-2xl overflow-hidden ${idx === 0 || idx === 3 ? 'md:aspect-[4/3]' : 'md:aspect-[4/5]'}`}
             >
-              <img src={img} alt="Mitin Studio Space" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={img} alt="Mitin Studio Space" loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
           ))}
         </div>
@@ -1005,6 +1013,8 @@ const CTA = () => {
         <img 
           src="https://images.unsplash.com/photo-1608869776252-33ff061fabf2?ixlib=rb-4.1.0&auto=format&fit=crop&w=2850&q=80" 
           alt="Mitin Studio Salon" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#332722]/80 to-transparent" />
@@ -1111,12 +1121,23 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">Síguenos</h4>
           <div className="flex gap-4">
-            <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0a0a0a] transition-colors">
+            <a
+              href="https://www.instagram.com/mitinstudiobcn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram de Mitin Studio"
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0a0a0a] transition-colors"
+            >
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0a0a0a] transition-colors">
+            <button
+              type="button"
+              disabled
+              aria-label="Facebook próximamente"
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 cursor-not-allowed"
+            >
               <Facebook className="w-4 h-4" />
-            </a>
+            </button>
           </div>
           
           
@@ -1125,8 +1146,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm font-light text-white/40">
         <p>© {new Date().getFullYear()} Mitin Studio. Todos los derechos reservados.</p>
         <div className="flex gap-4 mt-4 md:mt-0">
-          <a href="#" className="hover:text-white transition-colors">Aviso Legal</a>
-          <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
+          <span>Aviso Legal (demo)</span>
+          <span>Política de Privacidad (demo)</span>
         </div>
       </div>
     </footer>
@@ -1353,6 +1374,8 @@ const ReelsSection = () => {
               <img 
                 src={reel.image} 
                 alt={reel.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-[#0a0a0a]/20 to-transparent opacity-80 transition-opacity duration-300"></div>
@@ -1465,6 +1488,46 @@ export default function App() {
       document.removeEventListener('click', handleInternalLinkClick);
     };
   }, [currentPath]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const siteOrigin = 'https://mitin.studio';
+    const pageUrl = `${siteOrigin}${currentPath === '/' ? '/' : currentPath}`;
+    const pageMeta = isTreatmentsPage
+      ? {
+          title: 'Tratamientos Capilares en Barcelona | Mitin Studio',
+          description:
+            'Rituales capilares personalizados en Barcelona para hidratar, fortalecer, equilibrar y proteger el color. Descubre los tratamientos de Mitin Studio.',
+        }
+      : {
+          title: 'Mitin Studio | Peluquería Premium en Barcelona',
+          description:
+            'Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados. Reserva tu cita en Mitin Studio.',
+        };
+
+    const setMeta = (selector: string, content: string) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.setAttribute('content', content);
+      }
+    };
+
+    document.title = pageMeta.title;
+    setMeta('meta[name="description"]', pageMeta.description);
+    setMeta('meta[property="og:title"]', pageMeta.title);
+    setMeta('meta[property="og:description"]', pageMeta.description);
+    setMeta('meta[property="og:url"]', pageUrl);
+    setMeta('meta[name="twitter:title"]', pageMeta.title);
+    setMeta('meta[name="twitter:description"]', pageMeta.description);
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', pageUrl);
+    }
+  }, [currentPath, isTreatmentsPage]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
