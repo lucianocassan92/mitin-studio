@@ -590,7 +590,7 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
         </div>
       </section>
 
-      <KeuneSection />
+      <KeuneSection locale={locale} />
 
       <section className="bg-[#0a0a0a] text-white py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
