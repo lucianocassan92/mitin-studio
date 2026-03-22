@@ -31,31 +31,34 @@ const KEUNE_PRODUCTS = [
   {
     name: "Long & Strong Super Serum",
     displayName: "Long & Strong\nSuper Serum",
-    family: "Crecimiento y fuerza",
+    familyKey: "growth-strength",
     image: "/keune/long-strong-super-serum.webp",
   },
   {
     name: "Long & Strong Shampoo",
     displayName: "Long & Strong\nShampoo",
-    family: "Crecimiento y fuerza",
+    familyKey: "growth-strength",
     image: "/keune/long-strong-shampoo.webp",
   },
   {
     name: "Vital Nutrition Shampoo",
     displayName: "Vital Nutrition\nShampoo",
-    family: "Nutrición profunda",
+    familyKey: "deep-nutrition",
     image: "/keune/vital-nutrition-shampoo.webp",
   },
   {
     name: "Vital Nutrition Power Plump",
     displayName: "Vital Nutrition\nPower Plump",
-    family: "Nutrición profunda",
+    familyKey: "deep-nutrition",
     image: "/keune/vital-nutrition-power-plump.png",
   },
 ];
 
-const Header = () => {
+type Locale = 'es' | 'en';
+
+const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; treatmentsPath: string; switchLocalePath: string }) => {
   const [scrolled, setScrolled] = useState(false);
+  const isEn = locale === 'en';
 
   useEffect(() => {
     const handleNativeScroll = () => setScrolled(window.scrollY > 50);
@@ -77,19 +80,22 @@ const Header = () => {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#fdfcfb]/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between items-center text-[#0a0a0a]">
-        <a href="/" className="font-sans font-medium text-lg tracking-tighter hover:opacity-85 transition-opacity">
+        <a href={locale === 'en' ? '/en' : '/'} className="font-sans font-medium text-lg tracking-tighter hover:opacity-85 transition-opacity">
           Mitin Studio.
         </a>
         <div className="hidden md:flex items-center gap-4">
-          <a href="/tratamientos" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
-            Tratamientos
+          <a href={treatmentsPath} className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+            {isEn ? 'Treatments' : 'Tratamientos'}
+          </a>
+          <a href={switchLocalePath} className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
+            {isEn ? 'EN / ES' : 'ES / EN'}
           </a>
           <button className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
-            Reservar cita
+            {isEn ? 'Book now' : 'Reservar cita'}
           </button>
           <button className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
             <MessageCircle className="w-4 h-4" />
-            <span>Asesoramiento gratuito</span>
+            <span>{isEn ? 'Free consultation' : 'Asesoramiento gratuito'}</span>
           </button>
         </div>
       </div>
@@ -97,7 +103,8 @@ const Header = () => {
   );
 };
 
-const Hero = () => {
+const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: string }) => {
+  const isEn = locale === 'en';
   return (
     <section className="pt-20 md:pt-24 pb-8 md:pb-12 w-full bg-[#fdfcfb] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col">
@@ -116,7 +123,9 @@ const Hero = () => {
                 <Star key={i} className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current" />
               ))}
             </div>
-            <span className="text-[#0a0a0a] font-medium tracking-tight text-xs md:text-sm whitespace-nowrap">4.9/5 en Google · Barcelona · KEUNE Ambassador</span>
+            <span className="text-[#0a0a0a] font-medium tracking-tight text-xs md:text-sm whitespace-nowrap">
+              {isEn ? '4.9/5 on Google · Barcelona · KEUNE Ambassador' : '4.9/5 en Google · Barcelona · KEUNE Ambassador'}
+            </span>
           </motion.div>
         </div>
 
@@ -141,7 +150,7 @@ const Hero = () => {
           className="w-full flex justify-start mx-[0px] mt-[0px] mb-[16px]"
         >
           <p className="text-[#0a0a0a] text-lg md:text-2xl font-normal tracking-tight text-left max-w-3xl leading-snug md:leading-snug">
-            El arte de la colorimetría en equilibrio
+            {isEn ? 'The art of colorimetry in balance' : 'El arte de la colorimetría en equilibrio'}
           </p>
         </motion.div>
 
@@ -156,10 +165,10 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-start">
               <button className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
                 <MessageCircle className="w-5 h-5" />
-                Asesoramiento gratuito
+                {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
               </button>
-              <a href="/tratamientos" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
-                Ver servicios
+              <a href={treatmentsPath} className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
+                {isEn ? 'View services' : 'Ver servicios'}
               </a>
             </div>
           </motion.div>
@@ -193,10 +202,36 @@ const Hero = () => {
   );
 };
 
-const Treatments = () => {
+const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: string }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const isEn = locale === 'en';
 
-  const signatureTreatments = [
+  const signatureTreatments = isEn ? [
+    {
+      name: "Gloss Hair",
+      description:
+        "A polished shine ritual that wraps the hair in refined light, leaving a silky texture and mirror-like finish.",
+      benefit: "Key benefit: Immediate luminosity with an elegant glossy result.",
+    },
+    {
+      name: "Color Lock",
+      description:
+        "A protocol designed to protect and prolong color intensity, preserving nuance and depth between appointments.",
+      benefit: "Key benefit: Longer-lasting, vibrant and even color.",
+    },
+    {
+      name: "Hydro Nourish",
+      description:
+        "A deep hydration and nutrition treatment that restores comfort, elasticity and vitality to dry or dull hair.",
+      benefit: "Key benefit: Renewed softness, flexibility and natural movement.",
+    },
+    {
+      name: "Power & Protect",
+      description:
+        "A strengthening ritual from the root focused on improving resistance, density and day-to-day fiber protection.",
+      benefit: "Key benefit: Stronger structure with higher resilience.",
+    },
+  ] : [
     {
       name: "Gloss Hair",
       description:
@@ -227,10 +262,10 @@ const Treatments = () => {
     <section id="servicios" className="text-[#0a0a0a] bg-[#f4f4f4] px-[0px] pt-[72px] md:pt-[96px] pb-[80px] md:pb-[104px]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-10 md:mb-14">
         <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#0a0a0a] mb-5">
-          TRATAMIENTOS SIGNATURE
+          {isEn ? 'SIGNATURE TREATMENTS' : 'TRATAMIENTOS SIGNATURE'}
         </p>
         <h2 className="text-4xl md:text-5xl lg:text-[62px] font-medium tracking-tight leading-[1.04] text-[#0a0a0a] max-w-4xl">
-          Una selección curada de rituales para transformar el estado del cabello.
+          {isEn ? 'A curated selection of rituals to transform your hair condition.' : 'Una selección curada de rituales para transformar el estado del cabello.'}
         </h2>
       </div>
 
@@ -238,7 +273,9 @@ const Treatments = () => {
         <div className="lg:col-span-4 flex flex-col justify-between h-full">
           <div>
             <p className="text-[#4e4e4e] text-base md:text-lg tracking-tight leading-relaxed max-w-md">
-              Diseñados en cabina con enfoque personalizado, sensibilidad estética y protocolos profesionales para resultados visibles y duraderos.
+              {isEn
+                ? 'Designed in-salon with a personalized approach, aesthetic sensitivity and professional protocols for visible, lasting results.'
+                : 'Diseñados en cabina con enfoque personalizado, sensibilidad estética y protocolos profesionales para resultados visibles y duraderos.'}
             </p>
             <img
               src={keuneLogo}
@@ -316,10 +353,10 @@ const Treatments = () => {
 
           <div className="mt-8 md:mt-10 flex">
             <a
-              href="/tratamientos"
+              href={treatmentsPath}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors w-fit"
             >
-              Descubrir todos los tratamientos
+              {isEn ? 'Discover all treatments' : 'Descubrir todos los tratamientos'}
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -329,8 +366,34 @@ const Treatments = () => {
   );
 };
 
-const TreatmentsExperiencePage = () => {
-  const categories = [
+const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
+  const categories = isEn ? [
+    {
+      key: "cut",
+      title: "Cut and design",
+      description:
+        "Cuts shaped with intention, precision and aesthetic sensitivity to support each hair texture and personal identity.",
+    },
+    {
+      key: "color",
+      title: "Color and dimension",
+      description:
+        "The art of balanced colorimetry. Tones, depth and reflections crafted with technique and criterion for luminous, natural, sophisticated results.",
+    },
+    {
+      key: "rituals",
+      title: "Hair rituals",
+      description:
+        "Personalized diagnostics and deep-care protocols to restore strength, hydration and vitality from scalp to ends.",
+    },
+    {
+      key: "holistic",
+      title: "Holistic aesthetics",
+      description:
+        "Treatments designed to align wellbeing, beauty and care through a more global, sensory and personalized approach.",
+    },
+  ] : [
     {
       key: "corte",
       title: "Corte y diseño",
@@ -357,7 +420,56 @@ const TreatmentsExperiencePage = () => {
     },
   ];
 
-  const ritualTreatments = [
+  const ritualTreatments = isEn ? [
+    {
+      name: "Gloss Hair",
+      description:
+        "A luminosity and polishing ritual that amplifies reflection, softness and shine with an ultra-silky feel.",
+      benefit: "Key benefit: Sophisticated glossy effect and uniform radiance.",
+    },
+    {
+      name: "Color Lock",
+      description:
+        "A color-protection protocol for treated hair that preserves intensity, tonal balance and chromatic beauty between visits.",
+      benefit: "Key benefit: Longer-lasting color with healthy-looking finish.",
+    },
+    {
+      name: "Hydro Nourish",
+      description:
+        "A nourishing hydration treatment to recover elasticity, comfort and vitality when hair feels dry or depleted.",
+      benefit: "Key benefit: Deep hydration with natural movement.",
+    },
+    {
+      name: "Power & Protect",
+      description:
+        "A strength and growth-focused ritual that stimulates from the root and reinforces the fiber for greater resistance.",
+      benefit: "Key benefit: Stronger, denser and better-protected hair.",
+    },
+    {
+      name: "Detox & Balance",
+      description:
+        "A purifying scalp protocol that deeply cleanses, refreshes and restores natural balance.",
+      benefit: "Key benefit: Deep-clean sensation with a rebalanced scalp.",
+    },
+    {
+      name: "Defined Curl",
+      description:
+        "A ritual tailored for curls to improve definition, elasticity and structure while maintaining control and lightness.",
+      benefit: "Key benefit: Better-formed, flexible curls with stronger memory.",
+    },
+    {
+      name: "Frizz Veil Ritual",
+      description:
+        "A complementary treatment that reduces frizz and seals the cuticle, ideal for humid climates or porous hair.",
+      benefit: "Key benefit: Smoother surface and longer-lasting frizz control.",
+    },
+    {
+      name: "Scalp Reset Ceremony",
+      description:
+        "A sensory in-salon ritual to restore scalp wellbeing and prepare the hair for better technical outcomes.",
+      benefit: "Key benefit: A healthier foundation that elevates every service.",
+    },
+  ] : [
     {
       name: "Gloss Hair",
       description:
@@ -413,13 +525,15 @@ const TreatmentsExperiencePage = () => {
       <section className="pt-24 md:pt-32 pb-14 md:pb-20 bg-[#fdfcfb]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-5">
-            TRATAMIENTOS MITIN STUDIO
+            {isEn ? 'MITIN STUDIO TREATMENTS' : 'TRATAMIENTOS MITIN STUDIO'}
           </p>
           <h1 className="text-[12vw] md:text-[7.8vw] lg:text-[108px] leading-[0.9] tracking-[-0.05em] font-medium text-[#0a0a0a] max-w-5xl">
-            Rituales y tratamientos capilares
+            {isEn ? 'Hair rituals and treatments' : 'Rituales y tratamientos capilares'}
           </h1>
           <p className="text-lg md:text-2xl tracking-tight text-[#4e4e4e] leading-snug max-w-4xl mt-7 md:mt-9">
-            Una selección de rituales profesionales pensados para hidratar, fortalecer, equilibrar, proteger el color y realzar la belleza natural del cabello.
+            {isEn
+              ? 'A selection of professional rituals designed to hydrate, strengthen, rebalance, protect color and enhance natural beauty.'
+              : 'Una selección de rituales profesionales pensados para hidratar, fortalecer, equilibrar, proteger el color y realzar la belleza natural del cabello.'}
           </p>
         </div>
       </section>
@@ -427,7 +541,9 @@ const TreatmentsExperiencePage = () => {
       <section className="bg-[#fdfcfb] pb-8 md:pb-14">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <p className="text-[#5f5f5f] text-base md:text-xl leading-relaxed tracking-tight max-w-3xl">
-            Cada protocolo se adapta al estado real del cabello, al equilibrio del cuero cabelludo y al objetivo estético de cada persona para ofrecer una experiencia de cuidado verdaderamente personalizada.
+            {isEn
+              ? 'Each protocol is tailored to real hair condition, scalp balance and personal aesthetic goals to deliver truly individualized care.'
+              : 'Cada protocolo se adapta al estado real del cabello, al equilibrio del cuero cabelludo y al objetivo estético de cada persona para ofrecer una experiencia de cuidado verdaderamente personalizada.'}
           </p>
         </div>
       </section>
@@ -444,7 +560,7 @@ const TreatmentsExperiencePage = () => {
                   {category.description}
                 </p>
 
-                {category.key === "rituales" && (
+                {category.key === (isEn ? "rituals" : "rituales") && (
                   <div className="mt-7 md:mt-9 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     {ritualTreatments.map((ritual, idx) => (
                       <motion.article
@@ -479,17 +595,19 @@ const TreatmentsExperiencePage = () => {
       <section className="bg-[#0a0a0a] text-white py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <h2 className="text-4xl md:text-6xl font-medium tracking-tight leading-[0.95] mb-6">
-            ¿Te ayudamos a elegir tu ritual ideal?
+            {isEn ? 'Need help choosing your ideal ritual?' : '¿Te ayudamos a elegir tu ritual ideal?'}
           </h2>
           <p className="text-[#d2d2d2] text-base md:text-xl tracking-tight leading-relaxed max-w-3xl mb-10">
-            Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.
+            {isEn
+              ? 'We help you choose the right treatment for your hair, color goals and current needs.'
+              : 'Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <button className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors">
-              Asesoramiento gratuito por WhatsApp
+              {isEn ? 'Free WhatsApp consultation' : 'Asesoramiento gratuito por WhatsApp'}
             </button>
             <button className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
-              Reservar cita
+              {isEn ? 'Book appointment' : 'Reservar cita'}
             </button>
           </div>
         </div>
@@ -498,9 +616,16 @@ const TreatmentsExperiencePage = () => {
   );
 };
 
-const KeuneSection = () => {
+const KeuneSection = ({ locale }: { locale: Locale }) => {
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const [isKeuneBgActive, setIsKeuneBgActive] = useState(false);
+  const isEn = locale === 'en';
+  const getFamilyLabel = (familyKey: string) => {
+    if (familyKey === 'growth-strength') {
+      return isEn ? 'Growth and strength' : 'Crecimiento y fuerza';
+    }
+    return isEn ? 'Deep nutrition' : 'Nutrición profunda';
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -566,11 +691,17 @@ const KeuneSection = () => {
             />
             <div className="flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24 items-start w-full justify-between text-left">
               <h2 className="flex-1 text-4xl md:text-5xl lg:text-[64px] font-sans font-medium tracking-tight text-[#0a0a0a] leading-[1.08]">
-                Cuidado profesional, <br className="hidden lg:block" />dentro y fuera del salón.
+                {isEn ? (
+                  <>Professional care, <br className="hidden lg:block" />inside and beyond the salon.</>
+                ) : (
+                  <>Cuidado profesional, <br className="hidden lg:block" />dentro y fuera del salón.</>
+                )}
               </h2>
               <div className="flex-1 md:pt-4">
                 <p className="text-lg md:text-xl text-[#4e4e4e] font-normal tracking-tight leading-relaxed max-w-xl">
-                  Trabajamos con Keune como parte de nuestro estándar de cuidado profesional. Sus fórmulas acompañan nuestros tratamientos en salón y permiten prolongar sus beneficios en casa con la misma exigencia, calidad y sensibilidad por el cabello.
+                  {isEn
+                    ? 'We work with Keune as part of our professional care standard. Their formulas support our in-salon treatments and help extend results at home with the same level of quality and care.'
+                    : 'Trabajamos con Keune como parte de nuestro estándar de cuidado profesional. Sus fórmulas acompañan nuestros tratamientos en salón y permiten prolongar sus beneficios en casa con la misma exigencia, calidad y sensibilidad por el cabello.'}
                 </p>
                 <div className="mt-6 md:mt-8">
                   <a
@@ -579,10 +710,12 @@ const KeuneSection = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-9 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors shadow-lg"
                   >
-                    Descubrir productos
+                    {isEn ? 'Discover products' : 'Descubrir productos'}
                   </a>
                   <p className="text-[#737373] text-sm md:text-base tracking-tight leading-relaxed mt-4 max-w-2xl">
-                    Descubre los productos que acompañan nuestros tratamientos en salón.
+                    {isEn
+                      ? 'Continue your ritual at home with Keune’s professional selection.'
+                      : 'Descubre los productos que acompañan nuestros tratamientos en salón.'}
                   </p>
                 </div>
               </div>
@@ -625,7 +758,7 @@ const KeuneSection = () => {
                   </div>
                   <div className="p-4 md:p-5">
                     <p className="text-[11px] uppercase tracking-[0.2em] text-[#727272] font-semibold mb-2">
-                      {product.family}
+                      {getFamilyLabel(product.familyKey)}
                     </p>
                     <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight leading-[1.05] whitespace-pre-line min-h-[2.1em]">
                       {product.displayName ?? product.name}
@@ -786,9 +919,11 @@ const ScrollPaintText = ({ text, className }: { text: string; className: string 
   );
 };
 
-const FounderNote = () => {
-  const founderManifesto =
-    'Creemos que el color no se aplica, se interpreta. Trabajamos la colorimetría como un equilibrio entre luz, armonía y técnica. Nuestro propósito es revelar tonos que eleven tu belleza con naturalidad y elegancia.';
+const FounderNote = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
+  const founderManifesto = isEn
+    ? 'We believe color is not applied, it is interpreted. We approach colorimetry as a balance of light, harmony and technique. Our purpose is to reveal tones that elevate your beauty with natural elegance.'
+    : 'Creemos que el color no se aplica, se interpreta. Trabajamos la colorimetría como un equilibrio entre luz, armonía y técnica. Nuestro propósito es revelar tonos que eleven tu belleza con naturalidad y elegancia.';
 
   return (
     <section className="pt-24 md:pt-32 pb-12 md:pb-16 bg-white overflow-hidden">
@@ -823,7 +958,7 @@ const FounderNote = () => {
             />
             <div>
               <p className="font-sans tracking-tight font-medium text-2xl md:text-3xl text-[#0a0a0a]">Ilya Mitin</p>
-              <p className="font-normal text-[#8a8a8a] text-base md:text-lg tracking-tight mt-1">Fundador y Director Creativo</p>
+              <p className="font-normal text-[#8a8a8a] text-base md:text-lg tracking-tight mt-1">{isEn ? 'Founder & Creative Director' : 'Fundador y Director Creativo'}</p>
             </div>
           </motion.div>
 
@@ -835,7 +970,13 @@ const FounderNote = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">15+</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">Años perfeccionando<br className="hidden md:block"/> el oficio</p>
+              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+                {isEn ? (
+                  <>Years refining<br className="hidden md:block"/> the craft</>
+                ) : (
+                  <>Años perfeccionando<br className="hidden md:block"/> el oficio</>
+                )}
+              </p>
             </motion.div>
 
             <motion.div 
@@ -845,7 +986,13 @@ const FounderNote = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">3k+</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">Clientas fieles que<br className="hidden md:block"/> confían en nosotras</p>
+              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+                {isEn ? (
+                  <>Loyal clients who<br className="hidden md:block"/> trust our team</>
+                ) : (
+                  <>Clientas fieles que<br className="hidden md:block"/> confían en nosotras</>
+                )}
+              </p>
             </motion.div>
 
             <motion.div 
@@ -855,7 +1002,13 @@ const FounderNote = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">98%</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">Tasa de satisfacción<br className="hidden md:block"/> y retención</p>
+              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+                {isEn ? (
+                  <>Satisfaction and<br className="hidden md:block"/> retention rate</>
+                ) : (
+                  <>Tasa de satisfacción<br className="hidden md:block"/> y retención</>
+                )}
+              </p>
             </motion.div>
 
             <motion.div 
@@ -865,7 +1018,13 @@ const FounderNote = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">100%</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">Atención dedicada y<br className="hidden md:block"/> asesoramiento personal</p>
+              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+                {isEn ? (
+                  <>Dedicated care and<br className="hidden md:block"/> personal guidance</>
+                ) : (
+                  <>Atención dedicada y<br className="hidden md:block"/> asesoramiento personal</>
+                )}
+              </p>
             </motion.div>
           </div>
 
@@ -875,7 +1034,8 @@ const FounderNote = () => {
   );
 };
 
-const Testimonials = () => {
+const Testimonials = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   const testimonials = [
     // Column 1
     [
@@ -911,7 +1071,9 @@ const Testimonials = () => {
         <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover" />
         <div>
           <p className="text-[#0a0a0a] font-medium text-lg tracking-tight">{t.name}</p>
-          <p className="text-[#4e4e4e] text-sm">{t.role}</p>
+          <p className="text-[#4e4e4e] text-sm">
+            {isEn ? t.role.replace('Clienta desde', 'Client since') : t.role}
+          </p>
         </div>
         <StarRating />
       </div>
@@ -935,7 +1097,9 @@ const Testimonials = () => {
         .scroll-up:hover, .scroll-down:hover { animation-play-state: paused; }
       `}</style>
       <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-        <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-medium text-center mb-16 text-[#0a0a0a]">Lo que dicen nuestros clientes</h2>
+        <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-medium text-center mb-16 text-[#0a0a0a]">
+          {isEn ? 'What our clients say' : 'Lo que dicen nuestros clientes'}
+        </h2>
         
         {/* Desktop masonry 3 columns with infinite scroll */}
         <div 
@@ -972,14 +1136,19 @@ const Testimonials = () => {
   );
 };
 
-const Gallery = () => {
+const Gallery = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   const images_gallery = [images.gallery1, images.gallery2, images.gallery3, images.gallery4];
   
   return (
     <section className="bg-[#fdfcfb] px-[0px] pt-[56px] pb-[32px]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium text-center mb-4 text-[#0a0a0a]">Un espacio pensado para bajar el ritmo</h2>
-        <p className="text-center text-[#8a8a8a] mb-16 tracking-tight">Sofisticación, calma y diseño en cada rincón.</p>
+        <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium text-center mb-4 text-[#0a0a0a]">
+          {isEn ? 'A space designed to slow down' : 'Un espacio pensado para bajar el ritmo'}
+        </h2>
+        <p className="text-center text-[#8a8a8a] mb-16 tracking-tight">
+          {isEn ? 'Sophistication, calm and intentional design in every corner.' : 'Sofisticación, calma y diseño en cada rincón.'}
+        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {images_gallery.map((img, idx) => (
@@ -1000,7 +1169,8 @@ const Gallery = () => {
   );
 };
 
-const CTA = () => {
+const CTA = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-[#332722]">
       {/* Background Image with slow pan effect */}
@@ -1033,18 +1203,20 @@ const CTA = () => {
           <div className="flex items-center gap-4 mb-8">
             <span className="hidden md:block w-12 h-[1px] bg-[#e8e0d5]/40"></span>
             <span className="text-[#e8e0d5]/80 text-[10px] md:text-xs font-semibold uppercase tracking-[0.3em] md:tracking-[0.4em]">
-              El último paso
+              {isEn ? 'Final step' : 'El último paso'}
             </span>
             <span className="hidden md:block w-12 h-[1px] bg-[#e8e0d5]/40"></span>
           </div>
 
           <h2 className="font-sans font-medium leading-[0.9] tracking-[-0.04em] text-[15vw] md:text-[10vw] lg:text-[130px] text-[#fdfcfb] mb-12 flex flex-col md:items-center w-full">
-            <span className="block">Despierta</span>
-            <span className="block italic font-light text-[#e8e0d5]/90 ml-8 md:ml-0">tu belleza.</span>
+            <span className="block">{isEn ? 'Awaken' : 'Despierta'}</span>
+            <span className="block italic font-light text-[#e8e0d5]/90 ml-8 md:ml-0">{isEn ? 'your beauty.' : 'tu belleza.'}</span>
           </h2>
 
           <p className="text-[#e8e0d5]/70 text-base md:text-xl font-light tracking-tight leading-relaxed max-w-xl md:mx-auto text-left md:text-center m-[0px]">
-            Te ayudamos a elegir el tratamiento perfecto para ti. Nuestro equipo de estilistas expertos está listo para asesorarte de manera personalizada, sin ningún compromiso.
+            {isEn
+              ? 'We help you choose the perfect treatment. Our expert stylists are ready to guide you with personalized advice, with no commitment.'
+              : 'Te ayudamos a elegir el tratamiento perfecto para ti. Nuestro equipo de estilistas expertos está listo para asesorarte de manera personalizada, sin ningún compromiso.'}
           </p>
 
           
@@ -1061,11 +1233,11 @@ const CTA = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
               </span>
-              <span>Atención inmediata disponible</span>
+              <span>{isEn ? 'Immediate support available' : 'Atención inmediata disponible'}</span>
             </div>
             
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-              <span>Respuesta en {'<'} 1 hora</span>
+              <span>{isEn ? 'Reply in under 1 hour' : 'Respuesta en < 1 hora'}</span>
               <span className="hidden md:block w-1 h-1 rounded-full bg-[#fdfcfb]/20"></span>
               <a href="tel:+34934567890" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5" />
@@ -1079,19 +1251,22 @@ const CTA = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   return (
     <footer className="bg-[#0a0a0a] text-white/70 pt-16 pb-44 md:py-16 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-1">
           <h3 className="font-sans font-medium tracking-tight text-2xl text-white mb-6">Mitin Studio.</h3>
           <p className="font-normal tracking-tight text-sm leading-relaxed">
-            Una experiencia de belleza cuidada, personalizada y elegante en el corazón de Barcelona.
+            {isEn
+              ? 'A refined, personalized and elegant beauty experience in the heart of Barcelona.'
+              : 'Una experiencia de belleza cuidada, personalizada y elegante en el corazón de Barcelona.'}
           </p>
         </div>
         
         <div>
-          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">Contacto</h4>
+          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">{isEn ? 'Contact' : 'Contacto'}</h4>
           <ul className="space-y-4 font-light text-sm">
             <li className="flex items-start gap-3">
               <MapPin className="w-4 h-4 mt-0.5 text-[#e8e0d5]" />
@@ -1105,27 +1280,27 @@ const Footer = () => {
         </div>
         
         <div>
-          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">Horario</h4>
+          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">{isEn ? 'Hours' : 'Horario'}</h4>
           <ul className="space-y-4 font-light text-sm">
             <li className="flex items-start gap-3">
               <Clock className="w-4 h-4 mt-0.5 text-[#e8e0d5]" />
               <div>
-                <p>Mar - Vie: 10:00 - 20:00</p>
-                <p className="mt-1">Sáb: 09:00 - 15:00</p>
-                <p className="mt-1">Dom - Lun: Cerrado</p>
+                <p>{isEn ? 'Tue - Fri: 10:00 - 20:00' : 'Mar - Vie: 10:00 - 20:00'}</p>
+                <p className="mt-1">{isEn ? 'Sat: 09:00 - 15:00' : 'Sáb: 09:00 - 15:00'}</p>
+                <p className="mt-1">{isEn ? 'Sun - Mon: Closed' : 'Dom - Lun: Cerrado'}</p>
               </div>
             </li>
           </ul>
         </div>
         
         <div>
-          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">Síguenos</h4>
+          <h4 className="text-white font-medium mb-6 uppercase tracking-wider text-sm">{isEn ? 'Follow us' : 'Síguenos'}</h4>
           <div className="flex gap-4">
             <a
               href="https://www.instagram.com/mitinstudiobcn/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram de Mitin Studio"
+              aria-label={isEn ? 'Mitin Studio Instagram' : 'Instagram de Mitin Studio'}
               className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0a0a0a] transition-colors"
             >
               <Instagram className="w-4 h-4" />
@@ -1133,7 +1308,7 @@ const Footer = () => {
             <button
               type="button"
               disabled
-              aria-label="Facebook próximamente"
+              aria-label={isEn ? 'Facebook coming soon' : 'Facebook próximamente'}
               className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 cursor-not-allowed"
             >
               <Facebook className="w-4 h-4" />
@@ -1144,18 +1319,19 @@ const Footer = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm font-light text-white/40">
-        <p>© {new Date().getFullYear()} Mitin Studio. Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} Mitin Studio. {isEn ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
         <div className="flex gap-4 mt-4 md:mt-0">
-          <span>Aviso Legal (demo)</span>
-          <span>Política de Privacidad (demo)</span>
+          <span>{isEn ? 'Legal Notice (demo)' : 'Aviso Legal (demo)'}</span>
+          <span>{isEn ? 'Privacy Policy (demo)' : 'Política de Privacidad (demo)'}</span>
         </div>
       </div>
     </footer>
   );
 };
 
-const FloatingWhatsApp = () => {
+const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
   const [mounted, setMounted] = useState(false);
+  const isEn = locale === 'en';
 
   useEffect(() => {
     setMounted(true);
@@ -1169,11 +1345,11 @@ const FloatingWhatsApp = () => {
     <div className="hidden md:flex fixed bottom-8 right-8 z-[80] flex-col items-end gap-3 pointer-events-none">
       <div className="bg-white px-4 py-2 rounded-2xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.15)] border border-[#e8e0d5]/50 text-sm text-[#0a0a0a] font-medium tracking-tight pointer-events-auto flex items-center gap-2 animate-bounce">
         <span className="w-2.5 h-2.5 rounded-full bg-[#25D366]"></span>
-        ¿Te asesoramos?
+        {isEn ? 'Need guidance?' : '¿Te asesoramos?'}
       </div>
       <button
         className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all pointer-events-auto"
-        aria-label="Asesoramiento por WhatsApp"
+        aria-label={isEn ? 'WhatsApp consultation' : 'Asesoramiento por WhatsApp'}
       >
         <MessageCircle className="w-8 h-8" />
       </button>
@@ -1182,8 +1358,9 @@ const FloatingWhatsApp = () => {
   );
 };
 
-const MobileStickyCTA = () => {
+const MobileStickyCTA = ({ locale }: { locale: Locale }) => {
   const [mounted, setMounted] = useState(false);
+  const isEn = locale === 'en';
 
   useEffect(() => {
     setMounted(true);
@@ -1200,17 +1377,18 @@ const MobileStickyCTA = () => {
     >
       <button className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
         <MessageCircle className="w-4 h-4" />
-        Asesoramiento gratuito
+        {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
       </button>
       <button className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
-        Reservar cita
+        {isEn ? 'Book now' : 'Reservar cita'}
       </button>
     </div>,
     document.body,
   );
 };
 
-const InstagramFeed = () => {
+const InstagramFeed = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   // ═══════════════════════════════════════════════════════════════════════
   // 📸 INSTRUCCIONES PARA CONECTAR TU INSTAGRAM REAL (5 MINUTOS)
   // ═══════════════════════════════════════════════════════════════════════
@@ -1244,7 +1422,9 @@ const InstagramFeed = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[#4e4e4e] font-normal tracking-tight max-w-2xl leading-snug text-[24px]"
           >
-            Descubre nuestros últimos trabajos, inspiración y momentos del salón a través de Instagram.
+            {isEn
+              ? 'Explore our latest work, salon moments and creative inspiration on Instagram.'
+              : 'Descubre nuestros últimos trabajos, inspiración y momentos del salón a través de Instagram.'}
           </motion.p>
         </div>
 
@@ -1268,11 +1448,12 @@ const InstagramFeed = () => {
           <div className="bg-gradient-to-br from-[#e8e0d5]/20 to-[#e8e0d5]/10 rounded-2xl p-12 md:p-16 text-center border-2 border-dashed border-[#8a8a8a]/20">
             <Instagram className="w-20 h-20 mx-auto mb-8 text-[#8a8a8a]/60" strokeWidth={1.2} />
             <h3 className="text-2xl md:text-3xl font-medium text-[#0a0a0a] mb-4 tracking-tight">
-              Widget de Instagram listo para conectar
+              {isEn ? 'Instagram widget ready to connect' : 'Widget de Instagram listo para conectar'}
             </h3>
             <p className="text-[#4e4e4e] mb-8 max-w-xl mx-auto leading-relaxed">
-              Sigue las instrucciones en el código fuente para conectar tu feed real de Instagram. 
-              Es totalmente gratis y toma menos de 5 minutos.
+              {isEn
+                ? 'Follow the instructions in the source code to connect your real Instagram feed. It is fully free and takes under five minutes.'
+                : 'Sigue las instrucciones en el código fuente para conectar tu feed real de Instagram. Es totalmente gratis y toma menos de 5 minutos.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a 
@@ -1281,11 +1462,12 @@ const InstagramFeed = () => {
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center gap-2"
               >
-                Crear widget gratis
+                {isEn ? 'Create free widget' : 'Crear widget gratis'}
                 <ArrowRight className="w-4 h-4" />
               </a>
               <span className="text-[#8a8a8a] text-sm">
-                o usa <a href="https://behold.so/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#0a0a0a] font-medium">Behold</a>
+                {isEn ? 'or use ' : 'o usa '}
+                <a href="https://behold.so/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#0a0a0a] font-medium">Behold</a>
               </span>
             </div>
           </div>
@@ -1307,7 +1489,7 @@ const InstagramFeed = () => {
             className="px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a] hover:border-[#0a0a0a] hover:text-white transition-all duration-300 text-sm font-medium tracking-wide flex items-center justify-center gap-3"
           >
             <Instagram className="w-4 h-4" />
-            Ver perfil en Instagram
+            {isEn ? 'View Instagram profile' : 'Ver perfil en Instagram'}
           </a>
         </motion.div>
       </div>
@@ -1315,7 +1497,8 @@ const InstagramFeed = () => {
   );
 };
 
-const ReelsSection = () => {
+const ReelsSection = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
   const reelsData = [
     {
       id: 1,
@@ -1348,7 +1531,7 @@ const ReelsSection = () => {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-5xl font-medium text-[#1f1f1f] tracking-tight mb-6"
           >
-            Mitin Studio en movimiento.
+            {isEn ? 'Mitin Studio in motion.' : 'Mitin Studio en movimiento.'}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -1357,7 +1540,9 @@ const ReelsSection = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg md:text-xl text-[#4e4e4e] font-normal tracking-tight max-w-2xl leading-snug"
           >
-            Descubre el detrás de escena, nuestras técnicas y los resultados finales a través de nuestros reels.
+            {isEn
+              ? 'Discover behind-the-scenes moments, our techniques and final results through our reels.'
+              : 'Descubre el detrás de escena, nuestras técnicas y los resultados finales a través de nuestros reels.'}
           </motion.p>
         </div>
 
@@ -1414,7 +1599,13 @@ export default function App() {
     typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/',
   );
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
-  const isTreatmentsPage = currentPath === '/tratamientos';
+  const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
+  const locale: Locale = isEnglishLocale ? 'en' : 'es';
+  const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
+  const treatmentsPath = locale === 'en' ? '/en/treatments' : '/tratamientos';
+  const switchLocalePath = isTreatmentsPage
+    ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
+    : (locale === 'en' ? '/' : '/en');
 
   const navigateWithTransition = (nextPath: string) => {
     const normalizedNextPath = normalizePath(nextPath);
@@ -1497,16 +1688,28 @@ export default function App() {
     const siteOrigin = 'https://mitin.studio';
     const pageUrl = `${siteOrigin}${currentPath === '/' ? '/' : currentPath}`;
     const pageMeta = isTreatmentsPage
-      ? {
-          title: 'Tratamientos Capilares en Barcelona | Mitin Studio',
-          description:
-            'Rituales capilares personalizados en Barcelona para hidratar, fortalecer, equilibrar y proteger el color. Descubre los tratamientos de Mitin Studio.',
-        }
-      : {
-          title: 'Mitin Studio | Peluquería Premium en Barcelona',
-          description:
-            'Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados. Reserva tu cita en Mitin Studio.',
-        };
+      ? (locale === 'en'
+          ? {
+              title: 'Hair Treatments in Barcelona | Mitin Studio',
+              description:
+                'Personalized hair rituals in Barcelona to hydrate, strengthen, rebalance and protect color. Discover Mitin Studio treatments.',
+            }
+          : {
+              title: 'Tratamientos Capilares en Barcelona | Mitin Studio',
+              description:
+                'Rituales capilares personalizados en Barcelona para hidratar, fortalecer, equilibrar y proteger el color. Descubre los tratamientos de Mitin Studio.',
+            })
+      : (locale === 'en'
+          ? {
+              title: 'Mitin Studio | Premium Hair Salon in Barcelona',
+              description:
+                'Premium hair salon in Barcelona specializing in color, cuts and personalized hair treatments. Book your appointment at Mitin Studio.',
+            }
+          : {
+              title: 'Mitin Studio | Peluquería Premium en Barcelona',
+              description:
+                'Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados. Reserva tu cita en Mitin Studio.',
+            });
 
     const setMeta = (selector: string, content: string) => {
       const element = document.querySelector(selector);
@@ -1520,6 +1723,7 @@ export default function App() {
     setMeta('meta[property="og:title"]', pageMeta.title);
     setMeta('meta[property="og:description"]', pageMeta.description);
     setMeta('meta[property="og:url"]', pageUrl);
+    setMeta('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'es_ES');
     setMeta('meta[name="twitter:title"]', pageMeta.title);
     setMeta('meta[name="twitter:description"]', pageMeta.description);
 
@@ -1527,7 +1731,23 @@ export default function App() {
     if (canonical) {
       canonical.setAttribute('href', pageUrl);
     }
-  }, [currentPath, isTreatmentsPage]);
+
+    const esAlt = document.querySelector('link[rel="alternate"][hreflang="es-ES"]');
+    const enAlt = document.querySelector('link[rel="alternate"][hreflang="en"]');
+    const xDefaultAlt = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+
+    if (isTreatmentsPage) {
+      esAlt?.setAttribute('href', `${siteOrigin}/tratamientos`);
+      enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
+      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+    } else {
+      esAlt?.setAttribute('href', `${siteOrigin}/`);
+      enAlt?.setAttribute('href', `${siteOrigin}/en`);
+      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+    }
+
+    document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
+  }, [currentPath, isTreatmentsPage, locale]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -1580,27 +1800,27 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden pb-0">
-      <Header />
+      <Header locale={locale} treatmentsPath={treatmentsPath} switchLocalePath={switchLocalePath} />
       <main className={`transition-opacity duration-300 ${isPageTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         {isTreatmentsPage ? (
-          <TreatmentsExperiencePage />
+          <TreatmentsExperiencePage locale={locale} />
         ) : (
           <>
-            <Hero />
-            <FounderNote />
-            <Treatments />
-            <KeuneSection />
-            <Testimonials />
-            <Gallery />
-            <ReelsSection />
-            <InstagramFeed />
-            <CTA />
+            <Hero locale={locale} treatmentsPath={treatmentsPath} />
+            <FounderNote locale={locale} />
+            <Treatments locale={locale} treatmentsPath={treatmentsPath} />
+            <KeuneSection locale={locale} />
+            <Testimonials locale={locale} />
+            <Gallery locale={locale} />
+            <ReelsSection locale={locale} />
+            <InstagramFeed locale={locale} />
+            <CTA locale={locale} />
           </>
         )}
       </main>
-      <Footer />
-      <FloatingWhatsApp />
-      <MobileStickyCTA />
+      <Footer locale={locale} />
+      <FloatingWhatsApp locale={locale} />
+      <MobileStickyCTA locale={locale} />
     </div>
   );
 }
