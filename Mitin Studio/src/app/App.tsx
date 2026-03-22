@@ -1599,6 +1599,7 @@ export default function App() {
     typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/',
   );
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const scrollbarRef = React.useRef<any>(null);
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
   const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
@@ -1606,6 +1607,23 @@ export default function App() {
   const switchLocalePath = isTreatmentsPage
     ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
     : (locale === 'en' ? '/' : '/en');
+
+  const scrollToTop = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    const scrollbar = scrollbarRef.current;
+    if (scrollbar) {
+      scrollbar.setPosition(0, 0);
+      scrollbar.scrollTo(0, 0, 0);
+      window.dispatchEvent(new CustomEvent('smooth-scroll', { detail: { y: 0 } }));
+    }
+  };
 
   const navigateWithTransition = (nextPath: string) => {
     const normalizedNextPath = normalizePath(nextPath);
@@ -1617,7 +1635,7 @@ export default function App() {
     window.setTimeout(() => {
       window.history.pushState({}, '', normalizedNextPath);
       setCurrentPath(normalizedNextPath);
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      window.requestAnimationFrame(scrollToTop);
       setIsPageTransitioning(false);
     }, 220);
   };
@@ -1629,7 +1647,7 @@ export default function App() {
 
     const handlePopState = () => {
       setCurrentPath(normalizePath(window.location.pathname));
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      window.requestAnimationFrame(scrollToTop);
     };
 
     const handleInternalLinkClick = (event: MouseEvent) => {
@@ -1678,6 +1696,10 @@ export default function App() {
       window.removeEventListener('popstate', handlePopState);
       document.removeEventListener('click', handleInternalLinkClick);
     };
+  }, [currentPath]);
+
+  useEffect(() => {
+    scrollToTop();
   }, [currentPath]);
 
   useEffect(() => {
@@ -1766,6 +1788,7 @@ export default function App() {
     };
 
     if (prefersReducedMotion || isTouchDevice) {
+      scrollbarRef.current = null;
       const handleContainerScroll = () => emitScroll(window.scrollY);
       window.addEventListener('scroll', handleContainerScroll, { passive: true });
       emitScroll(window.scrollY);
@@ -1788,12 +1811,14 @@ export default function App() {
       emitScroll(status.offset.y);
     };
 
+    scrollbarRef.current = scrollbar;
     scrollbar.addListener(handleSmoothbarScroll);
     emitScroll(scrollbar.offset.y);
 
     return () => {
       scrollbar.removeListener(handleSmoothbarScroll);
       scrollbar.destroy();
+      scrollbarRef.current = null;
       emitScroll(0);
     };
   }, []);
