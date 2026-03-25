@@ -56,6 +56,21 @@ const KEUNE_PRODUCTS = [
 
 type Locale = 'es' | 'en';
 
+type CookieConsent = {
+  necessary: true;
+  analytics: boolean;
+  updatedAt: string;
+};
+
+const COOKIE_CONSENT_KEY = 'mitin_cookie_consent_v1';
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; treatmentsPath: string; switchLocalePath: string }) => {
   const [scrolled, setScrolled] = useState(false);
   const isEn = locale === 'en';
@@ -84,16 +99,16 @@ const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; 
           Mitin Studio.
         </a>
         <div className="hidden md:flex items-center gap-4">
-          <a href={treatmentsPath} className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+          <a href={treatmentsPath} data-analytics-event="nav_treatments_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Treatments' : 'Tratamientos'}
           </a>
-          <a href={switchLocalePath} className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
+          <a href={switchLocalePath} data-analytics-event="language_switch_click" className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'EN / ES' : 'ES / EN'}
           </a>
-          <button className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+          <button data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Book now' : 'Reservar cita'}
           </button>
-          <button className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
+          <button data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
             <MessageCircle className="w-4 h-4" />
             <span>{isEn ? 'Free consultation' : 'Asesoramiento gratuito'}</span>
           </button>
@@ -163,11 +178,11 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
             className="w-full sm:w-auto"
           >
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-start">
-              <button className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
+              <button data-analytics-event="hero_consultation_click" className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
                 <MessageCircle className="w-5 h-5" />
                 {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
               </button>
-              <a href={treatmentsPath} className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
+              <a href={treatmentsPath} data-analytics-event="hero_view_services_click" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
                 {isEn ? 'View services' : 'Ver servicios'}
               </a>
             </div>
@@ -354,6 +369,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
           <div className="mt-8 md:mt-10 flex">
             <a
               href={treatmentsPath}
+              data-analytics-event="signature_discover_all_treatments_click"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors w-fit"
             >
               {isEn ? 'Discover all treatments' : 'Descubrir todos los tratamientos'}
@@ -603,10 +619,10 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
               : 'Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors">
+            <button data-analytics-event="treatments_whatsapp_consultation_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors">
               {isEn ? 'Free WhatsApp consultation' : 'Asesoramiento gratuito por WhatsApp'}
             </button>
-            <button className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
+            <button data-analytics-event="treatments_book_now_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
               {isEn ? 'Book appointment' : 'Reservar cita'}
             </button>
           </div>
@@ -706,6 +722,7 @@ const KeuneSection = ({ locale }: { locale: Locale }) => {
                 <div className="mt-6 md:mt-8">
                   <a
                     href={KEUNE_STORE_URL}
+                    data-analytics-event="keune_discover_products_click"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-9 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors shadow-lg"
@@ -1251,7 +1268,7 @@ const CTA = ({ locale }: { locale: Locale }) => {
   );
 };
 
-const Footer = ({ locale }: { locale: Locale }) => {
+const Footer = ({ locale, onOpenCookiePreferences }: { locale: Locale; onOpenCookiePreferences: () => void }) => {
   const isEn = locale === 'en';
   return (
     <footer className="bg-[#0a0a0a] text-white/70 pt-16 pb-44 md:py-16 border-t border-white/10">
@@ -1321,11 +1338,107 @@ const Footer = ({ locale }: { locale: Locale }) => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm font-light text-white/40">
         <p>© {new Date().getFullYear()} Mitin Studio. {isEn ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
         <div className="flex gap-4 mt-4 md:mt-0">
+          <button type="button" onClick={onOpenCookiePreferences} className="hover:text-white transition-colors">
+            {isEn ? 'Cookie preferences' : 'Preferencias de cookies'}
+          </button>
           <span>{isEn ? 'Legal Notice (demo)' : 'Aviso Legal (demo)'}</span>
           <span>{isEn ? 'Privacy Policy (demo)' : 'Política de Privacidad (demo)'}</span>
         </div>
       </div>
     </footer>
+  );
+};
+
+const CookieBanner = ({
+  locale,
+  visible,
+  analyticsEnabled,
+  onAcceptAll,
+  onRejectAll,
+  onTogglePreferences,
+  onAnalyticsChange,
+  onSavePreferences,
+}: {
+  locale: Locale;
+  visible: boolean;
+  analyticsEnabled: boolean;
+  onAcceptAll: () => void;
+  onRejectAll: () => void;
+  onTogglePreferences: () => void;
+  onAnalyticsChange: (enabled: boolean) => void;
+  onSavePreferences: () => void;
+}) => {
+  if (!visible) {
+    return null;
+  }
+
+  const isEn = locale === 'en';
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-[95] p-4 md:p-6">
+      <div className="mx-auto max-w-[1100px] rounded-2xl border border-[#d6d6d6] bg-white shadow-[0_24px_60px_-35px_rgba(0,0,0,0.35)]">
+        <div className="p-5 md:p-6">
+          <h3 className="text-[#0a0a0a] text-lg md:text-xl font-medium tracking-tight">
+            {isEn ? 'Cookie preferences' : 'Preferencias de cookies'}
+          </h3>
+          <p className="text-[#525252] text-sm md:text-base leading-relaxed mt-2 max-w-3xl">
+            {isEn
+              ? 'We use necessary cookies for site functionality and optional analytics cookies to understand usage and improve performance.'
+              : 'Usamos cookies necesarias para el funcionamiento del sitio y cookies de analítica opcionales para entender el uso y mejorar el rendimiento.'}
+          </p>
+
+          <div className="mt-5 rounded-xl border border-[#e4e4e4] bg-[#f8f8f8] p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-[#0a0a0a]">
+                {isEn ? 'Analytics cookies' : 'Cookies de analítica'}
+              </p>
+              <p className="text-xs md:text-sm text-[#666666] mt-1">
+                {isEn ? 'Measure visits and key actions (GA4).' : 'Miden visitas y acciones clave (GA4).'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onAnalyticsChange(!analyticsEnabled)}
+              aria-pressed={analyticsEnabled}
+              className={`w-14 h-8 rounded-full transition-colors relative ${analyticsEnabled ? 'bg-[#0a0a0a]' : 'bg-[#cfcfcf]'}`}
+            >
+              <span className={`absolute top-1 h-6 w-6 rounded-full bg-white transition-transform ${analyticsEnabled ? 'translate-x-7' : 'translate-x-1'}`} />
+            </button>
+          </div>
+
+          <div className="mt-5 flex flex-col md:flex-row gap-3">
+            <button
+              type="button"
+              onClick={onAcceptAll}
+              className="px-6 py-3 rounded-full bg-[#0a0a0a] text-white text-sm font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
+            >
+              {isEn ? 'Accept all' : 'Aceptar todo'}
+            </button>
+            <button
+              type="button"
+              onClick={onRejectAll}
+              className="px-6 py-3 rounded-full border border-[#d0d0d0] text-[#0a0a0a] text-sm font-medium tracking-tight hover:bg-[#f3f3f3] transition-colors"
+            >
+              {isEn ? 'Reject optional' : 'Rechazar opcionales'}
+            </button>
+            <button
+              type="button"
+              onClick={onSavePreferences}
+              className="px-6 py-3 rounded-full border border-[#0a0a0a]/20 text-[#0a0a0a] text-sm font-medium tracking-tight hover:bg-[#f3f3f3] transition-colors"
+            >
+              {isEn ? 'Save preferences' : 'Guardar preferencias'}
+            </button>
+            <button
+              type="button"
+              onClick={onTogglePreferences}
+              className="md:ml-auto px-6 py-3 rounded-full border border-[#e0e0e0] text-[#606060] text-sm font-medium tracking-tight hover:text-[#0a0a0a] hover:border-[#c9c9c9] transition-colors"
+            >
+              {isEn ? 'Close' : 'Cerrar'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -1348,6 +1461,7 @@ const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
         {isEn ? 'Need guidance?' : '¿Te asesoramos?'}
       </div>
       <button
+        data-analytics-event="floating_whatsapp_click"
         className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all pointer-events-auto"
         aria-label={isEn ? 'WhatsApp consultation' : 'Asesoramiento por WhatsApp'}
       >
@@ -1375,11 +1489,11 @@ const MobileStickyCTA = ({ locale }: { locale: Locale }) => {
       className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-[#e8e0d5] p-4 z-[70] flex flex-col gap-3 shadow-[0_-10px_30px_-22px_rgba(0,0,0,0.45)]"
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.75rem)' }}
     >
-      <button className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
+      <button data-analytics-event="mobile_consultation_click" className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
         <MessageCircle className="w-4 h-4" />
         {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
       </button>
-      <button className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
+      <button data-analytics-event="mobile_book_now_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
         {isEn ? 'Book now' : 'Reservar cita'}
       </button>
     </div>,
@@ -1600,6 +1714,11 @@ export default function App() {
   );
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
   const scrollbarRef = React.useRef<any>(null);
+  const [cookieConsent, setCookieConsent] = useState<CookieConsent | null>(null);
+  const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
+  const [analyticsPreferenceDraft, setAnalyticsPreferenceDraft] = useState(false);
+  const gaInitializedRef = React.useRef(false);
+  const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
   const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
@@ -1607,6 +1726,47 @@ export default function App() {
   const switchLocalePath = isTreatmentsPage
     ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
     : (locale === 'en' ? '/' : '/en');
+
+  const setConsentAndPersist = (analytics: boolean) => {
+    const nextConsent: CookieConsent = {
+      necessary: true,
+      analytics,
+      updatedAt: new Date().toISOString(),
+    };
+    setCookieConsent(nextConsent);
+    setAnalyticsPreferenceDraft(analytics);
+    setIsCookieBannerVisible(false);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(nextConsent));
+    }
+  };
+
+  const ensureGAIsLoaded = () => {
+    if (!gaMeasurementId || typeof window === 'undefined' || gaInitializedRef.current) {
+      return;
+    }
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function gtagProxy(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
+
+    const existingScript = document.querySelector(`script[src*="gtag/js?id=${gaMeasurementId}"]`);
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
+      document.head.appendChild(script);
+    }
+
+    window.gtag('js', new Date());
+    window.gtag('config', gaMeasurementId, {
+      anonymize_ip: true,
+      send_page_view: false,
+    });
+
+    gaInitializedRef.current = true;
+  };
 
   const scrollToTop = () => {
     if (typeof window === 'undefined') {
@@ -1703,6 +1863,52 @@ export default function App() {
   }, [currentPath]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const rawConsent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!rawConsent) {
+      setIsCookieBannerVisible(true);
+      setAnalyticsPreferenceDraft(false);
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(rawConsent) as CookieConsent;
+      if (typeof parsed.analytics === 'boolean') {
+        setCookieConsent(parsed);
+        setAnalyticsPreferenceDraft(parsed.analytics);
+      } else {
+        setIsCookieBannerVisible(true);
+      }
+    } catch {
+      setIsCookieBannerVisible(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!cookieConsent) {
+      return;
+    }
+
+    if (!gaMeasurementId) {
+      return;
+    }
+
+    ensureGAIsLoaded();
+
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: cookieConsent.analytics ? 'granted' : 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+    }
+  }, [cookieConsent, gaMeasurementId]);
+
+  useEffect(() => {
     if (typeof document === 'undefined') {
       return;
     }
@@ -1770,6 +1976,51 @@ export default function App() {
 
     document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
   }, [currentPath, isTreatmentsPage, locale]);
+
+  useEffect(() => {
+    if (!cookieConsent?.analytics || !gaMeasurementId || typeof window === 'undefined' || !window.gtag) {
+      return;
+    }
+
+    const pageLocation = `https://mitin.studio${currentPath === '/' ? '/' : currentPath}`;
+    window.gtag('event', 'page_view', {
+      page_title: document.title,
+      page_location: pageLocation,
+      page_path: currentPath,
+      language: locale,
+    });
+  }, [currentPath, locale, cookieConsent, gaMeasurementId]);
+
+  useEffect(() => {
+    if (!cookieConsent?.analytics || !gaMeasurementId || typeof document === 'undefined') {
+      return;
+    }
+
+    const handleAnalyticsClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const trackedElement = target?.closest('[data-analytics-event]') as HTMLElement | null;
+      if (!trackedElement || !window.gtag) {
+        return;
+      }
+
+      const eventName = trackedElement.getAttribute('data-analytics-event');
+      if (!eventName) {
+        return;
+      }
+
+      const eventLabel = trackedElement.textContent?.trim().slice(0, 120);
+      window.gtag('event', eventName, {
+        event_category: 'engagement',
+        event_label: eventLabel,
+        page_path: currentPath,
+      });
+    };
+
+    document.addEventListener('click', handleAnalyticsClick);
+    return () => {
+      document.removeEventListener('click', handleAnalyticsClick);
+    };
+  }, [cookieConsent, currentPath, gaMeasurementId]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -1843,9 +2094,19 @@ export default function App() {
           </>
         )}
       </main>
-      <Footer locale={locale} />
+      <Footer locale={locale} onOpenCookiePreferences={() => setIsCookieBannerVisible(true)} />
       <FloatingWhatsApp locale={locale} />
       <MobileStickyCTA locale={locale} />
+      <CookieBanner
+        locale={locale}
+        visible={isCookieBannerVisible}
+        analyticsEnabled={analyticsPreferenceDraft}
+        onAcceptAll={() => setConsentAndPersist(true)}
+        onRejectAll={() => setConsentAndPersist(false)}
+        onTogglePreferences={() => setIsCookieBannerVisible(false)}
+        onAnalyticsChange={setAnalyticsPreferenceDraft}
+        onSavePreferences={() => setConsentAndPersist(analyticsPreferenceDraft)}
+      />
     </div>
   );
 }
