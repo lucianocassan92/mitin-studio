@@ -62,7 +62,7 @@ type CookieConsent = {
   updatedAt: string;
 };
 
-const COOKIE_CONSENT_KEY = 'mitin_cookie_consent_v1';
+const COOKIE_CONSENT_KEY = 'mitin_cookie_consent_v2';
 
 declare global {
   interface Window {
@@ -1352,21 +1352,13 @@ const Footer = ({ locale, onOpenCookiePreferences }: { locale: Locale; onOpenCoo
 const CookieBanner = ({
   locale,
   visible,
-  analyticsEnabled,
   onAcceptAll,
-  onRejectAll,
-  onTogglePreferences,
-  onAnalyticsChange,
-  onSavePreferences,
+  onReject,
 }: {
   locale: Locale;
   visible: boolean;
-  analyticsEnabled: boolean;
   onAcceptAll: () => void;
-  onRejectAll: () => void;
-  onTogglePreferences: () => void;
-  onAnalyticsChange: (enabled: boolean) => void;
-  onSavePreferences: () => void;
+  onReject: () => void;
 }) => {
   if (!visible) {
     return null;
@@ -1375,65 +1367,28 @@ const CookieBanner = ({
   const isEn = locale === 'en';
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[95] p-4 md:p-6">
-      <div className="mx-auto max-w-[1100px] rounded-2xl border border-[#d6d6d6] bg-white shadow-[0_24px_60px_-35px_rgba(0,0,0,0.35)]">
-        <div className="p-5 md:p-6">
-          <h3 className="text-[#0a0a0a] text-lg md:text-xl font-medium tracking-tight">
-            {isEn ? 'Cookie preferences' : 'Preferencias de cookies'}
-          </h3>
-          <p className="text-[#525252] text-sm md:text-base leading-relaxed mt-2 max-w-3xl">
+    <div className="fixed bottom-0 left-0 right-0 z-[120] p-2 md:p-3">
+      <div className="mx-auto max-w-[1200px] rounded-xl border border-[#d8d8d8] bg-white/98 backdrop-blur-sm shadow-[0_14px_36px_-24px_rgba(0,0,0,0.45)]">
+        <div className="px-3 py-2.5 md:px-4 md:py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <p className="text-[#4f4f4f] text-xs md:text-sm tracking-tight leading-snug">
             {isEn
-              ? 'We use necessary cookies for site functionality and optional analytics cookies to understand usage and improve performance.'
-              : 'Usamos cookies necesarias para el funcionamiento del sitio y cookies de analítica opcionales para entender el uso y mejorar el rendimiento.'}
+              ? 'We use cookies to improve experience and measure traffic.'
+              : 'Usamos cookies para mejorar la experiencia y medir el tráfico.'}
           </p>
-
-          <div className="mt-5 rounded-xl border border-[#e4e4e4] bg-[#f8f8f8] p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <p className="text-sm font-medium text-[#0a0a0a]">
-                {isEn ? 'Analytics cookies' : 'Cookies de analítica'}
-              </p>
-              <p className="text-xs md:text-sm text-[#666666] mt-1">
-                {isEn ? 'Measure visits and key actions (GA4).' : 'Miden visitas y acciones clave (GA4).'}
-              </p>
-            </div>
+          <div className="flex items-center gap-2 md:ml-auto">
             <button
               type="button"
-              onClick={() => onAnalyticsChange(!analyticsEnabled)}
-              aria-pressed={analyticsEnabled}
-              className={`w-14 h-8 rounded-full transition-colors relative ${analyticsEnabled ? 'bg-[#0a0a0a]' : 'bg-[#cfcfcf]'}`}
+              onClick={onReject}
+              className="px-4 py-2 rounded-full border border-[#d0d0d0] text-[#0a0a0a] text-xs md:text-sm font-medium tracking-tight hover:bg-[#f3f3f3] transition-colors"
             >
-              <span className={`absolute top-1 h-6 w-6 rounded-full bg-white transition-transform ${analyticsEnabled ? 'translate-x-7' : 'translate-x-1'}`} />
+              {isEn ? 'Reject' : 'Rechazar'}
             </button>
-          </div>
-
-          <div className="mt-5 flex flex-col md:flex-row gap-3">
             <button
               type="button"
               onClick={onAcceptAll}
-              className="px-6 py-3 rounded-full bg-[#0a0a0a] text-white text-sm font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
+              className="px-4 py-2 rounded-full bg-[#0a0a0a] text-white text-xs md:text-sm font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
             >
-              {isEn ? 'Accept all' : 'Aceptar todo'}
-            </button>
-            <button
-              type="button"
-              onClick={onRejectAll}
-              className="px-6 py-3 rounded-full border border-[#d0d0d0] text-[#0a0a0a] text-sm font-medium tracking-tight hover:bg-[#f3f3f3] transition-colors"
-            >
-              {isEn ? 'Reject optional' : 'Rechazar opcionales'}
-            </button>
-            <button
-              type="button"
-              onClick={onSavePreferences}
-              className="px-6 py-3 rounded-full border border-[#0a0a0a]/20 text-[#0a0a0a] text-sm font-medium tracking-tight hover:bg-[#f3f3f3] transition-colors"
-            >
-              {isEn ? 'Save preferences' : 'Guardar preferencias'}
-            </button>
-            <button
-              type="button"
-              onClick={onTogglePreferences}
-              className="md:ml-auto px-6 py-3 rounded-full border border-[#e0e0e0] text-[#606060] text-sm font-medium tracking-tight hover:text-[#0a0a0a] hover:border-[#c9c9c9] transition-colors"
-            >
-              {isEn ? 'Close' : 'Cerrar'}
+              {isEn ? 'Accept' : 'Aceptar'}
             </button>
           </div>
         </div>
@@ -1707,6 +1662,34 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
   );
 };
 
+const NotFoundPage = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
+  return (
+    <section className="min-h-[72vh] bg-[#fdfcfb] flex items-center">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-20">
+        <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-4">
+          404
+        </p>
+        <h1 className="text-5xl md:text-7xl font-medium tracking-tight leading-[0.95] text-[#0a0a0a]">
+          {isEn ? 'Page not found' : 'Pagina no encontrada'}
+        </h1>
+        <p className="text-[#4e4e4e] text-base md:text-xl tracking-tight leading-relaxed max-w-2xl mt-6">
+          {isEn
+            ? 'This URL does not exist on Mitin Studio. Please return to the main page.'
+            : 'Esta URL no existe en Mitin Studio. Vuelve a la pagina principal para continuar navegando.'}
+        </p>
+        <a
+          href={isEn ? '/en' : '/'}
+          className="inline-flex items-center gap-2 mt-8 px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
+        >
+          {isEn ? 'Back to home' : 'Volver al inicio'}
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+    </section>
+  );
+};
+
 export default function App() {
   const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
   const [currentPath, setCurrentPath] = useState(
@@ -1716,11 +1699,12 @@ export default function App() {
   const scrollbarRef = React.useRef<any>(null);
   const [cookieConsent, setCookieConsent] = useState<CookieConsent | null>(null);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
-  const [analyticsPreferenceDraft, setAnalyticsPreferenceDraft] = useState(false);
   const gaInitializedRef = React.useRef(false);
   const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
+  const isKnownPath = ['/', '/tratamientos', '/en', '/en/treatments'].includes(currentPath);
+  const isNotFoundPage = !isKnownPath;
   const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
   const treatmentsPath = locale === 'en' ? '/en/treatments' : '/tratamientos';
   const switchLocalePath = isTreatmentsPage
@@ -1734,7 +1718,6 @@ export default function App() {
       updatedAt: new Date().toISOString(),
     };
     setCookieConsent(nextConsent);
-    setAnalyticsPreferenceDraft(analytics);
     setIsCookieBannerVisible(false);
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(nextConsent));
@@ -1870,7 +1853,6 @@ export default function App() {
     const rawConsent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!rawConsent) {
       setIsCookieBannerVisible(true);
-      setAnalyticsPreferenceDraft(false);
       return;
     }
 
@@ -1878,7 +1860,6 @@ export default function App() {
       const parsed = JSON.parse(rawConsent) as CookieConsent;
       if (typeof parsed.analytics === 'boolean') {
         setCookieConsent(parsed);
-        setAnalyticsPreferenceDraft(parsed.analytics);
       } else {
         setIsCookieBannerVisible(true);
       }
@@ -1915,7 +1896,17 @@ export default function App() {
 
     const siteOrigin = 'https://mitin.studio';
     const pageUrl = `${siteOrigin}${currentPath === '/' ? '/' : currentPath}`;
-    const pageMeta = isTreatmentsPage
+    const pageMeta = isNotFoundPage
+      ? (locale === 'en'
+          ? {
+              title: '404 | Mitin Studio',
+              description: 'The requested page does not exist on Mitin Studio.',
+            }
+          : {
+              title: '404 | Mitin Studio',
+              description: 'La pagina solicitada no existe en Mitin Studio.',
+            })
+      : isTreatmentsPage
       ? (locale === 'en'
           ? {
               title: 'Hair Treatments in Barcelona | Mitin Studio',
@@ -1954,6 +1945,7 @@ export default function App() {
     setMeta('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'es_ES');
     setMeta('meta[name="twitter:title"]', pageMeta.title);
     setMeta('meta[name="twitter:description"]', pageMeta.description);
+    setMeta('meta[name="robots"]', isNotFoundPage ? 'noindex, nofollow' : 'index, follow, max-image-preview:large');
 
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) {
@@ -1964,7 +1956,11 @@ export default function App() {
     const enAlt = document.querySelector('link[rel="alternate"][hreflang="en"]');
     const xDefaultAlt = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
 
-    if (isTreatmentsPage) {
+    if (isNotFoundPage) {
+      esAlt?.setAttribute('href', `${siteOrigin}/`);
+      enAlt?.setAttribute('href', `${siteOrigin}/en`);
+      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+    } else if (isTreatmentsPage) {
       esAlt?.setAttribute('href', `${siteOrigin}/tratamientos`);
       enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
       xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
@@ -1975,7 +1971,7 @@ export default function App() {
     }
 
     document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
-  }, [currentPath, isTreatmentsPage, locale]);
+  }, [currentPath, isTreatmentsPage, isNotFoundPage, locale]);
 
   useEffect(() => {
     if (!cookieConsent?.analytics || !gaMeasurementId || typeof window === 'undefined' || !window.gtag) {
@@ -2078,7 +2074,9 @@ export default function App() {
     <div className="min-h-screen bg-[#fdfcfb] font-sans selection:bg-[#332722] selection:text-white overflow-x-hidden pb-0">
       <Header locale={locale} treatmentsPath={treatmentsPath} switchLocalePath={switchLocalePath} />
       <main className={`transition-opacity duration-300 ${isPageTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-        {isTreatmentsPage ? (
+        {isNotFoundPage ? (
+          <NotFoundPage locale={locale} />
+        ) : isTreatmentsPage ? (
           <TreatmentsExperiencePage locale={locale} />
         ) : (
           <>
@@ -2096,16 +2094,12 @@ export default function App() {
       </main>
       <Footer locale={locale} onOpenCookiePreferences={() => setIsCookieBannerVisible(true)} />
       <FloatingWhatsApp locale={locale} />
-      <MobileStickyCTA locale={locale} />
+      {!isCookieBannerVisible && <MobileStickyCTA locale={locale} />}
       <CookieBanner
         locale={locale}
         visible={isCookieBannerVisible}
-        analyticsEnabled={analyticsPreferenceDraft}
         onAcceptAll={() => setConsentAndPersist(true)}
-        onRejectAll={() => setConsentAndPersist(false)}
-        onTogglePreferences={() => setIsCookieBannerVisible(false)}
-        onAnalyticsChange={setAnalyticsPreferenceDraft}
-        onSavePreferences={() => setConsentAndPersist(analyticsPreferenceDraft)}
+        onReject={() => setConsentAndPersist(false)}
       />
     </div>
   );
