@@ -1412,6 +1412,38 @@ const CookieBanner = ({
   );
 };
 
+const CookieFloatingTrigger = ({
+  locale,
+  visible,
+  onOpen,
+}: {
+  locale: Locale;
+  visible: boolean;
+  onOpen: () => void;
+}) => {
+  const [mounted, setMounted] = useState(false);
+  const isEn = locale === 'en';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || typeof document === 'undefined' || visible) {
+    return null;
+  }
+
+  return createPortal(
+    <button
+      type="button"
+      onClick={onOpen}
+      className="fixed bottom-3 left-3 z-[119] px-4 py-2 rounded-full bg-white/95 border border-[#d9d9d9] text-[#444] text-xs md:text-sm font-medium tracking-tight shadow-[0_10px_26px_-20px_rgba(0,0,0,0.45)] hover:text-[#0a0a0a] hover:border-[#bfbfbf] transition-colors"
+    >
+      {isEn ? 'Cookies' : 'Cookies'}
+    </button>,
+    document.body,
+  );
+};
+
 const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
   const [mounted, setMounted] = useState(false);
   const isEn = locale === 'en';
@@ -2119,6 +2151,7 @@ export default function App() {
         onAcceptAll={() => setConsentAndPersist(true)}
         onReject={() => setConsentAndPersist(false)}
       />
+      <CookieFloatingTrigger locale={locale} visible={isCookieBannerVisible} onOpen={() => setIsCookieBannerVisible(true)} />
     </div>
   );
 }
