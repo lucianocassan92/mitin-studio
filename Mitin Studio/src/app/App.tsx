@@ -26,6 +26,7 @@ const images = {
 };
 
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
+const WHATSAPP_CHAT_URL = "https://wa.me/34625740726";
 
 const KEUNE_PRODUCTS = [
   {
@@ -108,10 +109,10 @@ const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; 
           <button data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Book now' : 'Reservar cita'}
           </button>
-          <button data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
+          <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
             <MessageCircle className="w-4 h-4" />
             <span>{isEn ? 'Free consultation' : 'Asesoramiento gratuito'}</span>
-          </button>
+          </a>
         </div>
       </div>
     </header>
@@ -178,10 +179,10 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
             className="w-full sm:w-auto"
           >
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-start">
-              <button data-analytics-event="hero_consultation_click" className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
+              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="hero_consultation_click" className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
                 <MessageCircle className="w-5 h-5" />
                 {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
-              </button>
+              </a>
               <a href={treatmentsPath} data-analytics-event="hero_view_services_click" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] rounded-full hover:bg-[#0a0a0a]/5 transition-colors text-sm font-medium tracking-wide flex items-center justify-center">
                 {isEn ? 'View services' : 'Ver servicios'}
               </a>
@@ -606,7 +607,7 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
         </div>
       </section>
 
-      <KeuneSection locale={locale} />
+      <KeuneSection locale={locale} enableScrollColorEffect={false} />
 
       <section className="bg-[#0a0a0a] text-white py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -619,9 +620,9 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
               : 'Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button data-analytics-event="treatments_whatsapp_consultation_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors">
+            <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="treatments_whatsapp_consultation_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors text-center">
               {isEn ? 'Free WhatsApp consultation' : 'Asesoramiento gratuito por WhatsApp'}
-            </button>
+            </a>
             <button data-analytics-event="treatments_book_now_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
               {isEn ? 'Book appointment' : 'Reservar cita'}
             </button>
@@ -632,7 +633,7 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
   );
 };
 
-const KeuneSection = ({ locale }: { locale: Locale }) => {
+const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Locale; enableScrollColorEffect?: boolean }) => {
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const [isKeuneBgActive, setIsKeuneBgActive] = useState(false);
   const isEn = locale === 'en';
@@ -644,6 +645,11 @@ const KeuneSection = ({ locale }: { locale: Locale }) => {
   };
 
   useEffect(() => {
+    if (!enableScrollColorEffect) {
+      setIsKeuneBgActive(true);
+      return;
+    }
+
     if (typeof window === 'undefined') {
       return;
     }
@@ -683,15 +689,17 @@ const KeuneSection = ({ locale }: { locale: Locale }) => {
         window.cancelAnimationFrame(rafId);
       }
     };
-  }, []);
+  }, [enableScrollColorEffect]);
 
   return (
     <section
       ref={sectionRef}
       className="px-[0px] pt-[40px] pb-[96px]"
       style={{
-        backgroundColor: isKeuneBgActive ? '#e2e2e2' : '#ffffff',
-        transition: 'background-color 460ms ease',
+        backgroundColor: enableScrollColorEffect
+          ? (isKeuneBgActive ? '#e2e2e2' : '#ffffff')
+          : '#e2e2e2',
+        transition: enableScrollColorEffect ? 'background-color 460ms ease' : 'none',
       }}
     >
       <div className="max-w-[1600px] mx-auto">
@@ -1360,13 +1368,19 @@ const CookieBanner = ({
   onAcceptAll: () => void;
   onReject: () => void;
 }) => {
-  if (!visible) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!visible || !mounted || typeof document === 'undefined') {
     return null;
   }
 
   const isEn = locale === 'en';
 
-  return (
+  return createPortal(
     <div className="fixed bottom-0 left-0 right-0 z-[120] p-2 md:p-3">
       <div className="mx-auto max-w-[1200px] rounded-xl border border-[#d8d8d8] bg-white/98 backdrop-blur-sm shadow-[0_14px_36px_-24px_rgba(0,0,0,0.45)]">
         <div className="px-3 py-2.5 md:px-4 md:py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
@@ -1393,7 +1407,8 @@ const CookieBanner = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
@@ -1415,13 +1430,16 @@ const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
         <span className="w-2.5 h-2.5 rounded-full bg-[#25D366]"></span>
         {isEn ? 'Need guidance?' : '¿Te asesoramos?'}
       </div>
-      <button
+      <a
+        href={WHATSAPP_CHAT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         data-analytics-event="floating_whatsapp_click"
         className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all pointer-events-auto"
         aria-label={isEn ? 'WhatsApp consultation' : 'Asesoramiento por WhatsApp'}
       >
         <MessageCircle className="w-8 h-8" />
-      </button>
+      </a>
     </div>,
     document.body,
   );
@@ -1444,10 +1462,10 @@ const MobileStickyCTA = ({ locale }: { locale: Locale }) => {
       className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-[#e8e0d5] p-4 z-[70] flex flex-col gap-3 shadow-[0_-10px_30px_-22px_rgba(0,0,0,0.45)]"
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.75rem)' }}
     >
-      <button data-analytics-event="mobile_consultation_click" className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
+      <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="mobile_consultation_click" className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
         <MessageCircle className="w-4 h-4" />
         {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
-      </button>
+      </a>
       <button data-analytics-event="mobile_book_now_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
         {isEn ? 'Book now' : 'Reservar cita'}
       </button>
@@ -2083,7 +2101,7 @@ export default function App() {
             <Hero locale={locale} treatmentsPath={treatmentsPath} />
             <FounderNote locale={locale} />
             <Treatments locale={locale} treatmentsPath={treatmentsPath} />
-            <KeuneSection locale={locale} />
+            <KeuneSection locale={locale} enableScrollColorEffect />
             <Testimonials locale={locale} />
             <Gallery locale={locale} />
             <ReelsSection locale={locale} />
