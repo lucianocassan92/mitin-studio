@@ -1901,8 +1901,8 @@ export default function App() {
     }
 
     const rawConsent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+    setIsCookieBannerVisible(true);
     if (!rawConsent) {
-      setIsCookieBannerVisible(true);
       return;
     }
 
