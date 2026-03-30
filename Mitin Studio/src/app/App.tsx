@@ -24,8 +24,8 @@ const images = {
   gallery4: gallery4Optimized,
 };
 
-const HERO_IMAGE_SRC = '/perf/hero-1080.webp';
-const HERO_IMAGE_SRCSET = '/perf/hero-720.webp 720w, /perf/hero-960.webp 960w, /perf/hero-1080.webp 1080w, /perf/hero-1440.webp 1440w';
+const HERO_IMAGE_SRC = '/perf/hero-640.webp';
+const HERO_IMAGE_SRCSET = '/perf/hero-360.webp 360w, /perf/hero-480.webp 480w, /perf/hero-640.webp 640w, /perf/hero-720.webp 720w, /perf/hero-960.webp 960w, /perf/hero-1080.webp 1080w, /perf/hero-1440.webp 1440w';
 const KEUNE_LOGO_SRC = '/perf/keune-logo.webp';
 const FOUNDER_PORTRAIT_SRC = '/perf/founder-portrait-480.webp';
 
@@ -266,7 +266,7 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="w-full h-[50vh] md:h-[60vh] relative overflow-hidden rounded-2xl md:rounded-sm shadow-xl md:shadow-none mt-4 md:mt-8"
+          className="w-full h-[46vh] md:h-[60vh] relative overflow-hidden rounded-2xl md:rounded-sm shadow-xl md:shadow-none mt-4 md:mt-8"
         >
           <div className="absolute top-4 md:top-6 left-4 md:left-6 z-10 w-24 md:w-32 bg-white/10 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-white/20 shadow-sm">
             <img 
@@ -280,10 +280,10 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
           <img
             src={HERO_IMAGE_SRC}
             srcSet={HERO_IMAGE_SRCSET}
-            sizes="100vw"
+            sizes="(max-width: 767px) 92vw, 100vw"
             alt="Mitin Studio Model"
-            width={1080}
-            height={1620}
+            width={640}
+            height={960}
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -2432,11 +2432,12 @@ export default function App() {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const isSmallViewport = window.innerWidth < 1024;
     const emitScroll = (y: number) => {
       window.dispatchEvent(new CustomEvent('smooth-scroll', { detail: { y } }));
     };
 
-    if (prefersReducedMotion || isTouchDevice) {
+    if (prefersReducedMotion || isTouchDevice || isSmallViewport) {
       scrollbarRef.current = null;
       const handleContainerScroll = () => emitScroll(window.scrollY);
       window.addEventListener('scroll', handleContainerScroll, { passive: true });
