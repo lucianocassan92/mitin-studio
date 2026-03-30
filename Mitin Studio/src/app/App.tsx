@@ -1,14 +1,15 @@
-import image_38b9e8caabd18994531c10195796a44535b96a9d from 'figma:asset/38b9e8caabd18994531c10195796a44535b96a9d.png'
 import image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 from 'figma:asset/a7ec64405f3af286fe5684ab2c4dda16bd6f6981.png'
-import image_81aa8fe3a4228a9160f66a4537389eb77969fcc8 from 'figma:asset/81aa8fe3a4228a9160f66a4537389eb77969fcc8.png'
-import image_854c6198f4803d1591af952ed1bbaf767a149818 from 'figma:asset/854c6198f4803d1591af952ed1bbaf767a149818.png'
-import image_2116399b8684d35d16b8ce95b635336a091849f4 from 'figma:asset/2116399b8684d35d16b8ce95b635336a091849f4.png'
-import image_2ec1f962f3bc715452965d175bdd4d1f20041c0d from 'figma:asset/2ec1f962f3bc715452965d175bdd4d1f20041c0d.png'
+import hero960 from '../assets/optimized/hero-960.webp';
+import hero1440 from '../assets/optimized/hero-1440.webp';
+import hero1920 from '../assets/optimized/hero-1920.webp';
+import signatureModel960 from '../assets/optimized/signature-model-960.webp';
+import gallery1Optimized from '../assets/optimized/gallery-1-1024.webp';
+import gallery3Optimized from '../assets/optimized/gallery-3-1024.webp';
+import gallery4Optimized from '../assets/optimized/gallery-4-1024.webp';
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRight, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import Scrollbar from 'smooth-scrollbar';
 import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png';
 
 // Color Palette Variables for Tailwind utility
@@ -20,12 +21,12 @@ import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png'
 // Stone gray: #8a8a8a
 
 const images = {
-  hero: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8,
-  about: image_38b9e8caabd18994531c10195796a44535b96a9d,
-  gallery1: image_2116399b8684d35d16b8ce95b635336a091849f4,
+  hero: hero1440,
+  about: signatureModel960,
+  gallery1: gallery1Optimized,
   gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
-  gallery3: image_2ec1f962f3bc715452965d175bdd4d1f20041c0d,
-  gallery4: image_854c6198f4803d1591af952ed1bbaf767a149818,
+  gallery3: gallery3Optimized,
+  gallery4: gallery4Optimized,
 };
 
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
@@ -271,9 +272,14 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
               className="w-full h-auto object-contain brightness-0 invert"
             />
           </div>
-          <img 
-            src={image_81aa8fe3a4228a9160f66a4537389eb77969fcc8} 
-            alt="Mitin Studio Model" 
+          <img
+            src={hero1440}
+            srcSet={`${hero960} 960w, ${hero1440} 1440w, ${hero1920} 1920w`}
+            sizes="100vw"
+            alt="Mitin Studio Model"
+            width={1920}
+            height={2880}
+            loading="eager"
             fetchPriority="high"
             decoding="async"
             className="w-full h-full object-cover object-center md:object-top"
@@ -378,7 +384,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
             </a>
             <div className="rounded-2xl overflow-hidden border border-[#dcd6ce]">
               <img
-                src={image_38b9e8caabd18994531c10195796a44535b96a9d}
+                src={images.about}
                 alt="Tratamientos signature Mitin Studio"
                 loading="lazy"
                 decoding="async"
@@ -1144,21 +1150,21 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
   const testimonials = [
     // Column 1
     [
-      { name: "María G.", role: "Clienta desde 2019", text: "El trato es exquisito. Un lugar precioso, limpio y relajante donde las profesionales escuchan y aciertan de lleno.", img: image_38b9e8caabd18994531c10195796a44535b96a9d },
+      { name: "María G.", role: "Clienta desde 2019", text: "El trato es exquisito. Un lugar precioso, limpio y relajante donde las profesionales escuchan y aciertan de lleno.", img: images.about },
       { name: "Laura F.", role: "Clienta desde 2021", text: "Una mezcla perfecta de talento creativo y precisión técnica. Recomendaría sus servicios sin dudarlo.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
-      { name: "Ana M.", role: "Clienta desde 2020", text: "Siempre atentas, cuidadosas y con mucho criterio. Cada visita es un momento de paz y el resultado siempre supera lo esperado.", img: image_854c6198f4803d1591af952ed1bbaf767a149818 },
+      { name: "Ana M.", role: "Clienta desde 2020", text: "Siempre atentas, cuidadosas y con mucho criterio. Cada visita es un momento de paz y el resultado siempre supera lo esperado.", img: images.gallery4 },
     ],
     // Column 2
     [
-      { name: "Elena R.", role: "Clienta desde 2018", text: "Resultados espectaculares y muy naturales. Es una experiencia comparable a la hospitalidad de un hotel 5 estrellas.", img: image_2116399b8684d35d16b8ce95b635336a091849f4 },
-      { name: "Clara B.", role: "Clienta desde 2022", text: "Cada interacción se siente con propósito. El proceso es colaborativo y el resultado final habla por sí solo.", img: image_2ec1f962f3bc715452965d175bdd4d1f20041c0d },
-      { name: "Isabel T.", role: "Clienta desde 2023", text: "Un espacio donde realmente te cuidan. El ambiente elegante y el profesionalismo hacen que siempre quiera volver.", img: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8 },
+      { name: "Elena R.", role: "Clienta desde 2018", text: "Resultados espectaculares y muy naturales. Es una experiencia comparable a la hospitalidad de un hotel 5 estrellas.", img: images.gallery1 },
+      { name: "Clara B.", role: "Clienta desde 2022", text: "Cada interacción se siente con propósito. El proceso es colaborativo y el resultado final habla por sí solo.", img: images.gallery3 },
+      { name: "Isabel T.", role: "Clienta desde 2023", text: "Un espacio donde realmente te cuidan. El ambiente elegante y el profesionalismo hacen que siempre quiera volver.", img: images.about },
     ],
     // Column 3
     [
-      { name: "Sofía P.", role: "Clienta desde 2020", text: "Decisiones de diseño brillantes con un toque personal. Mis amigas notaron el cambio al instante.", img: image_38b9e8caabd18994531c10195796a44535b96a9d },
+      { name: "Sofía P.", role: "Clienta desde 2020", text: "Decisiones de diseño brillantes con un toque personal. Mis amigas notaron el cambio al instante.", img: images.about },
       { name: "Carmen V.", role: "Clienta desde 2021", text: "Ahora tengo un look que refleja realmente quién soy. Simple, elegante y natural — exactamente lo que necesitaba.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
-      { name: "Lucía D.", role: "Clienta desde 2019", text: "La experiencia es impecable e intuitiva. Desde la primera visita me sentí como en casa. Gran atención desde el día uno.", img: image_854c6198f4803d1591af952ed1bbaf767a149818 },
+      { name: "Lucía D.", role: "Clienta desde 2019", text: "La experiencia es impecable e intuitiva. Desde la primera visita me sentí como en casa. Gran atención desde el día uno.", img: images.gallery4 },
     ],
   ];
 
@@ -1276,6 +1282,34 @@ const Gallery = ({ locale }: { locale: Locale }) => {
 
 const MapSection = ({ locale }: { locale: Locale }) => {
   const isEn = locale === 'en';
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const mapWrapperRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isMapLoaded || typeof window === 'undefined') {
+      return;
+    }
+
+    const wrapper = mapWrapperRef.current;
+    if (!wrapper) {
+      return;
+    }
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        const isVisible = entries.some((entry) => entry.isIntersecting);
+        if (isVisible) {
+          setIsMapLoaded(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '0px', threshold: 0.1 },
+    );
+
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, [isMapLoaded]);
+
   return (
     <section className="bg-[#fdfcfb] py-14 md:py-20">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -1298,16 +1332,41 @@ const MapSection = ({ locale }: { locale: Locale }) => {
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>
-        <div className="rounded-2xl overflow-hidden border border-[#e2ddd6] shadow-[0_18px_40px_-30px_rgba(0,0,0,0.45)]">
-          <iframe
-            title={isEn ? 'Mitin Studio location map' : 'Mapa ubicación Mitin Studio'}
-            src="https://www.google.com/maps?q=Carrer+de+Casanova+191+Barcelona&output=embed"
-            width="100%"
-            height="420"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="w-full"
-          />
+        <div
+          ref={mapWrapperRef}
+          className="rounded-2xl overflow-hidden border border-[#e2ddd6] shadow-[0_18px_40px_-30px_rgba(0,0,0,0.45)] bg-[#f6f4f1]"
+        >
+          {isMapLoaded ? (
+            <iframe
+              title={isEn ? 'Mitin Studio location map' : 'Mapa ubicación Mitin Studio'}
+              src="https://www.google.com/maps?q=Carrer+de+Casanova+191+Barcelona&output=embed"
+              width="100%"
+              height="420"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
+            />
+          ) : (
+            <div className="h-[420px] w-full flex flex-col items-center justify-center gap-5 text-center px-6">
+              <MapPin className="w-8 h-8 text-[#332722]" />
+              <div>
+                <p className="text-[#0a0a0a] text-lg md:text-xl font-medium tracking-tight">
+                  Carrer de Casanova 191, L&apos;Eixample, Barcelona
+                </p>
+                <p className="text-[#6b6b6b] text-sm md:text-base tracking-tight mt-2">
+                  {isEn ? 'Interactive map loads on demand to improve speed.' : 'El mapa interactivo se carga bajo demanda para mejorar la velocidad.'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMapLoaded(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
+              >
+                {isEn ? 'Load interactive map' : 'Cargar mapa interactivo'}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -1862,19 +1921,19 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
   const reelsData = [
     {
       id: 1,
-      image: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8,
+      image: hero960,
       title: "Balayage Transformation",
       views: "12.4K"
     },
     {
       id: 2,
-      image: image_38b9e8caabd18994531c10195796a44535b96a9d,
+      image: images.about,
       title: "Editorial Styling",
       views: "8.2K"
     },
     {
       id: 3,
-      image: image_2116399b8684d35d16b8ce95b635336a091849f4,
+      image: images.gallery1,
       title: "Hair Care Routine",
       views: "15.1K"
     }
@@ -2177,14 +2236,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!gaMeasurementId) {
-      return;
-    }
-
-    ensureGAIsLoaded();
-  }, [gaMeasurementId]);
-
-  useEffect(() => {
     if (!cookieConsent) {
       return;
     }
@@ -2193,7 +2244,9 @@ export default function App() {
       return;
     }
 
-    ensureGAIsLoaded();
+    if (cookieConsent.analytics) {
+      ensureGAIsLoaded();
+    }
 
     if (window.gtag) {
       window.gtag('consent', 'update', {
@@ -2259,7 +2312,7 @@ export default function App() {
                 'Premium hair salon in Barcelona for color, precision cuts and personalized rituals. Book your appointment and get expert consultation at Mitin Studio.',
             }
           : {
-              title: 'Mitin Studio | Peluquería Premium en Barcelona',
+              title: 'Mitin Studio Barcelona | Colorimetría en equilibrio',
               description:
                 'Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados. Reserva tu cita en Mitin Studio.',
             });
@@ -2388,27 +2441,52 @@ export default function App() {
       };
     }
 
-    const scrollbar = Scrollbar.init(container, {
-      damping: 0.09,
-      alwaysShowTracks: false,
-      renderByPixels: true,
-      continuousScrolling: true,
-      delegateTo: document,
-    });
+    let isUnmounted = false;
+    let destroySmoothScroll: (() => void) | null = null;
 
-    const handleSmoothbarScroll = (status: { offset: { y: number } }) => {
-      emitScroll(status.offset.y);
+    const initSmoothScroll = async () => {
+      const { default: SmoothScrollbar } = await import('smooth-scrollbar');
+      if (isUnmounted) {
+        return;
+      }
+
+      const scrollbar = SmoothScrollbar.init(container, {
+        damping: 0.09,
+        alwaysShowTracks: false,
+        renderByPixels: true,
+        continuousScrolling: true,
+        delegateTo: document,
+      });
+
+      const handleSmoothbarScroll = (status: { offset: { y: number } }) => {
+        emitScroll(status.offset.y);
+      };
+
+      scrollbarRef.current = scrollbar;
+      scrollbar.addListener(handleSmoothbarScroll);
+      emitScroll(scrollbar.offset.y);
+
+      destroySmoothScroll = () => {
+        scrollbar.removeListener(handleSmoothbarScroll);
+        scrollbar.destroy();
+        scrollbarRef.current = null;
+        emitScroll(0);
+      };
     };
 
-    scrollbarRef.current = scrollbar;
-    scrollbar.addListener(handleSmoothbarScroll);
-    emitScroll(scrollbar.offset.y);
+    initSmoothScroll().catch(() => {
+      scrollbarRef.current = null;
+      emitScroll(window.scrollY);
+    });
 
     return () => {
-      scrollbar.removeListener(handleSmoothbarScroll);
-      scrollbar.destroy();
-      scrollbarRef.current = null;
-      emitScroll(0);
+      isUnmounted = true;
+      if (destroySmoothScroll) {
+        destroySmoothScroll();
+      } else {
+        scrollbarRef.current = null;
+        emitScroll(0);
+      }
     };
   }, []);
 
