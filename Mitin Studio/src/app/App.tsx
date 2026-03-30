@@ -1,11 +1,9 @@
-import signatureModel960 from '../assets/optimized/signature-model-960.webp';
 import gallery1Optimized from '../assets/optimized/gallery-1-1024.webp';
 import gallery3Optimized from '../assets/optimized/gallery-3-1024.webp';
 import gallery4Optimized from '../assets/optimized/gallery-4-1024.webp';
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRight, Play } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 // Color Palette Variables for Tailwind utility
 // Black: #0a0a0a
@@ -17,7 +15,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 const images = {
   hero: '/perf/hero-720.webp',
-  about: signatureModel960,
+  about: '/perf/signature-model-640.webp',
   gallery1: gallery1Optimized,
   gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
   gallery3: gallery3Optimized,
@@ -26,8 +24,11 @@ const images = {
 
 const HERO_IMAGE_SRC = '/perf/hero-480.webp';
 const HERO_IMAGE_SRCSET = '/perf/hero-360.webp 360w, /perf/hero-480.webp 480w, /perf/hero-640.webp 640w, /perf/hero-720.webp 720w, /perf/hero-960.webp 960w, /perf/hero-1080.webp 1080w, /perf/hero-1440.webp 1440w';
-const KEUNE_LOGO_SRC = '/perf/keune-logo.webp';
-const FOUNDER_PORTRAIT_SRC = '/perf/founder-portrait-480.webp';
+const KEUNE_LOGO_SRC = '/perf/keune-logo-384.webp';
+const KEUNE_LOGO_SRCSET = '/perf/keune-logo-256.webp 256w, /perf/keune-logo-384.webp 384w';
+const FOUNDER_PORTRAIT_SRC = '/perf/founder-portrait-224.webp';
+const FOUNDER_PORTRAIT_SRCSET = '/perf/founder-portrait-160.webp 160w, /perf/founder-portrait-224.webp 224w, /perf/founder-portrait-480.webp 480w';
+const SIGNATURE_MODEL_SRCSET = '/perf/signature-model-480.webp 480w, /perf/signature-model-640.webp 640w, /perf/signature-model-960.webp 960w';
 
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
 const WHATSAPP_CHAT_URL = "https://wa.me/34625740726";
@@ -142,6 +143,42 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
+
+type MotionLikeProps = {
+  initial?: unknown;
+  animate?: unknown;
+  whileInView?: unknown;
+  viewport?: unknown;
+  transition?: unknown;
+  exit?: unknown;
+};
+
+const stripMotionProps = <T extends MotionLikeProps>(props: T) => {
+  const { initial, animate, whileInView, viewport, transition, exit, ...rest } = props;
+  return rest;
+};
+
+const motion = {
+  div: (props: React.ComponentPropsWithoutRef<'div'> & MotionLikeProps) => (
+    <div {...stripMotionProps(props)} />
+  ),
+  p: (props: React.ComponentPropsWithoutRef<'p'> & MotionLikeProps) => (
+    <p {...stripMotionProps(props)} />
+  ),
+  h2: (props: React.ComponentPropsWithoutRef<'h2'> & MotionLikeProps) => (
+    <h2 {...stripMotionProps(props)} />
+  ),
+  article: (props: React.ComponentPropsWithoutRef<'article'> & MotionLikeProps) => (
+    <article {...stripMotionProps(props)} />
+  ),
+};
+
+const AnimatePresence = ({
+  children,
+}: {
+  children: React.ReactNode;
+  initial?: boolean;
+}) => <>{children}</>;
 
 const LazyMount = ({
   children,
@@ -329,7 +366,11 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
           <div className="absolute top-4 md:top-6 left-4 md:left-6 z-10 w-24 md:w-32 bg-white/10 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-white/20 shadow-sm">
             <img 
               src={KEUNE_LOGO_SRC} 
+              srcSet={KEUNE_LOGO_SRCSET}
+              sizes="(max-width: 767px) 72px, 96px"
               alt="Keune" 
+              width={384}
+              height={294}
               loading="lazy"
               decoding="async"
               className="w-full h-auto object-contain brightness-0 invert"
@@ -430,7 +471,11 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
             </p>
             <img
               src={KEUNE_LOGO_SRC}
+              srcSet={KEUNE_LOGO_SRCSET}
+              sizes="(max-width: 767px) 112px, 160px"
               alt="Keune"
+              width={384}
+              height={294}
               decoding="async"
               className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain mix-blend-multiply"
             />
@@ -448,7 +493,11 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
             <div className="rounded-2xl overflow-hidden border border-[#dcd6ce]">
               <img
                 src={images.about}
+                srcSet={SIGNATURE_MODEL_SRCSET}
+                sizes="(max-width: 1023px) calc(100vw - 48px), 34vw"
                 alt="Tratamientos signature Mitin Studio"
+                width={640}
+                height={753}
                 loading="lazy"
                 decoding="async"
                 className="w-full aspect-[4/3] object-cover"
@@ -470,7 +519,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
                   >
                     <span
                       className={`block font-medium tracking-[-0.05em] leading-[1.02] text-[clamp(2.2rem,7vw,5.8rem)] transition-colors duration-500 ${
-                        isActive ? "text-[#0a0a0a]" : "text-[#8d8d8d] hover:text-[#666666]"
+                        isActive ? "text-[#0a0a0a]" : "text-[#6d6d6d] hover:text-[#4f4f4f]"
                       }`}
                     >
                       {treatment.name}
@@ -862,7 +911,11 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
           <div className="flex flex-col mb-14 md:mb-20 items-center w-full">
             <img
               src={KEUNE_LOGO_SRC}
+              srcSet={KEUNE_LOGO_SRCSET}
+              sizes="(max-width: 767px) 96px, (max-width: 1023px) 128px, 160px"
               alt="Keune Logo"
+              width={384}
+              height={294}
               loading="lazy"
               decoding="async"
               className="h-24 md:h-32 lg:h-40 object-contain mb-12 md:mb-16 mix-blend-multiply"
@@ -1142,7 +1195,11 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
           >
             <img 
               src={FOUNDER_PORTRAIT_SRC} 
+              srcSet={FOUNDER_PORTRAIT_SRCSET}
+              sizes="(max-width: 767px) 80px, 96px"
               alt="Ilya Mitin, fundador y director creativo" 
+              width={224}
+              height={224}
               loading="lazy"
               decoding="async"
               className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover grayscale-[20%]"
@@ -1259,7 +1316,7 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
   const TestimonialCard = ({ t }: { t: { name: string; role: string; text: string; img: string } }) => (
     <div className="bg-[#fafafa] rounded-lg p-6 flex flex-col gap-3">
       <div className="flex flex-col gap-3">
-        <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover" />
+        <img src={t.img} alt={t.name} width={48} height={48} loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover" />
         <div>
           <p className="text-[#0a0a0a] font-medium text-lg tracking-tight">{t.name}</p>
           <p className="text-[#4e4e4e] text-sm">
@@ -1351,7 +1408,7 @@ const Gallery = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className={`rounded-2xl overflow-hidden ${idx === 0 || idx === 3 ? 'md:aspect-[4/3]' : 'md:aspect-[4/5]'}`}
             >
-              <img src={img} alt="Mitin Studio Space" loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={img} alt="Mitin Studio Space" width={1024} height={768} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
           ))}
         </div>
@@ -1467,6 +1524,8 @@ const CTA = ({ locale }: { locale: Locale }) => {
         <img 
           src={images.hero}
           alt="Mitin Studio Salon" 
+          width={720}
+          height={1080}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity"
@@ -2058,6 +2117,8 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
               <img 
                 src={reel.image} 
                 alt={reel.title}
+                width={720}
+                height={1280}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
