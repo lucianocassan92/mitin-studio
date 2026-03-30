@@ -1,7 +1,3 @@
-import image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 from 'figma:asset/a7ec64405f3af286fe5684ab2c4dda16bd6f6981.png'
-import hero960 from '../assets/optimized/hero-960.webp';
-import hero1440 from '../assets/optimized/hero-1440.webp';
-import hero1920 from '../assets/optimized/hero-1920.webp';
 import signatureModel960 from '../assets/optimized/signature-model-960.webp';
 import gallery1Optimized from '../assets/optimized/gallery-1-1024.webp';
 import gallery3Optimized from '../assets/optimized/gallery-3-1024.webp';
@@ -10,7 +6,6 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRight, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png';
 
 // Color Palette Variables for Tailwind utility
 // Black: #0a0a0a
@@ -21,13 +16,18 @@ import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png'
 // Stone gray: #8a8a8a
 
 const images = {
-  hero: hero1440,
+  hero: '/perf/hero-1080.webp',
   about: signatureModel960,
   gallery1: gallery1Optimized,
   gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
   gallery3: gallery3Optimized,
   gallery4: gallery4Optimized,
 };
+
+const HERO_IMAGE_SRC = '/perf/hero-1080.webp';
+const HERO_IMAGE_SRCSET = '/perf/hero-720.webp 720w, /perf/hero-960.webp 960w, /perf/hero-1080.webp 1080w, /perf/hero-1440.webp 1440w';
+const KEUNE_LOGO_SRC = '/perf/keune-logo.webp';
+const FOUNDER_PORTRAIT_SRC = '/perf/founder-portrait-480.webp';
 
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
 const WHATSAPP_CHAT_URL = "https://wa.me/34625740726";
@@ -69,6 +69,10 @@ type CookieConsent = {
 };
 
 const COOKIE_CONSENT_KEY = 'mitin_cookie_consent_v2';
+const DEFERRED_SECTION_STYLE: React.CSSProperties = {
+  contentVisibility: 'auto',
+  containIntrinsicSize: '1px 1000px',
+};
 
 const SERVICE_SLUGS = [
   '/balayage-barcelona',
@@ -266,19 +270,20 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
         >
           <div className="absolute top-4 md:top-6 left-4 md:left-6 z-10 w-24 md:w-32 bg-white/10 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-white/20 shadow-sm">
             <img 
-              src={keuneLogo} 
+              src={KEUNE_LOGO_SRC} 
               alt="Keune" 
+              loading="lazy"
               decoding="async"
               className="w-full h-auto object-contain brightness-0 invert"
             />
           </div>
           <img
-            src={hero1440}
-            srcSet={`${hero960} 960w, ${hero1440} 1440w, ${hero1920} 1920w`}
+            src={HERO_IMAGE_SRC}
+            srcSet={HERO_IMAGE_SRCSET}
             sizes="100vw"
             alt="Mitin Studio Model"
-            width={1920}
-            height={2880}
+            width={1080}
+            height={1620}
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -366,7 +371,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
                 : 'Diseñados en cabina con enfoque personalizado, sensibilidad estética y protocolos profesionales para resultados visibles y duraderos.'}
             </p>
             <img
-              src={keuneLogo}
+              src={KEUNE_LOGO_SRC}
               alt="Keune"
               decoding="async"
               className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain mix-blend-multiply"
@@ -793,7 +798,7 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
           {/* Intro */}
           <div className="flex flex-col mb-14 md:mb-20 items-center w-full">
             <img
-              src={keuneLogo}
+              src={KEUNE_LOGO_SRC}
               alt="Keune Logo"
               loading="lazy"
               decoding="async"
@@ -1061,7 +1066,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
             className="flex items-center gap-6"
           >
             <img 
-              src={image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981} 
+              src={FOUNDER_PORTRAIT_SRC} 
               alt="Ilya Mitin, fundador y director creativo" 
               loading="lazy"
               decoding="async"
@@ -1151,7 +1156,7 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
     // Column 1
     [
       { name: "María G.", role: "Clienta desde 2019", text: "El trato es exquisito. Un lugar precioso, limpio y relajante donde las profesionales escuchan y aciertan de lleno.", img: images.about },
-      { name: "Laura F.", role: "Clienta desde 2021", text: "Una mezcla perfecta de talento creativo y precisión técnica. Recomendaría sus servicios sin dudarlo.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
+      { name: "Laura F.", role: "Clienta desde 2021", text: "Una mezcla perfecta de talento creativo y precisión técnica. Recomendaría sus servicios sin dudarlo.", img: FOUNDER_PORTRAIT_SRC },
       { name: "Ana M.", role: "Clienta desde 2020", text: "Siempre atentas, cuidadosas y con mucho criterio. Cada visita es un momento de paz y el resultado siempre supera lo esperado.", img: images.gallery4 },
     ],
     // Column 2
@@ -1163,7 +1168,7 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
     // Column 3
     [
       { name: "Sofía P.", role: "Clienta desde 2020", text: "Decisiones de diseño brillantes con un toque personal. Mis amigas notaron el cambio al instante.", img: images.about },
-      { name: "Carmen V.", role: "Clienta desde 2021", text: "Ahora tengo un look que refleja realmente quién soy. Simple, elegante y natural — exactamente lo que necesitaba.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
+      { name: "Carmen V.", role: "Clienta desde 2021", text: "Ahora tengo un look que refleja realmente quién soy. Simple, elegante y natural — exactamente lo que necesitaba.", img: FOUNDER_PORTRAIT_SRC },
       { name: "Lucía D.", role: "Clienta desde 2019", text: "La experiencia es impecable e intuitiva. Desde la primera visita me sentí como en casa. Gran atención desde el día uno.", img: images.gallery4 },
     ],
   ];
@@ -1921,7 +1926,7 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
   const reelsData = [
     {
       id: 1,
-      image: hero960,
+      image: '/perf/hero-960.webp',
       title: "Balayage Transformation",
       views: "12.4K"
     },
@@ -2507,15 +2512,33 @@ export default function App() {
         ) : (
           <>
             <Hero locale={locale} treatmentsPath={treatmentsPath} />
-            <FounderNote locale={locale} />
-            <Treatments locale={locale} treatmentsPath={treatmentsPath} />
-            <KeuneSection locale={locale} enableScrollColorEffect />
-            <Testimonials locale={locale} />
-            <Gallery locale={locale} />
-            <MapSection locale={locale} />
-            <ReelsSection locale={locale} />
-            <InstagramFeed locale={locale} />
-            <CTA locale={locale} />
+            <div style={DEFERRED_SECTION_STYLE}>
+              <FounderNote locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <Treatments locale={locale} treatmentsPath={treatmentsPath} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <KeuneSection locale={locale} enableScrollColorEffect />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <Testimonials locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <Gallery locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <MapSection locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <ReelsSection locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <InstagramFeed locale={locale} />
+            </div>
+            <div style={DEFERRED_SECTION_STYLE}>
+              <CTA locale={locale} />
+            </div>
           </>
         )}
       </main>
