@@ -2039,6 +2039,17 @@ export default function App() {
       document.head.appendChild(script);
     }
 
+    // Consent Mode v2: establish default consent state before config.
+    window.gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      wait_for_update: 500,
+    });
+
+    window.gtag('set', 'ads_data_redaction', true);
+    window.gtag('set', 'url_passthrough', true);
     window.gtag('js', new Date());
     window.gtag('config', gaMeasurementId, {
       anonymize_ip: true,
@@ -2164,6 +2175,14 @@ export default function App() {
       setIsCookieBannerVisible(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (!gaMeasurementId) {
+      return;
+    }
+
+    ensureGAIsLoaded();
+  }, [gaMeasurementId]);
 
   useEffect(() => {
     if (!cookieConsent) {
