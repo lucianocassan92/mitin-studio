@@ -167,13 +167,13 @@ const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; 
           Mitin Studio.
         </a>
         <div className="hidden md:flex items-center gap-4">
-          <a href={treatmentsPath} data-analytics-event="nav_treatments_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+          <a href={treatmentsPath} data-analytics-event="nav_treatments_click" className="text-sm font-medium tracking-tight text-[#5f5f5f] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Treatments' : 'Tratamientos'}
           </a>
           <a href={switchLocalePath} data-analytics-event="language_switch_click" className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'EN / ES' : 'ES / EN'}
           </a>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#5f5f5f] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Book now' : 'Reservar cita'}
           </a>
           <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
@@ -946,7 +946,7 @@ const Process = () => {
 };
 
 const ScrollPaintText = ({ text, className }: { text: string; className: string }) => {
-  const textRef = React.useRef<HTMLHeadingElement | null>(null);
+  const textRef = React.useRef<HTMLParagraphElement | null>(null);
   const [revealedChars, setRevealedChars] = useState(0);
   const chars = Array.from(text);
 
@@ -1003,7 +1003,7 @@ const ScrollPaintText = ({ text, className }: { text: string; className: string 
   }, [chars.length]);
 
   return (
-    <h3
+    <p
       ref={textRef}
       className={className}
       style={{ whiteSpace: 'normal', overflowWrap: 'normal', maxWidth: '100%' }}
@@ -1026,7 +1026,7 @@ const ScrollPaintText = ({ text, className }: { text: string; className: string 
           </span>
         );
       })}
-    </h3>
+    </p>
   );
 };
 
@@ -1989,6 +1989,8 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
                   href="https://www.instagram.com/reel/DIbBU52tlo0/?igsh=MXcwaGo0cDlyMzhlZQ=="
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={isEn ? `Play reel: ${reel.title}` : `Reproducir reel: ${reel.title}`}
+                  title={isEn ? `Play reel: ${reel.title}` : `Reproducir reel: ${reel.title}`}
                   className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-lg hover:bg-white/30 transition-colors cursor-pointer"
                 >
                   <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
