@@ -27,4 +27,16 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        treatmentsEs: path.resolve(__dirname, 'tratamientos.html'),
+        homeEn: path.resolve(__dirname, 'en.html'),
+        treatmentsEn: path.resolve(__dirname, 'en-treatments.html'),
+        cookieEs: path.resolve(__dirname, 'politica-cookies.html'),
+        cookieEn: path.resolve(__dirname, 'en-cookie-policy.html'),
+      },
+    },
+  },
 })

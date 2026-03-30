@@ -7,6 +7,56 @@
   NODE_VERSION = "20"
 
 [[redirects]]
+  from = "/tratamientos"
+  to = "/tratamientos.html"
+  status = 200
+
+[[redirects]]
+  from = "/tratamientos/"
+  to = "/tratamientos.html"
+  status = 200
+
+[[redirects]]
+  from = "/en"
+  to = "/en.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/"
+  to = "/en.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/treatments"
+  to = "/en-treatments.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/treatments/"
+  to = "/en-treatments.html"
+  status = 200
+
+[[redirects]]
+  from = "/politica-cookies"
+  to = "/politica-cookies.html"
+  status = 200
+
+[[redirects]]
+  from = "/politica-cookies/"
+  to = "/politica-cookies.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/cookie-policy"
+  to = "/en-cookie-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/cookie-policy/"
+  to = "/en-cookie-policy.html"
+  status = 200
+
+[[redirects]]
   from = "/wp-admin/*"
   to = "/410.html"
   status = 410

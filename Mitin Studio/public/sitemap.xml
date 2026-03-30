@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
   <url>
     <loc>https://mitin.studio/</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
   </url>
   <url>
     <loc>https://mitin.studio/tratamientos</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/tratamientos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en/treatments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
   </url>
   <url>
     <loc>https://mitin.studio/en</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
   </url>
   <url>
     <loc>https://mitin.studio/en/treatments</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/tratamientos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en/treatments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
+  </url>
+  <url>
+    <loc>https://mitin.studio/politica-cookies</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/politica-cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
+  </url>
+  <url>
+    <loc>https://mitin.studio/en/cookie-policy</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mitin.studio/politica-cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mitin.studio/en/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mitin.studio/" />
   </url>
 </urlset>

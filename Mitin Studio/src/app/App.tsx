@@ -1276,7 +1276,15 @@ const CTA = ({ locale }: { locale: Locale }) => {
   );
 };
 
-const Footer = ({ locale, onOpenCookiePreferences }: { locale: Locale; onOpenCookiePreferences: () => void }) => {
+const Footer = ({
+  locale,
+  onOpenCookiePreferences,
+  cookiePolicyPath,
+}: {
+  locale: Locale;
+  onOpenCookiePreferences: () => void;
+  cookiePolicyPath: string;
+}) => {
   const isEn = locale === 'en';
   return (
     <footer className="bg-[#0a0a0a] text-white/70 pt-16 pb-44 md:py-16 border-t border-white/10">
@@ -1349,6 +1357,9 @@ const Footer = ({ locale, onOpenCookiePreferences }: { locale: Locale; onOpenCoo
           <button type="button" onClick={onOpenCookiePreferences} className="hover:text-white transition-colors">
             {isEn ? 'Cookie preferences' : 'Preferencias de cookies'}
           </button>
+          <a href={cookiePolicyPath} className="hover:text-white transition-colors">
+            {isEn ? 'Cookie Policy' : 'Política de Cookies'}
+          </a>
           <span>{isEn ? 'Legal Notice (demo)' : 'Aviso Legal (demo)'}</span>
           <span>{isEn ? 'Privacy Policy (demo)' : 'Política de Privacidad (demo)'}</span>
         </div>
@@ -1412,35 +1423,77 @@ const CookieBanner = ({
   );
 };
 
-const CookieFloatingTrigger = ({
-  locale,
-  visible,
-  onOpen,
-}: {
-  locale: Locale;
-  visible: boolean;
-  onOpen: () => void;
-}) => {
-  const [mounted, setMounted] = useState(false);
+const CookiePolicyPage = ({ locale }: { locale: Locale }) => {
   const isEn = locale === 'en';
+  return (
+    <section className="pt-28 md:pt-36 pb-20 md:pb-24 bg-[#fdfcfb]">
+      <div className="max-w-[980px] mx-auto px-6 md:px-12">
+        <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-5">
+          {isEn ? 'LEGAL' : 'LEGAL'}
+        </p>
+        <h1 className="text-4xl md:text-6xl font-medium tracking-tight leading-[0.95] text-[#0a0a0a]">
+          {isEn ? 'Cookie Policy' : 'Política de Cookies'}
+        </h1>
+        <p className="text-[#4e4e4e] text-base md:text-xl leading-relaxed tracking-tight mt-6">
+          {isEn
+            ? 'This website uses strictly necessary cookies and, if you accept, analytics cookies to measure visits and improve user experience.'
+            : 'Este sitio web utiliza cookies necesarias y, si las aceptas, cookies de analítica para medir visitas y mejorar la experiencia de usuario.'}
+        </p>
+        <p className="text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight mt-4">
+          {isEn
+            ? 'You can also review our main service pages: '
+            : 'También puedes revisar nuestras páginas principales: '}
+          <a href={isEn ? '/en' : '/'} className="text-[#0a0a0a] underline underline-offset-2">
+            {isEn ? 'Home' : 'Inicio'}
+          </a>
+          {' · '}
+          <a href={isEn ? '/en/treatments' : '/tratamientos'} className="text-[#0a0a0a] underline underline-offset-2">
+            {isEn ? 'Treatments' : 'Tratamientos'}
+          </a>
+        </p>
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted || typeof document === 'undefined' || visible) {
-    return null;
-  }
-
-  return createPortal(
-    <button
-      type="button"
-      onClick={onOpen}
-      className="fixed bottom-3 left-3 z-[119] px-4 py-2 rounded-full bg-white/95 border border-[#d9d9d9] text-[#444] text-xs md:text-sm font-medium tracking-tight shadow-[0_10px_26px_-20px_rgba(0,0,0,0.45)] hover:text-[#0a0a0a] hover:border-[#bfbfbf] transition-colors"
-    >
-      {isEn ? 'Cookies' : 'Cookies'}
-    </button>,
-    document.body,
+        <div className="mt-10 space-y-7 text-[#3f3f3f]">
+          <article>
+            <h2 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-2">
+              {isEn ? '1. Controller' : '1. Responsable'}
+            </h2>
+            <p className="leading-relaxed">
+              Mitin Studio, Carrer de Casanova 191, Barcelona.
+            </p>
+          </article>
+          <article>
+            <h2 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-2">
+              {isEn ? '2. Cookie types' : '2. Tipos de cookies'}
+            </h2>
+            <p className="leading-relaxed">
+              {isEn
+                ? 'Necessary cookies are always active. Analytics cookies (GA4) are optional and only enabled after your consent.'
+                : 'Las cookies necesarias están siempre activas. Las cookies de analítica (GA4) son opcionales y solo se activan tras tu consentimiento.'}
+            </p>
+          </article>
+          <article>
+            <h2 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-2">
+              {isEn ? '3. Purpose' : '3. Finalidad'}
+            </h2>
+            <p className="leading-relaxed">
+              {isEn
+                ? 'Measure page views, interactions and navigation quality to optimize site performance and user experience.'
+                : 'Medir visualizaciones, interacciones y calidad de navegación para optimizar el rendimiento del sitio y la experiencia de usuario.'}
+            </p>
+          </article>
+          <article>
+            <h2 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-2">
+              {isEn ? '4. Consent management' : '4. Gestión del consentimiento'}
+            </h2>
+            <p className="leading-relaxed">
+              {isEn
+                ? 'You can accept or reject cookies from the banner. You can update your choice from “Cookie preferences” in the footer.'
+                : 'Puedes aceptar o rechazar cookies desde el banner. Puedes cambiar tu decisión desde “Preferencias de cookies” en el footer.'}
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -1726,7 +1779,7 @@ const NotFoundPage = ({ locale }: { locale: Locale }) => {
         <p className="text-[#4e4e4e] text-base md:text-xl tracking-tight leading-relaxed max-w-2xl mt-6">
           {isEn
             ? 'This URL does not exist on Mitin Studio. Please return to the main page.'
-            : 'Esta URL no existe en Mitin Studio. Vuelve a la pagina principal para continuar navegando.'}
+            : 'Esta URL no existe en Mitin Studio. Vuelve a la página principal para continuar navegando.'}
         </p>
         <a
           href={isEn ? '/en' : '/'}
@@ -1753,10 +1806,12 @@ export default function App() {
   const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
-  const isKnownPath = ['/', '/tratamientos', '/en', '/en/treatments'].includes(currentPath);
+  const isKnownPath = ['/', '/tratamientos', '/politica-cookies', '/en', '/en/treatments', '/en/cookie-policy'].includes(currentPath);
   const isNotFoundPage = !isKnownPath;
+  const isCookiePolicyPage = currentPath === '/politica-cookies' || currentPath === '/en/cookie-policy';
   const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
   const treatmentsPath = locale === 'en' ? '/en/treatments' : '/tratamientos';
+  const cookiePolicyPath = locale === 'en' ? '/en/cookie-policy' : '/politica-cookies';
   const switchLocalePath = isTreatmentsPage
     ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
     : (locale === 'en' ? '/' : '/en');
@@ -1954,7 +2009,19 @@ export default function App() {
             }
           : {
               title: '404 | Mitin Studio',
-              description: 'La pagina solicitada no existe en Mitin Studio.',
+              description: 'La página solicitada no existe en Mitin Studio.',
+            })
+      : isCookiePolicyPage
+      ? (locale === 'en'
+          ? {
+              title: 'Cookie Policy | Mitin Studio',
+              description:
+                'Learn how cookies are used on Mitin Studio and how to manage your consent preferences.',
+            }
+          : {
+              title: 'Política de Cookies | Mitin Studio',
+              description:
+                'Conoce cómo se usan las cookies en Mitin Studio y cómo gestionar tus preferencias de consentimiento.',
             })
       : isTreatmentsPage
       ? (locale === 'en'
@@ -2010,6 +2077,10 @@ export default function App() {
       esAlt?.setAttribute('href', `${siteOrigin}/`);
       enAlt?.setAttribute('href', `${siteOrigin}/en`);
       xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+    } else if (isCookiePolicyPage) {
+      esAlt?.setAttribute('href', `${siteOrigin}/politica-cookies`);
+      enAlt?.setAttribute('href', `${siteOrigin}/en/cookie-policy`);
+      xDefaultAlt?.setAttribute('href', `${siteOrigin}/politica-cookies`);
     } else if (isTreatmentsPage) {
       esAlt?.setAttribute('href', `${siteOrigin}/tratamientos`);
       enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
@@ -2021,7 +2092,7 @@ export default function App() {
     }
 
     document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
-  }, [currentPath, isTreatmentsPage, isNotFoundPage, locale]);
+  }, [currentPath, isTreatmentsPage, isNotFoundPage, isCookiePolicyPage, locale]);
 
   useEffect(() => {
     if (!cookieConsent?.analytics || !gaMeasurementId || typeof window === 'undefined' || !window.gtag) {
@@ -2126,6 +2197,8 @@ export default function App() {
       <main className={`transition-opacity duration-300 ${isPageTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         {isNotFoundPage ? (
           <NotFoundPage locale={locale} />
+        ) : isCookiePolicyPage ? (
+          <CookiePolicyPage locale={locale} />
         ) : isTreatmentsPage ? (
           <TreatmentsExperiencePage locale={locale} />
         ) : (
@@ -2142,7 +2215,7 @@ export default function App() {
           </>
         )}
       </main>
-      <Footer locale={locale} onOpenCookiePreferences={() => setIsCookieBannerVisible(true)} />
+      <Footer locale={locale} onOpenCookiePreferences={() => setIsCookieBannerVisible(true)} cookiePolicyPath={cookiePolicyPath} />
       <FloatingWhatsApp locale={locale} />
       {!isCookieBannerVisible && <MobileStickyCTA locale={locale} />}
       <CookieBanner
@@ -2151,7 +2224,6 @@ export default function App() {
         onAcceptAll={() => setConsentAndPersist(true)}
         onReject={() => setConsentAndPersist(false)}
       />
-      <CookieFloatingTrigger locale={locale} visible={isCookieBannerVisible} onOpen={() => setIsCookieBannerVisible(true)} />
     </div>
   );
 }
