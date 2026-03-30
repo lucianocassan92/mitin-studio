@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from 'motion/react';
 // Stone gray: #8a8a8a
 
 const images = {
-  hero: '/perf/hero-1080.webp',
+  hero: '/perf/hero-720.webp',
   about: signatureModel960,
   gallery1: gallery1Optimized,
   gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
@@ -24,7 +24,7 @@ const images = {
   gallery4: gallery4Optimized,
 };
 
-const HERO_IMAGE_SRC = '/perf/hero-640.webp';
+const HERO_IMAGE_SRC = '/perf/hero-480.webp';
 const HERO_IMAGE_SRCSET = '/perf/hero-360.webp 360w, /perf/hero-480.webp 480w, /perf/hero-640.webp 640w, /perf/hero-720.webp 720w, /perf/hero-960.webp 960w, /perf/hero-1080.webp 1080w, /perf/hero-1440.webp 1440w';
 const KEUNE_LOGO_SRC = '/perf/keune-logo.webp';
 const FOUNDER_PORTRAIT_SRC = '/perf/founder-portrait-480.webp';
@@ -142,6 +142,64 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
+
+const LazyMount = ({
+  children,
+  placeholderHeight = 560,
+}: {
+  children: React.ReactNode;
+  placeholderHeight?: number;
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const hostRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isVisible || typeof window === 'undefined') {
+      return;
+    }
+
+    const host = hostRef.current;
+    if (!host) {
+      return;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '600px 0px',
+        threshold: 0.01,
+      },
+    );
+
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  if (isVisible) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div
+      ref={hostRef}
+      style={{
+        minHeight: `${placeholderHeight}px`,
+        ...DEFERRED_SECTION_STYLE,
+      }}
+      aria-hidden="true"
+    />
+  );
+};
 
 const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; treatmentsPath: string; switchLocalePath: string }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -282,8 +340,8 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
             srcSet={HERO_IMAGE_SRCSET}
             sizes="(max-width: 767px) 92vw, 100vw"
             alt="Mitin Studio Model"
-            width={640}
-            height={960}
+            width={480}
+            height={720}
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -412,7 +470,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
                   >
                     <span
                       className={`block font-medium tracking-[-0.05em] leading-[1.02] text-[clamp(2.2rem,7vw,5.8rem)] transition-colors duration-500 ${
-                        isActive ? "text-[#0a0a0a]" : "text-[#c8c8c8] hover:text-[#a3a3a3]"
+                        isActive ? "text-[#0a0a0a]" : "text-[#8d8d8d] hover:text-[#666666]"
                       }`}
                     >
                       {treatment.name}
@@ -745,6 +803,11 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
       return;
     }
 
+    if (window.innerWidth < 1024) {
+      setIsKeuneBgActive(true);
+      return;
+    }
+
     let rafId = 0;
 
     const updateBackgroundState = () => {
@@ -828,7 +891,7 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
                   >
                     {isEn ? 'Discover products' : 'Descubrir productos'}
                   </a>
-                  <p className="text-[#737373] text-sm md:text-base tracking-tight leading-relaxed mt-4 max-w-2xl">
+                  <p className="text-[#5f5f5f] text-sm md:text-base tracking-tight leading-relaxed mt-4 max-w-2xl">
                     {isEn
                       ? 'Continue your ritual at home with Keune’s professional selection.'
                       : 'Descubre los productos que acompañan nuestros tratamientos en salón.'}
@@ -873,7 +936,7 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
                     />
                   </div>
                   <div className="p-4 md:p-5">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-[#727272] font-semibold mb-2">
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-[#5f5f5f] font-semibold mb-2">
                       {getFamilyLabel(product.familyKey)}
                     </p>
                     <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight leading-[1.05] whitespace-pre-line min-h-[2.1em]">
@@ -933,7 +996,7 @@ const Process = () => {
               transition={{ duration: 0.8, delay: idx * 0.1 }}
               className="flex flex-col border-t border-[#0a0a0a]/10 pt-8"
             >
-              <div className="text-sm font-semibold tracking-widest text-[#8a8a8a] mb-6">
+              <div className="text-sm font-semibold tracking-widest text-[#6f6f6f] mb-6">
                 {step.num}
               </div>
               <h3 className="text-2xl lg:text-3xl font-medium tracking-tight text-[#0a0a0a] mb-4">
@@ -953,6 +1016,7 @@ const Process = () => {
 const ScrollPaintText = ({ text, className }: { text: string; className: string }) => {
   const textRef = React.useRef<HTMLParagraphElement | null>(null);
   const [revealedChars, setRevealedChars] = useState(0);
+  const [isScrollPaintEnabled, setIsScrollPaintEnabled] = useState(true);
   const chars = Array.from(text);
 
   useEffect(() => {
@@ -960,12 +1024,15 @@ const ScrollPaintText = ({ text, className }: { text: string; className: string 
       return;
     }
 
+    const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || isMobileViewport) {
+      setIsScrollPaintEnabled(false);
       setRevealedChars(chars.length);
       return;
     }
 
+    setIsScrollPaintEnabled(true);
     let rafId = 0;
 
     const updateProgress = () => {
@@ -1006,6 +1073,14 @@ const ScrollPaintText = ({ text, className }: { text: string; className: string 
       }
     };
   }, [chars.length]);
+
+  if (!isScrollPaintEnabled) {
+    return (
+      <p className={className} style={{ whiteSpace: 'normal', overflowWrap: 'normal', maxWidth: '100%' }}>
+        {text}
+      </p>
+    );
+  }
 
   return (
     <p
@@ -1074,7 +1149,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
             />
             <div>
               <p className="font-sans tracking-tight font-medium text-2xl md:text-3xl text-[#0a0a0a]">Ilya Mitin</p>
-              <p className="font-normal text-[#8a8a8a] text-base md:text-lg tracking-tight mt-1">{isEn ? 'Founder & Creative Director' : 'Fundador y Director Creativo'}</p>
+              <p className="font-normal text-[#6f6f6f] text-base md:text-lg tracking-tight mt-1">{isEn ? 'Founder & Creative Director' : 'Fundador y Director Creativo'}</p>
             </div>
           </motion.div>
 
@@ -1086,7 +1161,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">15+</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+              <p className="text-[#6f6f6f] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
                 {isEn ? (
                   <>Years refining<br className="hidden md:block"/> the craft</>
                 ) : (
@@ -1102,7 +1177,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">3k+</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+              <p className="text-[#6f6f6f] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
                 {isEn ? (
                   <>Loyal clients who<br className="hidden md:block"/> trust our team</>
                 ) : (
@@ -1118,7 +1193,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">98%</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+              <p className="text-[#6f6f6f] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
                 {isEn ? (
                   <>Satisfaction and<br className="hidden md:block"/> retention rate</>
                 ) : (
@@ -1134,7 +1209,7 @@ const FounderNote = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <div className="font-sans tracking-tighter font-medium text-5xl md:text-7xl lg:text-[80px] text-[#332722] leading-none mb-3 md:mb-5">100%</div>
-              <p className="text-[#8a8a8a] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
+              <p className="text-[#6f6f6f] text-sm md:text-lg font-normal tracking-tight leading-relaxed">
                 {isEn ? (
                   <>Dedicated care and<br className="hidden md:block"/> personal guidance</>
                 ) : (
@@ -1262,7 +1337,7 @@ const Gallery = ({ locale }: { locale: Locale }) => {
         <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-medium text-center mb-4 text-[#0a0a0a]">
           {isEn ? 'A space designed to slow down' : 'Un espacio pensado para bajar el ritmo'}
         </h2>
-        <p className="text-center text-[#8a8a8a] mb-16 tracking-tight">
+        <p className="text-center text-[#5f5f5f] mb-16 tracking-tight">
           {isEn ? 'Sophistication, calm and intentional design in every corner.' : 'Sofisticación, calma y diseño en cada rincón.'}
         </p>
         
@@ -1471,7 +1546,7 @@ const Footer = ({
 }) => {
   const isEn = locale === 'en';
   return (
-    <footer className="bg-[#0a0a0a] text-white/70 pt-16 pb-44 md:py-16 border-t border-white/10">
+    <footer className="bg-[#0a0a0a] text-white/80 pt-16 pb-44 md:py-16 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-1">
           <h3 className="font-sans font-medium tracking-tight text-2xl text-white mb-6">Mitin Studio.</h3>
@@ -1535,7 +1610,7 @@ const Footer = ({
           
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm font-light text-white/40">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm font-light text-white/65">
         <p>© {new Date().getFullYear()} Mitin Studio. {isEn ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <button type="button" onClick={onOpenCookiePreferences} className="hover:text-white transition-colors">
@@ -1870,7 +1945,7 @@ const InstagramFeed = ({ locale }: { locale: Locale }) => {
           
           {/* ⬇️ PLACEHOLDER TEMPORAL - ELIMINA ESTO CUANDO PEGUES TU WIDGET REAL ⬇️ */}
           <div className="bg-gradient-to-br from-[#e8e0d5]/20 to-[#e8e0d5]/10 rounded-2xl p-12 md:p-16 text-center border-2 border-dashed border-[#8a8a8a]/20">
-            <Instagram className="w-20 h-20 mx-auto mb-8 text-[#8a8a8a]/60" strokeWidth={1.2} />
+            <Instagram className="w-20 h-20 mx-auto mb-8 text-[#666666]/70" strokeWidth={1.2} />
             <h3 className="text-2xl md:text-3xl font-medium text-[#0a0a0a] mb-4 tracking-tight">
               {isEn ? 'Instagram widget ready to connect' : 'Widget de Instagram listo para conectar'}
             </h3>
@@ -1889,7 +1964,7 @@ const InstagramFeed = ({ locale }: { locale: Locale }) => {
                 {isEn ? 'Create free widget' : 'Crear widget gratis'}
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <span className="text-[#8a8a8a] text-sm">
+              <span className="text-[#666666] text-sm">
                 {isEn ? 'or use ' : 'o usa '}
                 <a href="https://behold.so/" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#0a0a0a] font-medium">Behold</a>
               </span>
@@ -2522,24 +2597,24 @@ export default function App() {
             <div style={DEFERRED_SECTION_STYLE}>
               <KeuneSection locale={locale} enableScrollColorEffect />
             </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            <LazyMount placeholderHeight={760}>
               <Testimonials locale={locale} />
-            </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            </LazyMount>
+            <LazyMount placeholderHeight={620}>
               <Gallery locale={locale} />
-            </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            </LazyMount>
+            <LazyMount placeholderHeight={500}>
               <MapSection locale={locale} />
-            </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            </LazyMount>
+            <LazyMount placeholderHeight={620}>
               <ReelsSection locale={locale} />
-            </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            </LazyMount>
+            <LazyMount placeholderHeight={560}>
               <InstagramFeed locale={locale} />
-            </div>
-            <div style={DEFERRED_SECTION_STYLE}>
+            </LazyMount>
+            <LazyMount placeholderHeight={720}>
               <CTA locale={locale} />
-            </div>
+            </LazyMount>
           </>
         )}
       </main>
