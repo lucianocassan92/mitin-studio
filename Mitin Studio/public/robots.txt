@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://mitin.studio/sitemap.xml
+Llmstxt: https://mitin.studio/llms.txt

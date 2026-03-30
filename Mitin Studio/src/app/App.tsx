@@ -1,6 +1,9 @@
 import image_38b9e8caabd18994531c10195796a44535b96a9d from 'figma:asset/38b9e8caabd18994531c10195796a44535b96a9d.png'
 import image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 from 'figma:asset/a7ec64405f3af286fe5684ab2c4dda16bd6f6981.png'
 import image_81aa8fe3a4228a9160f66a4537389eb77969fcc8 from 'figma:asset/81aa8fe3a4228a9160f66a4537389eb77969fcc8.png'
+import image_854c6198f4803d1591af952ed1bbaf767a149818 from 'figma:asset/854c6198f4803d1591af952ed1bbaf767a149818.png'
+import image_2116399b8684d35d16b8ce95b635336a091849f4 from 'figma:asset/2116399b8684d35d16b8ce95b635336a091849f4.png'
+import image_2ec1f962f3bc715452965d175bdd4d1f20041c0d from 'figma:asset/2ec1f962f3bc715452965d175bdd4d1f20041c0d.png'
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, MessageCircle, ArrowRight, Play } from 'lucide-react';
@@ -17,16 +20,17 @@ import keuneLogo from 'figma:asset/e171f66c4e2be75ae95937046439793161211834.png'
 // Stone gray: #8a8a8a
 
 const images = {
-  hero: "https://images.unsplash.com/photo-1764844463777-2accb463f1b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjBtb2RlbCUyMG5hdHVyYWwlMjBtYWtldXAlMjBiZWF1dHklMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzM4NDYxNjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  about: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiZWF1dHklMjBzcGF8ZW58MXx8fHwxNzIxMTg2MjY3fDA&ixlib=rb-4.0.3&q=80&w=1080",
-  gallery1: "https://images.unsplash.com/photo-1633681140152-3b8726450518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwYmVhdXR5JTIwc2Fsb24lMjBkZXRhaWx8ZW58MXx8fHwxNzczODQ1MTk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  hero: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8,
+  about: image_38b9e8caabd18994531c10195796a44535b96a9d,
+  gallery1: image_2116399b8684d35d16b8ce95b635336a091849f4,
   gallery2: "https://keune.al/wp-content/uploads/2025/09/Radiant_Gloss_-_Illume_Fusion_-_key_visual_-_desktop.webp",
-  gallery3: "https://images.unsplash.com/photo-1712641970791-ea9a566c93bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwc3R5bGluZyUyMGVsZWdhbnQlMjBzYWxvbnxlbnwxfHx8fDE3NzM4NDUxOTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  gallery4: "https://images.unsplash.com/photo-1689893265427-d7da200eff05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwaGFpciUyMHdhc2hpbmclMjBiYXNpbiUyMHNhbG9ufGVufDF8fHx8MTc3Mzg0NTE5NHww&ixlib=rb-4.1.0&q=80&w=1080"
+  gallery3: image_2ec1f962f3bc715452965d175bdd4d1f20041c0d,
+  gallery4: image_854c6198f4803d1591af952ed1bbaf767a149818,
 };
 
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
 const WHATSAPP_CHAT_URL = "https://wa.me/34625740726";
+const BOOKING_URL = WHATSAPP_CHAT_URL;
 
 const KEUNE_PRODUCTS = [
   {
@@ -64,6 +68,68 @@ type CookieConsent = {
 };
 
 const COOKIE_CONSENT_KEY = 'mitin_cookie_consent_v2';
+
+const SERVICE_SLUGS = [
+  '/balayage-barcelona',
+  '/coloracion-barcelona',
+  '/corte-pelo-barcelona',
+  '/mechas-barcelona',
+] as const;
+
+type ServiceSlug = typeof SERVICE_SLUGS[number];
+
+const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
+  title: string;
+  hero: string;
+  description: string;
+  benefit: string;
+  faqs: { q: string; a: string }[];
+}> = {
+  '/balayage-barcelona': {
+    title: 'Balayage en Barcelona',
+    hero: 'Balayage en Barcelona con acabado natural y luminoso.',
+    description:
+      'En Mitin Studio diseñamos balayage personalizado según tono de piel, base natural y objetivo estético. Trabajamos transiciones suaves, dimensión real y brillo elegante para un resultado premium y duradero.',
+    benefit: 'Beneficio clave: color con profundidad, menor efecto raíz y mantenimiento inteligente.',
+    faqs: [
+      { q: '¿Cada cuánto mantener un balayage?', a: 'Normalmente cada 10 a 14 semanas, según contraste y objetivo de luz.' },
+      { q: '¿Incluye diagnóstico de color?', a: 'Sí. Definimos punto de partida, porosidad, tono ideal y plan de mantenimiento.' },
+    ],
+  },
+  '/coloracion-barcelona': {
+    title: 'Coloración en Barcelona',
+    hero: 'Coloración profesional en Barcelona con técnica y criterio.',
+    description:
+      'Creamos coloraciones personalizadas para cubrir cana, aportar brillo, corregir matices o transformar el look sin perder naturalidad. Cada fórmula se adapta al estado real del cabello.',
+    benefit: 'Beneficio clave: color equilibrado, uniforme y con mayor duración entre visitas.',
+    faqs: [
+      { q: '¿Trabajáis cobertura de cana?', a: 'Sí, con protocolos específicos para mantener naturalidad y reflejo.' },
+      { q: '¿Cómo se mantiene el color en casa?', a: 'Te recomendamos rutina Keune personalizada para fijar tono y brillo.' },
+    ],
+  },
+  '/corte-pelo-barcelona': {
+    title: 'Corte de Pelo en Barcelona',
+    hero: 'Corte de pelo en Barcelona con precisión y sensibilidad estética.',
+    description:
+      'Nuestros cortes se diseñan para acompañar la forma natural del cabello, tu estilo de vida y tus rasgos. Buscamos una caída elegante y fácil de mantener en el día a día.',
+    benefit: 'Beneficio clave: forma duradera, movimiento natural y resultado que favorece tu identidad.',
+    faqs: [
+      { q: '¿Hacéis corte en seco o en húmedo?', a: 'Elegimos técnica según textura, densidad y objetivo de acabado.' },
+      { q: '¿Incluye asesoramiento de estilo?', a: 'Sí, siempre. Definimos largo, forma y rutina de peinado realista.' },
+    ],
+  },
+  '/mechas-barcelona': {
+    title: 'Mechas en Barcelona',
+    hero: 'Mechas en Barcelona para crear luz, dimensión y profundidad.',
+    description:
+      'Trabajamos mechas finas y técnicas de iluminación personalizadas para resultados sofisticados, sin efecto rígido. El objetivo es una luz integrada y coherente con tu base.',
+    benefit: 'Beneficio clave: mayor dimensión visual con acabado pulido y natural.',
+    faqs: [
+      { q: '¿Qué diferencia hay entre mechas y balayage?', a: 'Las mechas generan estructura de luz más definida; el balayage prioriza degradado orgánico.' },
+      { q: '¿Se puede hacer sin dañar el cabello?', a: 'Sí, con diagnóstico previo y protocolos de protección y reconstrucción capilar.' },
+    ],
+  },
+};
 
 declare global {
   interface Window {
@@ -106,9 +172,9 @@ const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; 
           <a href={switchLocalePath} data-analytics-event="language_switch_click" className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'EN / ES' : 'ES / EN'}
           </a>
-          <button data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#8a8a8a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Book now' : 'Reservar cita'}
-          </button>
+          </a>
           <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
             <MessageCircle className="w-4 h-4" />
             <span>{isEn ? 'Free consultation' : 'Asesoramiento gratuito'}</span>
@@ -562,6 +628,20 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
               ? 'Each protocol is tailored to real hair condition, scalp balance and personal aesthetic goals to deliver truly individualized care.'
               : 'Cada protocolo se adapta al estado real del cabello, al equilibrio del cuero cabelludo y al objetivo estético de cada persona para ofrecer una experiencia de cuidado verdaderamente personalizada.'}
           </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="/balayage-barcelona" className="px-4 py-2 rounded-full border border-[#dadada] text-[#0a0a0a] text-sm tracking-tight hover:bg-[#f3f3f3] transition-colors">
+              {isEn ? 'Balayage Barcelona' : 'Balayage Barcelona'}
+            </a>
+            <a href="/coloracion-barcelona" className="px-4 py-2 rounded-full border border-[#dadada] text-[#0a0a0a] text-sm tracking-tight hover:bg-[#f3f3f3] transition-colors">
+              {isEn ? 'Hair Color Barcelona' : 'Coloración Barcelona'}
+            </a>
+            <a href="/corte-pelo-barcelona" className="px-4 py-2 rounded-full border border-[#dadada] text-[#0a0a0a] text-sm tracking-tight hover:bg-[#f3f3f3] transition-colors">
+              {isEn ? 'Haircut Barcelona' : 'Corte de pelo Barcelona'}
+            </a>
+            <a href="/mechas-barcelona" className="px-4 py-2 rounded-full border border-[#dadada] text-[#0a0a0a] text-sm tracking-tight hover:bg-[#f3f3f3] transition-colors">
+              {isEn ? 'Highlights Barcelona' : 'Mechas Barcelona'}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -623,9 +703,9 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
             <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="treatments_whatsapp_consultation_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors text-center">
               {isEn ? 'Free WhatsApp consultation' : 'Asesoramiento gratuito por WhatsApp'}
             </a>
-            <button data-analytics-event="treatments_book_now_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="treatments_book_now_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors text-center">
               {isEn ? 'Book appointment' : 'Reservar cita'}
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -1064,21 +1144,21 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
   const testimonials = [
     // Column 1
     [
-      { name: "María G.", role: "Clienta desde 2019", text: "El trato es exquisito. Un lugar precioso, limpio y relajante donde las profesionales escuchan y aciertan de lleno.", img: "https://images.unsplash.com/photo-1655249493799-9cee4fe983bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0JTIwcHJvZmVzc2lvbmFsJTIwaGVhZHNob3R8ZW58MXx8fHwxNzczODE5OTYxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Laura F.", role: "Clienta desde 2021", text: "Una mezcla perfecta de talento creativo y precisión técnica. Recomendaría sus servicios sin dudarlo.", img: "https://images.unsplash.com/photo-1614436201459-156d322d38c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHdvbWFuJTIwc21pbGluZyUyMHBvcnRyYWl0fGVufDF8fHx8MTc3Mzc1NTI5MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Ana M.", role: "Clienta desde 2020", text: "Siempre atentas, cuidadosas y con mucho criterio. Cada visita es un momento de paz y el resultado siempre supera lo esperado.", img: "https://images.unsplash.com/photo-1613239077413-54b5c39cf191?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwd29tYW4lMjBmYWNlJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzczODQ1NDM2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { name: "María G.", role: "Clienta desde 2019", text: "El trato es exquisito. Un lugar precioso, limpio y relajante donde las profesionales escuchan y aciertan de lleno.", img: image_38b9e8caabd18994531c10195796a44535b96a9d },
+      { name: "Laura F.", role: "Clienta desde 2021", text: "Una mezcla perfecta de talento creativo y precisión técnica. Recomendaría sus servicios sin dudarlo.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
+      { name: "Ana M.", role: "Clienta desde 2020", text: "Siempre atentas, cuidadosas y con mucho criterio. Cada visita es un momento de paz y el resultado siempre supera lo esperado.", img: image_854c6198f4803d1591af952ed1bbaf767a149818 },
     ],
     // Column 2
     [
-      { name: "Elena R.", role: "Clienta desde 2018", text: "Resultados espectaculares y muy naturales. Es una experiencia comparable a la hospitalidad de un hotel 5 estrellas.", img: "https://images.unsplash.com/photo-1760552069335-07d43ca826f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGJydW5ldHRlJTIwcG9ydHJhaXQlMjBoZWFkc2hvdHxlbnwxfHx8fDE3NzM4NDU0Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Clara B.", role: "Clienta desde 2022", text: "Cada interacción se siente con propósito. El proceso es colaborativo y el resultado final habla por sí solo.", img: "https://images.unsplash.com/photo-1762522921456-cdfe882d36c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGJsb25kZSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDF8fHx8MTc3Mzg0NTQzNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Isabel T.", role: "Clienta desde 2023", text: "Un espacio donde realmente te cuidan. El ambiente elegante y el profesionalismo hacen que siempre quiera volver.", img: "https://images.unsplash.com/photo-1743642887694-12042391ede9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGN1cmx5JTIwaGFpciUyMHBvcnRyYWl0JTIwc21pbGV8ZW58MXx8fHwxNzczODQwMDQ2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { name: "Elena R.", role: "Clienta desde 2018", text: "Resultados espectaculares y muy naturales. Es una experiencia comparable a la hospitalidad de un hotel 5 estrellas.", img: image_2116399b8684d35d16b8ce95b635336a091849f4 },
+      { name: "Clara B.", role: "Clienta desde 2022", text: "Cada interacción se siente con propósito. El proceso es colaborativo y el resultado final habla por sí solo.", img: image_2ec1f962f3bc715452965d175bdd4d1f20041c0d },
+      { name: "Isabel T.", role: "Clienta desde 2023", text: "Un espacio donde realmente te cuidan. El ambiente elegante y el profesionalismo hacen que siempre quiera volver.", img: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8 },
     ],
     // Column 3
     [
-      { name: "Sofía P.", role: "Clienta desde 2020", text: "Decisiones de diseño brillantes con un toque personal. Mis amigas notaron el cambio al instante.", img: "https://images.unsplash.com/photo-1570666291894-f46aef938a73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHJlZGhlYWQlMjBwb3J0cmFpdCUyMG5hdHVyYWx8ZW58MXx8fHwxNzczNzgzNjc2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Carmen V.", role: "Clienta desde 2021", text: "Ahora tengo un look que refleja realmente quién soy. Simple, elegante y natural — exactamente lo que necesitaba.", img: "https://images.unsplash.com/photo-1759873821395-c29de82a5b99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHdvbWFuJTIwcG9ydHJhaXQlMjBvdXRkb29yJTIwbmF0dXJhbHxlbnwxfHx8fDE3NzM4NDU0Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-      { name: "Lucía D.", role: "Clienta desde 2019", text: "La experiencia es impecable e intuitiva. Desde la primera visita me sentí como en casa. Gran atención desde el día uno.", img: "https://images.unsplash.com/photo-1761414500568-1348275e08a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjB3b21hbiUyMGVsZWdhbnQlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzM3NTM5ODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { name: "Sofía P.", role: "Clienta desde 2020", text: "Decisiones de diseño brillantes con un toque personal. Mis amigas notaron el cambio al instante.", img: image_38b9e8caabd18994531c10195796a44535b96a9d },
+      { name: "Carmen V.", role: "Clienta desde 2021", text: "Ahora tengo un look que refleja realmente quién soy. Simple, elegante y natural — exactamente lo que necesitaba.", img: image_a7ec64405f3af286fe5684ab2c4dda16bd6f6981 },
+      { name: "Lucía D.", role: "Clienta desde 2019", text: "La experiencia es impecable e intuitiva. Desde la primera visita me sentí como en casa. Gran atención desde el día uno.", img: image_854c6198f4803d1591af952ed1bbaf767a149818 },
     ],
   ];
 
@@ -1194,6 +1274,46 @@ const Gallery = ({ locale }: { locale: Locale }) => {
   );
 };
 
+const MapSection = ({ locale }: { locale: Locale }) => {
+  const isEn = locale === 'en';
+  return (
+    <section className="bg-[#fdfcfb] py-14 md:py-20">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-3">
+              {isEn ? 'LOCATION' : 'UBICACIÓN'}
+            </p>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-[#0a0a0a] leading-tight">
+              {isEn ? 'Visit Mitin Studio in Barcelona' : 'Visita Mitin Studio en Barcelona'}
+            </h2>
+          </div>
+          <a
+            href="https://maps.google.com/?q=Carrer+de+Casanova+191+Barcelona"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm md:text-base text-[#0a0a0a] font-medium tracking-tight hover:opacity-80 transition-opacity"
+          >
+            {isEn ? 'Open in Google Maps' : 'Abrir en Google Maps'}
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+        <div className="rounded-2xl overflow-hidden border border-[#e2ddd6] shadow-[0_18px_40px_-30px_rgba(0,0,0,0.45)]">
+          <iframe
+            title={isEn ? 'Mitin Studio location map' : 'Mapa ubicación Mitin Studio'}
+            src="https://www.google.com/maps?q=Carrer+de+Casanova+191+Barcelona&output=embed"
+            width="100%"
+            height="420"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const CTA = ({ locale }: { locale: Locale }) => {
   const isEn = locale === 'en';
   return (
@@ -1206,7 +1326,7 @@ const CTA = ({ locale }: { locale: Locale }) => {
         className="absolute inset-0 z-0"
       >
         <img 
-          src="https://images.unsplash.com/photo-1608869776252-33ff061fabf2?ixlib=rb-4.1.0&auto=format&fit=crop&w=2850&q=80" 
+          src={images.hero}
           alt="Mitin Studio Salon" 
           loading="lazy"
           decoding="async"
@@ -1264,9 +1384,9 @@ const CTA = ({ locale }: { locale: Locale }) => {
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
               <span>{isEn ? 'Reply in under 1 hour' : 'Respuesta en < 1 hora'}</span>
               <span className="hidden md:block w-1 h-1 rounded-full bg-[#fdfcfb]/20"></span>
-              <a href="tel:+34934567890" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
+              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5" />
-                +34 93 456 78 90
+                +34 625 74 07 26
               </a>
             </div>
           </motion.div>
@@ -1307,7 +1427,7 @@ const Footer = ({
             </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-[#e8e0d5]" />
-              <span>+34 93 456 78 90</span>
+              <span>+34 625 74 07 26</span>
             </li>
           </ul>
         </div>
@@ -1497,6 +1617,74 @@ const CookiePolicyPage = ({ locale }: { locale: Locale }) => {
   );
 };
 
+const ServiceLandingPage = ({ slug }: { slug: ServiceSlug }) => {
+  const service = SERVICE_PAGE_CONTENT[slug];
+
+  return (
+    <>
+      <section className="pt-28 md:pt-36 pb-12 md:pb-16 bg-[#fdfcfb]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+          <nav aria-label="breadcrumb" className="text-xs tracking-tight text-[#6a6a6a] mb-6">
+            <a href="/" className="hover:text-[#0a0a0a] transition-colors">Inicio</a>
+            <span className="mx-2">/</span>
+            <a href="/tratamientos" className="hover:text-[#0a0a0a] transition-colors">Tratamientos</a>
+            <span className="mx-2">/</span>
+            <span className="text-[#0a0a0a]">{service.title}</span>
+          </nav>
+          <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0a0a0a] mb-5">
+            SERVICIO DESTACADO
+          </p>
+          <h1 className="text-5xl md:text-7xl font-medium tracking-tight leading-[0.92] text-[#0a0a0a] max-w-5xl">
+            {service.hero}
+          </h1>
+          <p className="text-[#4e4e4e] text-lg md:text-2xl leading-relaxed tracking-tight mt-7 max-w-4xl">
+            {service.description}
+          </p>
+          <p className="text-[#1f1f1f] text-base md:text-xl font-medium tracking-tight leading-relaxed mt-5 max-w-4xl">
+            {service.benefit}
+          </p>
+          <div className="mt-9 flex flex-col sm:flex-row gap-4">
+            <a
+              href={WHATSAPP_CHAT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="service_whatsapp_click"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
+            >
+              Asesoramiento gratuito
+            </a>
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="service_book_click"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-[#0a0a0a]/20 text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#0a0a0a]/5 transition-colors"
+            >
+              Reservar cita
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-10 md:py-14">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+          <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-[#0a0a0a] mb-6">
+            Preguntas frecuentes
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            {service.faqs.map((faq) => (
+              <article key={faq.q} className="border border-[#e4e4e4] rounded-2xl p-5 md:p-6 bg-[#fcfcfc]">
+                <h3 className="text-[#0a0a0a] text-xl font-medium tracking-tight mb-2">{faq.q}</h3>
+                <p className="text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight">{faq.a}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
 const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
   const [mounted, setMounted] = useState(false);
   const isEn = locale === 'en';
@@ -1551,9 +1739,9 @@ const MobileStickyCTA = ({ locale }: { locale: Locale }) => {
         <MessageCircle className="w-4 h-4" />
         {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
       </a>
-      <button data-analytics-event="mobile_book_now_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight">
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="mobile_book_now_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight text-center">
         {isEn ? 'Book now' : 'Reservar cita'}
-      </button>
+      </a>
     </div>,
     document.body,
   );
@@ -1674,19 +1862,19 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
   const reelsData = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1759134248487-e8baaf31e33e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnN0YWdyYW0lMjByZWVscyUyMHZlcnRpY2FsJTIwYmVhdXR5JTIwaGFpciUyMHNhbG9ufGVufDF8fHx8MTc3Mzg1ODI0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: image_81aa8fe3a4228a9160f66a4537389eb77969fcc8,
       title: "Balayage Transformation",
       views: "12.4K"
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1653241625670-3a1e643464ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXJ0aWNhbCUyMHBvcnRyYWl0JTIwYmxvbmRlJTIwYmVhdXRpZnVsJTIwaGFpciUyMG1vZGVsfGVufDF8fHx8MTc3Mzg1ODI1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: image_38b9e8caabd18994531c10195796a44535b96a9d,
       title: "Editorial Styling",
       views: "8.2K"
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1707135999173-beab1fb736a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicnVuZXR0ZSUyMG1vZGVsJTIwbmF0dXJhbCUyMGxpZ2h0JTIwaGFpciUyMHNhbG9uJTIwc3R5bGluZyUyMHBvcnRyYWl0fGVufDF8fHx8MTc3Mzg1ODI1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: image_2116399b8684d35d16b8ce95b635336a091849f4,
       title: "Hair Care Routine",
       views: "15.1K"
     }
@@ -1806,15 +1994,19 @@ export default function App() {
   const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
-  const isKnownPath = ['/', '/tratamientos', '/politica-cookies', '/en', '/en/treatments', '/en/cookie-policy'].includes(currentPath);
+  const serviceSlug = (SERVICE_SLUGS as readonly string[]).includes(currentPath) ? (currentPath as ServiceSlug) : null;
+  const isServicePage = Boolean(serviceSlug);
+  const isKnownPath = ['/', '/tratamientos', '/politica-cookies', '/en', '/en/treatments', '/en/cookie-policy', ...SERVICE_SLUGS].includes(currentPath);
   const isNotFoundPage = !isKnownPath;
   const isCookiePolicyPage = currentPath === '/politica-cookies' || currentPath === '/en/cookie-policy';
   const isTreatmentsPage = currentPath === '/tratamientos' || currentPath === '/en/treatments';
   const treatmentsPath = locale === 'en' ? '/en/treatments' : '/tratamientos';
   const cookiePolicyPath = locale === 'en' ? '/en/cookie-policy' : '/politica-cookies';
-  const switchLocalePath = isTreatmentsPage
-    ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
-    : (locale === 'en' ? '/' : '/en');
+  const switchLocalePath = isServicePage
+    ? '/en/treatments'
+    : isTreatmentsPage
+      ? (locale === 'en' ? '/tratamientos' : '/en/treatments')
+      : (locale === 'en' ? '/' : '/en');
 
   const setConsentAndPersist = (analytics: boolean) => {
     const nextConsent: CookieConsent = {
@@ -2001,6 +2193,7 @@ export default function App() {
 
     const siteOrigin = 'https://mitin.studio';
     const pageUrl = `${siteOrigin}${currentPath === '/' ? '/' : currentPath}`;
+    const serviceMeta = serviceSlug ? SERVICE_PAGE_CONTENT[serviceSlug] : null;
     const pageMeta = isNotFoundPage
       ? (locale === 'en'
           ? {
@@ -2011,6 +2204,11 @@ export default function App() {
               title: '404 | Mitin Studio',
               description: 'La página solicitada no existe en Mitin Studio.',
             })
+      : isServicePage && serviceMeta
+      ? {
+          title: `${serviceMeta.title} | Mitin Studio`,
+          description: serviceMeta.description.slice(0, 155),
+        }
       : isCookiePolicyPage
       ? (locale === 'en'
           ? {
@@ -2039,7 +2237,7 @@ export default function App() {
           ? {
               title: 'Mitin Studio | Premium Hair Salon in Barcelona',
               description:
-                'Premium hair salon in Barcelona specializing in color, cuts and personalized hair treatments. Book your appointment at Mitin Studio.',
+                'Premium hair salon in Barcelona for color, precision cuts and personalized rituals. Book your appointment and get expert consultation at Mitin Studio.',
             }
           : {
               title: 'Mitin Studio | Peluquería Premium en Barcelona',
@@ -2077,6 +2275,10 @@ export default function App() {
       esAlt?.setAttribute('href', `${siteOrigin}/`);
       enAlt?.setAttribute('href', `${siteOrigin}/en`);
       xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+    } else if (isServicePage && serviceSlug) {
+      esAlt?.setAttribute('href', `${siteOrigin}${serviceSlug}`);
+      enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
+      xDefaultAlt?.setAttribute('href', `${siteOrigin}${serviceSlug}`);
     } else if (isCookiePolicyPage) {
       esAlt?.setAttribute('href', `${siteOrigin}/politica-cookies`);
       enAlt?.setAttribute('href', `${siteOrigin}/en/cookie-policy`);
@@ -2092,7 +2294,7 @@ export default function App() {
     }
 
     document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
-  }, [currentPath, isTreatmentsPage, isNotFoundPage, isCookiePolicyPage, locale]);
+  }, [currentPath, isTreatmentsPage, isNotFoundPage, isCookiePolicyPage, isServicePage, serviceSlug, locale]);
 
   useEffect(() => {
     if (!cookieConsent?.analytics || !gaMeasurementId || typeof window === 'undefined' || !window.gtag) {
@@ -2197,6 +2399,8 @@ export default function App() {
       <main className={`transition-opacity duration-300 ${isPageTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         {isNotFoundPage ? (
           <NotFoundPage locale={locale} />
+        ) : isServicePage && serviceSlug ? (
+          <ServiceLandingPage slug={serviceSlug} />
         ) : isCookiePolicyPage ? (
           <CookiePolicyPage locale={locale} />
         ) : isTreatmentsPage ? (
@@ -2209,6 +2413,7 @@ export default function App() {
             <KeuneSection locale={locale} enableScrollColorEffect />
             <Testimonials locale={locale} />
             <Gallery locale={locale} />
+            <MapSection locale={locale} />
             <ReelsSection locale={locale} />
             <InstagramFeed locale={locale} />
             <CTA locale={locale} />

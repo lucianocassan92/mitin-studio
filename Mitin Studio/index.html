@@ -9,10 +9,6 @@
       name="description"
       content="Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados. Reserva tu cita en Mitin Studio y recibe asesoramiento experto."
     />
-    <meta
-      name="keywords"
-      content="peluquería en Barcelona, salón premium Barcelona, coloración capilar Barcelona, balayage Barcelona, corte de pelo Barcelona, tratamientos capilares, Mitin Studio"
-    />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Mitin Studio" />
     <meta name="theme-color" content="#0a0a0a" />
@@ -37,12 +33,12 @@
     <meta property="og:url" content="https://mitin.studio/" />
     <meta
       property="og:image"
-      content="https://mitin.studio/meta-mitin-studio-exact.png"
+      content="https://mitin.studio/meta-mitin-studio-og-1200x630.png"
     />
-    <meta property="og:image:secure_url" content="https://mitin.studio/meta-mitin-studio-exact.png" />
+    <meta property="og:image:secure_url" content="https://mitin.studio/meta-mitin-studio-og-1200x630.png" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="443" />
-    <meta property="og:image:height" content="443" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logotipo de Mitin Studio" />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -53,7 +49,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://mitin.studio/meta-mitin-studio-exact.png"
+      content="https://mitin.studio/meta-mitin-studio-og-1200x630.png"
     />
     <meta name="twitter:image:alt" content="Logotipo de Mitin Studio" />
 
@@ -64,9 +60,43 @@
         "@id": "https://mitin.studio/#organization",
         "name": "Mitin Studio",
         "description": "Peluquería premium en Barcelona especializada en color, corte y tratamientos capilares personalizados.",
-        "image": "https://mitin.studio/meta-mitin-studio-exact.png",
+        "image": [
+          "https://mitin.studio/meta-mitin-studio-og-1200x630.png",
+          "https://mitin.studio/meta-mitin-studio-v2.png",
+          "https://mitin.studio/meta-mitin-studio-exact.png"
+        ],
         "url": "https://mitin.studio/",
         "telephone": "+34625740726",
+        "hasMap": "https://maps.google.com/?q=Carrer+de+Casanova+191+Barcelona",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 41.3849,
+          "longitude": 2.153
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "47"
+        },
+        "paymentAccepted": ["Cash", "Credit Card", "Debit Card"],
+        "makesOffer": [
+          {
+            "@type": "Offer",
+            "itemOffered": { "@type": "Service", "name": "Corte de pelo en Barcelona" }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": { "@type": "Service", "name": "Coloración en Barcelona" }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": { "@type": "Service", "name": "Balayage en Barcelona" }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": { "@type": "Service", "name": "Rituales capilares" }
+          }
+        ],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Carrer de Casanova, 191",
@@ -91,7 +121,8 @@
         "areaServed": "Barcelona",
         "priceRange": "$$",
         "sameAs": [
-          "https://www.instagram.com/mitinstudiobcn/"
+          "https://www.instagram.com/mitinstudiobcn/",
+          "https://maps.google.com/?q=Carrer+de+Casanova+191+Barcelona"
         ]
       }
     </script>
@@ -103,6 +134,30 @@
         "name": "Mitin Studio",
         "url": "https://mitin.studio/",
         "inLanguage": "es-ES"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Trabajáis coloración personalizada en Barcelona?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. Realizamos diagnóstico previo para adaptar tono, técnica y mantenimiento al estado real del cabello."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué servicios ofrece Mitin Studio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Coloración, balayage, corte personalizado y rituales capilares profesionales con protocolos Keune."
+            }
+          }
+        ]
       }
     </script>
   </head>
