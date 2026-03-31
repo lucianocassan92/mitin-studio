@@ -2193,7 +2193,7 @@ export default function App() {
   const [cookieConsent, setCookieConsent] = useState<CookieConsent | null>(null);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const gaInitializedRef = React.useRef(false);
-  const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim();
+  const gaMeasurementId = (import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-JZDYGNVN0G').trim();
   const isEnglishLocale = currentPath === '/en' || currentPath.startsWith('/en/');
   const locale: Locale = isEnglishLocale ? 'en' : 'es';
   const serviceSlug = (SERVICE_SLUGS as readonly string[]).includes(currentPath) ? (currentPath as ServiceSlug) : null;
