@@ -1737,7 +1737,7 @@ const CookieBanner = ({
         </div>
       </div>
     </div>,
-    document.body,
+    document.documentElement,
   );
 };
 
@@ -2361,8 +2361,8 @@ export default function App() {
     }
 
     const rawConsent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
-    setIsCookieBannerVisible(true);
     if (!rawConsent) {
+      setIsCookieBannerVisible(true);
       return;
     }
 
@@ -2370,6 +2370,7 @@ export default function App() {
       const parsed = JSON.parse(rawConsent) as CookieConsent;
       if (typeof parsed.analytics === 'boolean') {
         setCookieConsent(parsed);
+        setIsCookieBannerVisible(false);
       } else {
         setIsCookieBannerVisible(true);
       }
