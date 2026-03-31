@@ -89,6 +89,10 @@ const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
   hero: string;
   description: string;
   benefit: string;
+  expertise: string;
+  includes: string[];
+  idealFor: string[];
+  maintenance: string;
   faqs: { q: string; a: string }[];
 }> = {
   '/balayage-barcelona': {
@@ -97,6 +101,21 @@ const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
     description:
       'En Mitin Studio diseñamos balayage personalizado según tono de piel, base natural y objetivo estético. Trabajamos transiciones suaves, dimensión real y brillo elegante para un resultado premium y duradero.',
     benefit: 'Beneficio clave: color con profundidad, menor efecto raíz y mantenimiento inteligente.',
+    expertise:
+      'Comenzamos con diagnóstico de base, porosidad y contraste para definir la técnica de luz más favorecedora. Nuestro enfoque busca movimiento visual, naturalidad y una transición elegante entre raíz y medios.',
+    includes: [
+      'Diagnóstico de colorimetría y diseño de luz personalizado.',
+      'Aplicación de técnica de aclarado progresivo con protección capilar.',
+      'Matiz final para equilibrar reflejo, profundidad y brillo.',
+      'Recomendación de rutina en casa para prolongar resultado y tono.',
+    ],
+    idealFor: [
+      'Quien busca iluminar sin efecto raíz marcada.',
+      'Cabello natural o teñido que necesita dimensión y suavidad visual.',
+      'Resultados elegantes con mantenimiento más espaciado.',
+    ],
+    maintenance:
+      'Sugerimos revisión de matiz y brillo cada 8 a 10 semanas, y retoque de técnica completa entre 10 y 14 semanas según contraste.',
     faqs: [
       { q: '¿Cada cuánto mantener un balayage?', a: 'Normalmente cada 10 a 14 semanas, según contraste y objetivo de luz.' },
       { q: '¿Incluye diagnóstico de color?', a: 'Sí. Definimos punto de partida, porosidad, tono ideal y plan de mantenimiento.' },
@@ -108,6 +127,21 @@ const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
     description:
       'Creamos coloraciones personalizadas para cubrir cana, aportar brillo, corregir matices o transformar el look sin perder naturalidad. Cada fórmula se adapta al estado real del cabello.',
     benefit: 'Beneficio clave: color equilibrado, uniforme y con mayor duración entre visitas.',
+    expertise:
+      'Cada servicio de color se formula en cabina con criterio técnico y sensibilidad estética. Analizamos fondo natural, historial químico y objetivo final para trabajar un color coherente, luminoso y estable.',
+    includes: [
+      'Diagnóstico de base, subtono y condición de fibra.',
+      'Formulación personalizada para cobertura, matiz o transformación.',
+      'Sellado de color y protocolo de cuidado postservicio.',
+      'Plan de mantenimiento con productos Keune según necesidad.',
+    ],
+    idealFor: [
+      'Cobertura de cana con acabado natural.',
+      'Corrección tonal o neutralización de reflejos no deseados.',
+      'Cambio de look manteniendo brillo y salud del cabello.',
+    ],
+    maintenance:
+      'Recomendamos mantenimiento entre 4 y 8 semanas según técnica y porcentaje de cobertura, junto con rutina de protección de color en casa.',
     faqs: [
       { q: '¿Trabajáis cobertura de cana?', a: 'Sí, con protocolos específicos para mantener naturalidad y reflejo.' },
       { q: '¿Cómo se mantiene el color en casa?', a: 'Te recomendamos rutina Keune personalizada para fijar tono y brillo.' },
@@ -119,6 +153,21 @@ const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
     description:
       'Nuestros cortes se diseñan para acompañar la forma natural del cabello, tu estilo de vida y tus rasgos. Buscamos una caída elegante y fácil de mantener en el día a día.',
     benefit: 'Beneficio clave: forma duradera, movimiento natural y resultado que favorece tu identidad.',
+    expertise:
+      'El corte se proyecta desde la estructura real del cabello: densidad, patrón de crecimiento, textura y hábitos de peinado. Priorizamos una silueta equilibrada, limpia y de mantenimiento realista.',
+    includes: [
+      'Asesoramiento de forma según rostro, textura y estilo de vida.',
+      'Diseño de corte personalizado con técnica en seco o húmedo.',
+      'Pulido de contorno y detalles para mejorar caída y movilidad.',
+      'Guía de peinado y mantenimiento entre visitas.',
+    ],
+    idealFor: [
+      'Quien busca renovar forma sin perder identidad.',
+      'Cabello que necesita orden, movimiento y mayor control.',
+      'Looks de bajo mantenimiento con resultado profesional.',
+    ],
+    maintenance:
+      'Para conservar estructura y caída, recomendamos revisión de corte cada 6 a 8 semanas, ajustando frecuencia según largo y estilo.',
     faqs: [
       { q: '¿Hacéis corte en seco o en húmedo?', a: 'Elegimos técnica según textura, densidad y objetivo de acabado.' },
       { q: '¿Incluye asesoramiento de estilo?', a: 'Sí, siempre. Definimos largo, forma y rutina de peinado realista.' },
@@ -130,6 +179,21 @@ const SERVICE_PAGE_CONTENT: Record<ServiceSlug, {
     description:
       'Trabajamos mechas finas y técnicas de iluminación personalizadas para resultados sofisticados, sin efecto rígido. El objetivo es una luz integrada y coherente con tu base.',
     benefit: 'Beneficio clave: mayor dimensión visual con acabado pulido y natural.',
+    expertise:
+      'Diseñamos mechas según nivel de contraste, dirección de luz y tipo de cabello para construir profundidad sin endurecer el resultado. Priorizamos armonía, brillo y continuidad visual.',
+    includes: [
+      'Análisis de base y diseño de mapa de iluminación.',
+      'Aplicación técnica personalizada (babylights, contouring o mecha clásica).',
+      'Matiz de ajuste para equilibrar reflejo y tono final.',
+      'Recomendación de cuidado en casa para proteger fibra y color.',
+    ],
+    idealFor: [
+      'Quien quiere más luz sin perder naturalidad.',
+      'Cabello plano que necesita dimensión y contraste elegante.',
+      'Clientes que buscan un acabado sofisticado y versátil.',
+    ],
+    maintenance:
+      'El mantenimiento ideal depende del contraste elegido, con controles de tono cada 6 a 10 semanas y retoque estructural según crecimiento.',
     faqs: [
       { q: '¿Qué diferencia hay entre mechas y balayage?', a: 'Las mechas generan estructura de luz más definida; el balayage prioriza degradado orgánico.' },
       { q: '¿Se puede hacer sin dañar el cabello?', a: 'Sí, con diagnóstico previo y protocolos de protección y reconstrucción capilar.' },
@@ -1881,6 +1945,47 @@ const ServiceLandingPage = ({ slug }: { slug: ServiceSlug }) => {
         </div>
       </section>
 
+      <section className="bg-[#f7f6f4] py-10 md:py-14 border-y border-[#ebe7e1]">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+          <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-[#0a0a0a] mb-4">
+            Enfoque del servicio
+          </h2>
+          <p className="text-[#4e4e4e] text-base md:text-lg leading-relaxed tracking-tight max-w-4xl">
+            {service.expertise}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mt-8">
+            <article className="border border-[#e4dfd8] rounded-2xl p-5 md:p-6 bg-white">
+              <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-4">
+                Qué incluye
+              </h3>
+              <ul className="space-y-2.5 text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight list-disc pl-5">
+                {service.includes.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="border border-[#e4dfd8] rounded-2xl p-5 md:p-6 bg-white">
+              <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-4">
+                Ideal para
+              </h3>
+              <ul className="space-y-2.5 text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight list-disc pl-5">
+                {service.idealFor.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+          <article className="mt-5 border border-[#e4dfd8] rounded-2xl p-5 md:p-6 bg-white">
+            <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight mb-2">
+              Mantenimiento recomendado
+            </h3>
+            <p className="text-[#4e4e4e] text-sm md:text-base leading-relaxed tracking-tight">
+              {service.maintenance}
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section className="bg-white py-10 md:py-14">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-[#0a0a0a] mb-6">
@@ -2500,30 +2605,41 @@ export default function App() {
       canonical.setAttribute('href', pageUrl);
     }
 
-    const esAlt = document.querySelector('link[rel="alternate"][hreflang="es-ES"]');
-    const enAlt = document.querySelector('link[rel="alternate"][hreflang="en"]');
-    const xDefaultAlt = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+    const upsertAlt = (lang: string, href: string) => {
+      let link = document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`) as HTMLLinkElement | null;
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'alternate');
+        link.setAttribute('hreflang', lang);
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', href);
+    };
+
+    const removeAlt = (lang: string) => {
+      document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`)?.remove();
+    };
 
     if (isNotFoundPage) {
-      esAlt?.setAttribute('href', `${siteOrigin}/`);
-      enAlt?.setAttribute('href', `${siteOrigin}/en`);
-      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+      upsertAlt('es-ES', `${siteOrigin}/`);
+      upsertAlt('en', `${siteOrigin}/en`);
+      upsertAlt('x-default', `${siteOrigin}/`);
     } else if (isServicePage && serviceSlug) {
-      esAlt?.setAttribute('href', `${siteOrigin}${serviceSlug}`);
-      enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
-      xDefaultAlt?.setAttribute('href', `${siteOrigin}${serviceSlug}`);
+      upsertAlt('es-ES', `${siteOrigin}${serviceSlug}`);
+      upsertAlt('x-default', `${siteOrigin}${serviceSlug}`);
+      removeAlt('en');
     } else if (isCookiePolicyPage) {
-      esAlt?.setAttribute('href', `${siteOrigin}/politica-cookies`);
-      enAlt?.setAttribute('href', `${siteOrigin}/en/cookie-policy`);
-      xDefaultAlt?.setAttribute('href', `${siteOrigin}/politica-cookies`);
+      upsertAlt('es-ES', `${siteOrigin}/politica-cookies`);
+      upsertAlt('en', `${siteOrigin}/en/cookie-policy`);
+      upsertAlt('x-default', `${siteOrigin}/politica-cookies`);
     } else if (isTreatmentsPage) {
-      esAlt?.setAttribute('href', `${siteOrigin}/tratamientos`);
-      enAlt?.setAttribute('href', `${siteOrigin}/en/treatments`);
-      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+      upsertAlt('es-ES', `${siteOrigin}/tratamientos`);
+      upsertAlt('en', `${siteOrigin}/en/treatments`);
+      upsertAlt('x-default', `${siteOrigin}/`);
     } else {
-      esAlt?.setAttribute('href', `${siteOrigin}/`);
-      enAlt?.setAttribute('href', `${siteOrigin}/en`);
-      xDefaultAlt?.setAttribute('href', `${siteOrigin}/`);
+      upsertAlt('es-ES', `${siteOrigin}/`);
+      upsertAlt('en', `${siteOrigin}/en`);
+      upsertAlt('x-default', `${siteOrigin}/`);
     }
 
     document.documentElement.setAttribute('lang', locale === 'en' ? 'en' : 'es');
