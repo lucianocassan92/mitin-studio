@@ -373,7 +373,7 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
               height={294}
               loading="lazy"
               decoding="async"
-              className="w-full h-auto object-contain brightness-0 invert"
+              className="w-full h-auto object-contain"
             />
           </div>
           <img
@@ -477,7 +477,7 @@ const Treatments = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath
               width={384}
               height={294}
               decoding="async"
-              className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain mix-blend-multiply"
+              className="mt-6 md:mt-7 h-14 md:h-20 w-auto object-contain"
             />
           </div>
           <div className="mt-8 md:mt-12">
@@ -918,7 +918,7 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
               height={294}
               loading="lazy"
               decoding="async"
-              className="h-24 md:h-32 lg:h-40 object-contain mb-12 md:mb-16 mix-blend-multiply"
+              className="h-24 md:h-32 lg:h-40 object-contain mb-12 md:mb-16"
             />
             <div className="flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24 items-start w-full justify-between text-left">
               <h2 className="flex-1 text-4xl md:text-5xl lg:text-[64px] font-sans font-medium tracking-tight text-[#0a0a0a] leading-[1.08]">
@@ -2450,9 +2450,9 @@ export default function App() {
             })
       : (locale === 'en'
           ? {
-              title: 'Mitin Studio | Premium Hair Salon in Barcelona',
+              title: 'Mitin Studio Barcelona | Colorimetry in balance',
               description:
-                'Premium hair salon in Barcelona for color, precision cuts and personalized rituals. Book your appointment and get expert consultation at Mitin Studio.',
+                'Hair salon in Barcelona focused on color, precision cuts and personalized rituals. Book your appointment and get expert consultation at Mitin Studio.',
             }
           : {
               title: 'Mitin Studio Barcelona | Colorimetría en equilibrio',
