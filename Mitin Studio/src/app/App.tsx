@@ -2685,7 +2685,7 @@ export default function App() {
       {!isCookieBannerVisible && <MobileStickyCTA locale={locale} />}
       <CookieBanner
         locale={locale}
-        visible={isCookieBannerVisible}
+        visible={isCookieBannerVisible && !isCookiePolicyPage}
         onAcceptAll={() => setConsentAndPersist(true)}
         onReject={() => setConsentAndPersist(false)}
       />
