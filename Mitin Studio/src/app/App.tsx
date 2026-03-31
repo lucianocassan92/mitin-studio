@@ -960,11 +960,24 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
           <style>{`
             @keyframes keuneInfiniteScroll {
               0% { transform: translate3d(0, 0, 0); }
-              100% { transform: translate3d(-50%, 0, 0); }
+              100% { transform: translate3d(-33.3333%, 0, 0); }
             }
             .keune-infinite-track {
               animation: keuneInfiniteScroll 38s linear infinite;
               will-change: transform;
+              width: max-content;
+            }
+            .keune-infinite-group {
+              display: flex;
+              gap: 1rem;
+              padding: 2rem 1rem;
+              flex-shrink: 0;
+            }
+            @media (min-width: 768px) {
+              .keune-infinite-group {
+                gap: 1.5rem;
+                padding: 2.5rem 2rem;
+              }
             }
             @media (max-width: 1024px) {
               .keune-infinite-track {
@@ -973,30 +986,34 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
             }
           `}</style>
           <div className="relative overflow-hidden bg-[#e3e3e3]">
-            <div className="keune-infinite-track flex w-max gap-4 md:gap-6 px-4 md:px-8 py-8 md:py-10">
-              {[...KEUNE_PRODUCTS, ...KEUNE_PRODUCTS].map((product, idx) => (
-                <article
-                  key={`${product.name}-${idx}`}
-                  className="w-[220px] md:w-[260px] lg:w-[290px] shrink-0 rounded-2xl overflow-hidden bg-[#f2f2f2] shadow-[0_20px_40px_-28px_rgba(20,20,20,0.45)]"
-                >
-                  <div className="aspect-[4/5] overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4 md:p-5">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-[#5f5f5f] font-semibold mb-2">
-                      {getFamilyLabel(product.familyKey)}
-                    </p>
-                    <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight leading-[1.05] whitespace-pre-line min-h-[2.1em]">
-                      {product.displayName ?? product.name}
-                    </h3>
-                  </div>
-                </article>
+            <div className="keune-infinite-track flex">
+              {[0, 1, 2].map((groupIndex) => (
+                <div className="keune-infinite-group" key={`keune-group-${groupIndex}`}>
+                  {KEUNE_PRODUCTS.map((product) => (
+                    <article
+                      key={`${groupIndex}-${product.name}`}
+                      className="w-[220px] md:w-[260px] lg:w-[290px] shrink-0 rounded-2xl overflow-hidden bg-[#f2f2f2] shadow-[0_20px_40px_-28px_rgba(20,20,20,0.45)]"
+                    >
+                      <div className="aspect-[4/5] overflow-hidden">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-4 md:p-5">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-[#5f5f5f] font-semibold mb-2">
+                          {getFamilyLabel(product.familyKey)}
+                        </p>
+                        <h3 className="text-[#0a0a0a] text-xl md:text-2xl font-medium tracking-tight leading-[1.05] whitespace-pre-line min-h-[2.1em]">
+                          {product.displayName ?? product.name}
+                        </h3>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               ))}
             </div>
           </div>
