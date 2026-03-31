@@ -272,10 +272,10 @@ const Header = ({ locale, treatmentsPath, switchLocalePath }: { locale: Locale; 
           <a href={switchLocalePath} data-analytics-event="language_switch_click" className="text-sm font-semibold tracking-tight text-[#5a5a5a] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'EN / ES' : 'ES / EN'}
           </a>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="book_now_click" className="text-sm font-medium tracking-tight text-[#5f5f5f] hover:text-[#0a0a0a] transition-colors">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="text-sm font-medium tracking-tight text-[#5f5f5f] hover:text-[#0a0a0a] transition-colors">
             {isEn ? 'Book now' : 'Reservar cita'}
           </a>
-          <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="consultation_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
+          <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-colors bg-[#0a0a0a] text-white hover:bg-[#1f1f1f] flex items-center gap-2">
             <MessageCircle className="w-4 h-4" />
             <span>{isEn ? 'Free consultation' : 'Asesoramiento gratuito'}</span>
           </a>
@@ -345,7 +345,7 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
             className="w-full sm:w-auto"
           >
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-start">
-              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="hero_consultation_click" className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
+              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="w-full sm:w-auto px-8 py-4 bg-[#0a0a0a] text-white rounded-full hover:bg-[#1f1f1f] transition-colors text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg">
                 <MessageCircle className="w-5 h-5" />
                 {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
               </a>
@@ -818,10 +818,10 @@ const TreatmentsExperiencePage = ({ locale }: { locale: Locale }) => {
               : 'Te ayudamos a elegir el tratamiento ideal según tu cabello, color y necesidad.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="treatments_whatsapp_consultation_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors text-center">
+            <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="px-8 py-4 rounded-full bg-white text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#f2f2f2] transition-colors text-center">
               {isEn ? 'Free WhatsApp consultation' : 'Asesoramiento gratuito por WhatsApp'}
             </a>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="treatments_book_now_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors text-center">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="px-8 py-4 rounded-full border border-white/30 text-white text-sm md:text-base font-medium tracking-tight hover:bg-white/10 transition-colors text-center">
               {isEn ? 'Book appointment' : 'Reservar cita'}
             </a>
           </div>
@@ -1582,7 +1582,7 @@ const CTA = ({ locale }: { locale: Locale }) => {
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
               <span>{isEn ? 'Reply in under 1 hour' : 'Respuesta en < 1 hora'}</span>
               <span className="hidden md:block w-1 h-1 rounded-full bg-[#fdfcfb]/20"></span>
-              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
+              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5" />
                 +34 625 74 07 26
               </a>
@@ -1846,7 +1846,7 @@ const ServiceLandingPage = ({ slug }: { slug: ServiceSlug }) => {
               href={WHATSAPP_CHAT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              data-analytics-event="service_whatsapp_click"
+              data-analytics-event="whatsapp_click"
               className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#0a0a0a] text-white text-sm md:text-base font-medium tracking-tight hover:bg-[#1f1f1f] transition-colors"
             >
               Asesoramiento gratuito
@@ -1855,7 +1855,7 @@ const ServiceLandingPage = ({ slug }: { slug: ServiceSlug }) => {
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              data-analytics-event="service_book_click"
+              data-analytics-event="whatsapp_click"
               className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-[#0a0a0a]/20 text-[#0a0a0a] text-sm md:text-base font-medium tracking-tight hover:bg-[#0a0a0a]/5 transition-colors"
             >
               Reservar cita
@@ -1905,7 +1905,7 @@ const FloatingWhatsApp = ({ locale }: { locale: Locale }) => {
         href={WHATSAPP_CHAT_URL}
         target="_blank"
         rel="noopener noreferrer"
-        data-analytics-event="floating_whatsapp_click"
+        data-analytics-event="whatsapp_click"
         className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all pointer-events-auto"
         aria-label={isEn ? 'WhatsApp consultation' : 'Asesoramiento por WhatsApp'}
       >
@@ -1933,11 +1933,11 @@ const MobileStickyCTA = ({ locale }: { locale: Locale }) => {
       className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-[#e8e0d5] p-4 z-[70] flex flex-col gap-3 shadow-[0_-10px_30px_-22px_rgba(0,0,0,0.45)]"
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.75rem)' }}
     >
-      <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="mobile_consultation_click" className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
+      <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="w-full bg-[#0a0a0a] text-white py-3.5 rounded-full text-sm font-medium tracking-tight flex justify-center items-center gap-2 shadow-sm">
         <MessageCircle className="w-4 h-4" />
         {isEn ? 'Free consultation' : 'Asesoramiento gratuito'}
       </a>
-      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="mobile_book_now_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight text-center">
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="w-full bg-transparent border border-[#0a0a0a]/20 text-[#0a0a0a] py-3.5 rounded-full text-sm font-medium tracking-tight text-center">
         {isEn ? 'Book now' : 'Reservar cita'}
       </a>
     </div>,
