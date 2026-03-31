@@ -373,7 +373,7 @@ const Hero = ({ locale, treatmentsPath }: { locale: Locale; treatmentsPath: stri
               height={294}
               loading="lazy"
               decoding="async"
-              className="w-full h-auto object-contain"
+              className="w-full h-auto object-contain brightness-0 invert"
             />
           </div>
           <img
