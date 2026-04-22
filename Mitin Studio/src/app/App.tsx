@@ -33,6 +33,9 @@ const SIGNATURE_MODEL_SRCSET = '/perf/signature-model-480.webp 480w, /perf/signa
 const KEUNE_STORE_URL = "https://www.keune.com/es/?fromKickbackFeeCode=Mitin+Studio";
 const WHATSAPP_CHAT_URL = "https://wa.me/34625740726";
 const BOOKING_URL = WHATSAPP_CHAT_URL;
+const STUDIO_ADDRESS = "Carrer de Gandesa, 3, Les Corts, 08028 Barcelona";
+const STUDIO_ADDRESS_QUERY = "Carrer+de+Gandesa+3+Les+Corts+08028+Barcelona";
+const STUDIO_PHONE_DISPLAY = "34625740726";
 
 const KEUNE_PRODUCTS = [
   {
@@ -1541,7 +1544,7 @@ const MapSection = ({ locale }: { locale: Locale }) => {
             </h2>
           </div>
           <a
-            href="https://maps.google.com/?q=Carrer+de+Casanova+191+Barcelona"
+            href={`https://maps.google.com/?q=${STUDIO_ADDRESS_QUERY}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm md:text-base text-[#0a0a0a] font-medium tracking-tight hover:opacity-80 transition-opacity"
@@ -1557,7 +1560,7 @@ const MapSection = ({ locale }: { locale: Locale }) => {
           {isMapLoaded ? (
             <iframe
               title={isEn ? 'Mitin Studio location map' : 'Mapa ubicación Mitin Studio'}
-              src="https://www.google.com/maps?q=Carrer+de+Casanova+191+Barcelona&output=embed"
+              src={`https://www.google.com/maps?q=${STUDIO_ADDRESS_QUERY}&output=embed`}
               width="100%"
               height="420"
               loading="lazy"
@@ -1569,7 +1572,7 @@ const MapSection = ({ locale }: { locale: Locale }) => {
               <MapPin className="w-8 h-8 text-[#332722]" />
               <div>
                 <p className="text-[#0a0a0a] text-lg md:text-xl font-medium tracking-tight">
-                  Carrer de Casanova 191, L&apos;Eixample, Barcelona
+                  {STUDIO_ADDRESS}
                 </p>
                 <p className="text-[#6b6b6b] text-sm md:text-base tracking-tight mt-2">
                   {isEn ? 'Interactive map loads on demand to improve speed.' : 'El mapa interactivo se carga bajo demanda para mejorar la velocidad.'}
@@ -1665,7 +1668,7 @@ const CTA = ({ locale }: { locale: Locale }) => {
               <span className="hidden md:block w-1 h-1 rounded-full bg-[#fdfcfb]/20"></span>
               <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer" data-analytics-event="whatsapp_click" className="hover:text-[#fdfcfb] transition-colors flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5" />
-                +34 625 74 07 26
+                {STUDIO_PHONE_DISPLAY}
               </a>
             </div>
           </motion.div>
@@ -1702,11 +1705,11 @@ const Footer = ({
           <ul className="space-y-4 font-light text-sm">
             <li className="flex items-start gap-3">
               <MapPin className="w-4 h-4 mt-0.5 text-[#e8e0d5]" />
-              <span>Carrer de Casanova, 191,<br/> L'Eixample, 08036 Barcelona</span>
+              <span>{STUDIO_ADDRESS}</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-[#e8e0d5]" />
-              <span>+34 625 74 07 26</span>
+              <span>{STUDIO_PHONE_DISPLAY}</span>
             </li>
           </ul>
         </div>
@@ -1857,7 +1860,7 @@ const CookiePolicyPage = ({ locale }: { locale: Locale }) => {
               {isEn ? '1. Controller' : '1. Responsable'}
             </h2>
             <p className="leading-relaxed">
-              Mitin Studio, Carrer de Casanova 191, Barcelona.
+              Mitin Studio, {STUDIO_ADDRESS}.
             </p>
           </article>
           <article>
