@@ -1037,13 +1037,15 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
             .keune-infinite-group {
               display: flex;
               gap: 1rem;
-              padding: 2rem 1rem;
+              padding: 2rem 0;
+              margin-right: 1rem;
               flex-shrink: 0;
             }
             @media (min-width: 768px) {
               .keune-infinite-group {
                 gap: 1.5rem;
-                padding: 2.5rem 2rem;
+                padding: 2.5rem 0;
+                margin-right: 1.5rem;
               }
             }
             @media (max-width: 1024px) {
@@ -1052,7 +1054,7 @@ const KeuneSection = ({ locale, enableScrollColorEffect = true }: { locale: Loca
               }
             }
           `}</style>
-          <div className="relative overflow-hidden bg-[#e3e3e3]">
+          <div className="relative overflow-hidden bg-[#e3e3e3] px-4 md:px-8">
             <div className="keune-infinite-track flex">
               {[0, 1, 2].map((groupIndex) => (
                 <div className="keune-infinite-group" key={`keune-group-${groupIndex}`}>
@@ -1470,7 +1472,14 @@ const Testimonials = ({ locale }: { locale: Locale }) => {
 
 const Gallery = ({ locale }: { locale: Locale }) => {
   const isEn = locale === 'en';
-  const images_gallery = [images.gallery1, images.gallery2, images.gallery3, images.gallery4];
+  const images_gallery = [
+    '/perf/space-01.webp',
+    '/perf/space-02.webp',
+    '/perf/space-03.webp',
+    '/perf/space-04.webp',
+    '/perf/space-05.webp',
+    '/perf/space-06.webp',
+  ];
   
   return (
     <section className="bg-[#fdfcfb] px-[0px] pt-[56px] pb-[32px]">
@@ -1482,7 +1491,7 @@ const Gallery = ({ locale }: { locale: Locale }) => {
           {isEn ? 'Sophistication, calm and intentional design in every corner.' : 'Sofisticación, calma y diseño en cada rincón.'}
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {images_gallery.map((img, idx) => (
             <motion.div 
               key={idx}
@@ -1490,7 +1499,7 @@ const Gallery = ({ locale }: { locale: Locale }) => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className={`rounded-2xl overflow-hidden ${idx === 0 || idx === 3 ? 'md:aspect-[4/3]' : 'md:aspect-[4/5]'}`}
+              className="rounded-2xl overflow-hidden md:aspect-[4/5]"
             >
               <img src={img} alt="Mitin Studio Space" width={1024} height={768} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
@@ -2185,21 +2194,24 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
   const reelsData = [
     {
       id: 1,
-      image: '/perf/hero-960.webp',
-      title: "Balayage Transformation",
-      views: "12.4K"
+      image: '/perf/reel-the-studio.webp',
+      title: "The Studio",
+      views: "12.4K",
+      url: "https://www.instagram.com/reel/DWCY3vODYWF/"
     },
     {
       id: 2,
       image: images.about,
-      title: "Editorial Styling",
-      views: "8.2K"
+      title: "High Performance",
+      views: "55.7K",
+      url: "https://www.instagram.com/reel/DBq63JMKtmw/"
     },
     {
       id: 3,
-      image: images.gallery1,
+      image: '/perf/reel-haircare.webp',
       title: "Hair Care Routine",
-      views: "15.1K"
+      views: "15.1K",
+      url: "https://www.instagram.com/reel/DIbBU52tlo0/?igsh=MXcwaGo0cDlyMzhlZQ=="
     }
   ];
 
@@ -2239,6 +2251,13 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
               transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
               className="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer bg-[#e8e0d5]/30 shadow-sm hover:shadow-xl transition-all duration-500"
             >
+              <a
+                href={reel.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={isEn ? `Open reel: ${reel.title}` : `Abrir reel: ${reel.title}`}
+                className="absolute inset-0 z-10"
+              />
               <img 
                 src={reel.image} 
                 alt={reel.title}
@@ -2251,16 +2270,14 @@ const ReelsSection = ({ locale }: { locale: Locale }) => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-[#0a0a0a]/20 to-transparent opacity-80 transition-opacity duration-300"></div>
               
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <a 
-                  href="https://www.instagram.com/reel/DIbBU52tlo0/?igsh=MXcwaGo0cDlyMzhlZQ=="
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <span
+                  href={reel.url}
                   aria-label={isEn ? `Play reel: ${reel.title}` : `Reproducir reel: ${reel.title}`}
                   title={isEn ? `Play reel: ${reel.title}` : `Reproducir reel: ${reel.title}`}
                   className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-lg hover:bg-white/30 transition-colors cursor-pointer"
                 >
                   <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
-                </a>
+                </span>
               </div>
 
               <div className="absolute bottom-0 left-0 w-full p-6 text-left transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
@@ -2808,7 +2825,6 @@ export default function App() {
               <ReelsSection locale={locale} />
             </LazyMount>
             <LazyMount placeholderHeight={560}>
-              <InstagramFeed locale={locale} />
             </LazyMount>
             <LazyMount placeholderHeight={720}>
               <CTA locale={locale} />
